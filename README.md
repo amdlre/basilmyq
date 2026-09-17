@@ -19,6 +19,18 @@ npm run dev
 
 The site is served from `/ar` and `/en`; `/` redirects to the default locale.
 
+### Admin access
+
+There is no user table — the single admin's identity lives in the environment:
+
+```bash
+npm run hash-password
+```
+
+Paste both printed lines into `.env.local` **verbatim, backslashes included**. Next.js
+expands unescaped `$` in env files, so an unescaped bcrypt hash silently loads as an empty
+string. The dashboard lives at `/ar/dashboard` and `/en/dashboard`.
+
 ### Database
 
 Set `DATABASE_URL` in `.env.local`, then:
@@ -57,7 +69,7 @@ Before finishing any phase: `npm run typecheck && npm run lint && npm run build`
 
 - [x] **Phase 0** — Foundation: design system, theming, i18n + RTL, tooling
 - [x] **Phase 1** — Database schema and seed
-- [ ] **Phase 2** — Single-admin authentication
+- [x] **Phase 2** — Single-admin authentication
 - [ ] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
 - [ ] **Phase 4** — Dashboard modules
 - [ ] **Phase 5** — Public site

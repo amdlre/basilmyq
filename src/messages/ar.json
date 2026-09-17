@@ -40,5 +40,21 @@
     "title": "basilmyq.com",
     "description": "الأساس جاهز: نظام تصميم، ثيم فاتح وداكن، ولغتان بدعم كامل للاتجاهين.",
     "phase": "المرحلة ٠ — التأسيس والبنية"
+  },
+  "Login": {
+    "title": "تسجيل الدخول",
+    "description": "لوحة تحكم basilmyq",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "دخول",
+    "submitting": "جارٍ الدخول…",
+    "invalidCredentials": "بيانات الدخول غير صحيحة.",
+    "tooManyAttempts": "محاولات كثيرة. حاول بعد {minutes} دقيقة.",
+    "backToSite": "العودة للموقع"
+  },
+  "Dashboard": {
+    "title": "لوحة التحكم",
+    "signedInAs": "مسجّل الدخول باسم",
+    "logout": "تسجيل الخروج"
   }
 }

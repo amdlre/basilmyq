@@ -60,6 +60,10 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   Prettier. Run `npx prisma generate` after any schema change.
 - The Prisma CLI does not read `.env.local`, so `prisma7.config.ts` loads it explicitly.
   Keep `.env.local` as the single source of environment truth in development.
+- **Env files expand `$`.** Next.js runs `.env*` through dotenv-expand, so a bcrypt hash
+  written as `$2b$12$…` loads as an empty string and auth fails with a confusing
+  "must be a bcrypt hash" error. Escape every `$` as `\$`. `npm run hash-password`
+  already emits it escaped.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

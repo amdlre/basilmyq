@@ -40,5 +40,21 @@
     "title": "basilmyq.com",
     "description": "Foundation is in place: design system, light and dark themes, and two locales with full bidirectional support.",
     "phase": "Phase 0 — Foundation & Architecture"
+  },
+  "Login": {
+    "title": "Sign in",
+    "description": "basilmyq dashboard",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "invalidCredentials": "Those credentials are not correct.",
+    "tooManyAttempts": "Too many attempts. Try again in {minutes} minutes.",
+    "backToSite": "Back to site"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "signedInAs": "Signed in as",
+    "logout": "Sign out"
   }
 }
