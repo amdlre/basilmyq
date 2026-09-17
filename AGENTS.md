@@ -83,6 +83,17 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   Server Actions and no new UI components.
 - **Arabic labels must not assume gender.** `"{name} جديد"` breaks on feminine nouns
   (خدمة، خبرة، مهارة); use a neutral verb form such as `"إضافة {name}"`.
+- **`unstable_cache` serialises its result**, so every `Date` from
+  `server/queries/public.ts` arrives as an ISO string and `Intl` throws "Invalid time
+  value" on it. Pass those dates through `toDate()` in `lib/format.ts` before formatting.
+- **Dashboard writes call `updateTag`, not `revalidateTag`.** `revalidateTag` serves stale
+  content while it refreshes, which would break "edit in the dashboard, see it on the
+  site". `updateTag` expires the tag immediately. Editing the database directly bypasses
+  both, so a manual SQL change will not appear until the cache expires.
+- **A client component reading the query string with nuqs needs a Suspense boundary** in
+  any prerendered page, because it calls `useSearchParams`.
+- **lucide-react v1 has no brand icons.** GitHub, LinkedIn, X, Instagram and YouTube live
+  in `components/public/brand-icons.tsx` as inline paths.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

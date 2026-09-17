@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 import type { Prisma } from "@/generated/prisma/client";
 import { requireAuth } from "@/lib/auth/require-auth";
@@ -32,7 +32,12 @@ function assertEntity(entity: string): ContentEntity {
 }
 
 async function revalidateFor(entity: ContentEntity): Promise<void> {
-  const { paths } = getContentConfig(entity);
+  const { paths, tag } = getContentConfig(entity);
+
+  // `updateTag`, not `revalidateTag`: it expires the tag immediately so the
+  // next request waits for fresh data instead of being served the stale copy.
+  // That is what makes a dashboard edit visible on the site straight away.
+  updateTag(tag);
   for (const path of paths) {
     revalidatePath(`/[locale]${path === "/" ? "" : path}`, "page");
   }

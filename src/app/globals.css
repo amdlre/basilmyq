@@ -164,6 +164,22 @@
     sans-serif;
 }
 
+/* Testimonial marquee. Half the duplicated track scrolls out, so the loop is
+   seamless; `motion-safe:` keeps it off for reduced-motion users. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+[dir="rtl"] .rtl-marquee,
+[dir="rtl"] [class*="animate-[marquee"] {
+  animation-direction: reverse;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

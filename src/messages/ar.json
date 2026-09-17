@@ -59,7 +59,8 @@
       "commandDescription": "انتقل إلى أي صفحة في اللوحة.",
       "commandPlaceholder": "ابحث…",
       "commandEmpty": "لا نتائج."
-    }
+    },
+    "downloadCv": "السيرة الذاتية"
   },
   "Theme": {
     "toggle": "تبديل المظهر",
@@ -73,10 +74,28 @@
     "en": "English"
   },
   "Home": {
-    "eyebrow": "قيد الإنشاء",
-    "title": "basilmyq.com",
-    "description": "الأساس جاهز: نظام تصميم، ثيم فاتح وداكن، ولغتان بدعم كامل للاتجاهين.",
-    "phase": "المرحلة ٠ — التأسيس والبنية"
+    "featuredProjects": "مشاريع مختارة",
+    "featuredProjectsDesc": "أعمال أعتز بها.",
+    "allProjects": "كل المشاريع",
+    "skills": "ما أعمل به",
+    "skillsDesc": "أدوات وتقنيات أستخدمها يومياً.",
+    "services": "الخدمات",
+    "servicesDesc": "كيف يمكنني المساعدة.",
+    "experience": "الخبرة",
+    "experienceDesc": "أين عملت.",
+    "testimonials": "آراء العملاء",
+    "testimonialsDesc": "ما قيل عن العمل.",
+    "latestPosts": "أحدث المقالات",
+    "latestPostsDesc": "أكتب عمّا أتعلّمه.",
+    "allPosts": "كل المقالات",
+    "ctaTitle": "لديك مشروع في ذهنك؟",
+    "ctaDesc": "أخبرني عنه — أرد عادةً خلال يوم عمل.",
+    "ctaButton": "تواصل معي",
+    "aboutTitle": "نبذة",
+    "years": "سنوات خبرة",
+    "projectsCount": "مشروع",
+    "clientsCount": "عميل",
+    "readMore": "اقرأ المزيد"
   },
   "Login": {
     "title": "تسجيل الدخول",
@@ -611,5 +630,84 @@
       "skillGroup": "مجموعة مهارات",
       "projectCategory": "تصنيف"
     }
+  },
+  "Footer": {
+    "links": "روابط",
+    "rights": "© {year} {name}. جميع الحقوق محفوظة."
+  },
+  "Maintenance": {
+    "title": "الموقع تحت الصيانة",
+    "description": "نعمل على تحديثات. عُد بعد قليل."
+  },
+  "ProjectsPage": {
+    "title": "المشاريع",
+    "description": "مختارات من أعمالي.",
+    "search": "ابحث في المشاريع…",
+    "allCategories": "كل التصنيفات",
+    "empty": "لا مشاريع مطابقة.",
+    "emptyHint": "جرّب تصنيفاً أو كلمة بحث أخرى.",
+    "count": "{count} مشروع",
+    "client": "العميل",
+    "year": "السنة",
+    "role": "الدور",
+    "tech": "التقنيات",
+    "results": "النتائج",
+    "gallery": "معرض الصور",
+    "live": "زيارة الموقع",
+    "repo": "الشيفرة",
+    "nextProject": "المشروع التالي",
+    "back": "كل المشاريع"
+  },
+  "BlogPage": {
+    "title": "المدونة",
+    "description": "أكتب عن هندسة الويب والتعريب.",
+    "search": "ابحث في المقالات…",
+    "empty": "لا مقالات مطابقة.",
+    "emptyHint": "جرّب كلمة بحث أخرى.",
+    "readTime": "{minutes} دقيقة قراءة",
+    "views": "{count} مشاهدة",
+    "contents": "محتويات المقال",
+    "share": "مشاركة",
+    "copied": "نُسخ الرابط.",
+    "back": "كل المقالات",
+    "publishedOn": "نُشر في"
+  },
+  "AboutPage": {
+    "title": "نبذة عني",
+    "description": "من أنا وما أعمله.",
+    "experience": "الخبرة",
+    "education": "التعليم والشهادات",
+    "downloadCv": "تحميل السيرة الذاتية",
+    "credential": "التحقق من الشهادة"
+  },
+  "ContactPage": {
+    "title": "تواصل معي",
+    "description": "أخبرني عن مشروعك — أرد عادةً خلال يوم عمل.",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "subject": "الموضوع",
+    "message": "رسالتك",
+    "send": "إرسال",
+    "sending": "جارٍ الإرسال…",
+    "success": "وصلتني رسالتك. سأرد قريباً.",
+    "error": "تعذّر الإرسال. حاول مرة أخرى.",
+    "tooMany": "محاولات كثيرة. حاول بعد {minutes} دقيقة.",
+    "emailCard": "راسلني مباشرة",
+    "copy": "نسخ البريد",
+    "copied": "نُسخ البريد.",
+    "location": "الموقع",
+    "phone": "الجوال",
+    "social": "تابعني"
+  },
+  "NotFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الرابط الذي فتحته غير صحيح أو حُذف المحتوى.",
+    "home": "العودة للرئيسية"
+  },
+  "ErrorPage": {
+    "title": "حدث خطأ",
+    "description": "تعذّر تحميل هذه الصفحة. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "home": "العودة للرئيسية"
   }
 }

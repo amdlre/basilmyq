@@ -16,6 +16,7 @@ import {
   testimonialSchema,
 } from "@/lib/validations/content";
 import { db } from "@/server/db";
+import { PUBLIC_TAGS } from "@/server/queries/public";
 
 /**
  * A minimal structural view of a Prisma delegate. Typing the registry against
@@ -46,6 +47,8 @@ type ContentConfig = {
   schema: ZodType<Record<string, unknown>, Record<string, unknown>>;
   /** Public paths to revalidate after a write. */
   paths: string[];
+  /** Cache tag of the public query this model feeds. */
+  tag: string;
   /** Fields cleared when duplicating, because they must stay unique. */
   uniqueFields?: string[];
   supportsVisibility: boolean;
@@ -61,6 +64,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.project as unknown as ContentDelegate,
     schema: projectSchema as unknown as ContentConfig["schema"],
     paths: ["/", "/projects"],
+    tag: PUBLIC_TAGS.projects,
     uniqueFields: ["slug"],
     supportsVisibility: true,
     supportsFeatured: true,
@@ -69,6 +73,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.projectCategory as unknown as ContentDelegate,
     schema: projectCategorySchema as unknown as ContentConfig["schema"],
     paths: ["/", "/projects"],
+    tag: PUBLIC_TAGS.projects,
     uniqueFields: ["slug"],
     supportsVisibility: true,
     supportsFeatured: false,
@@ -77,6 +82,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.post as unknown as ContentDelegate,
     schema: postSchema as unknown as ContentConfig["schema"],
     paths: ["/", "/blog"],
+    tag: PUBLIC_TAGS.posts,
     uniqueFields: ["slug"],
     supportsVisibility: true,
     supportsFeatured: true,
@@ -85,6 +91,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.service as unknown as ContentDelegate,
     schema: serviceSchema as unknown as ContentConfig["schema"],
     paths: ["/"],
+    tag: PUBLIC_TAGS.services,
     supportsVisibility: true,
     supportsFeatured: true,
   },
@@ -92,6 +99,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.testimonial as unknown as ContentDelegate,
     schema: testimonialSchema as unknown as ContentConfig["schema"],
     paths: ["/"],
+    tag: PUBLIC_TAGS.testimonials,
     supportsVisibility: true,
     supportsFeatured: true,
   },
@@ -99,6 +107,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.experience as unknown as ContentDelegate,
     schema: experienceSchema as unknown as ContentConfig["schema"],
     paths: ["/", "/about"],
+    tag: PUBLIC_TAGS.experience,
     supportsVisibility: true,
     supportsFeatured: true,
   },
@@ -106,6 +115,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.education as unknown as ContentDelegate,
     schema: educationSchema as unknown as ContentConfig["schema"],
     paths: ["/", "/about"],
+    tag: PUBLIC_TAGS.education,
     supportsVisibility: true,
     supportsFeatured: true,
   },
@@ -113,6 +123,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.skill as unknown as ContentDelegate,
     schema: skillSchema as unknown as ContentConfig["schema"],
     paths: ["/"],
+    tag: PUBLIC_TAGS.skills,
     supportsVisibility: true,
     supportsFeatured: true,
   },
@@ -120,6 +131,7 @@ export const CONTENT_ENTITIES = {
     delegate: db.skillGroup as unknown as ContentDelegate,
     schema: skillGroupSchema as unknown as ContentConfig["schema"],
     paths: ["/"],
+    tag: PUBLIC_TAGS.skills,
     supportsVisibility: true,
     supportsFeatured: false,
   },

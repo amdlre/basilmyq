@@ -11,3 +11,16 @@ export function formatBytes(bytes: number, locale: string): string {
 
   return `${value.toLocaleString(locale, { maximumFractionDigits: 1 })} ${units[exponent]}`;
 }
+
+/**
+ * Revives a date that came back from a cached query.
+ *
+ * `unstable_cache` serialises its result, so `Date` fields arrive as ISO
+ * strings. Every date read from `server/queries/public.ts` must pass through
+ * here before it is formatted, or `Intl` throws "Invalid time value".
+ */
+export function toDate(value: Date | string | null | undefined): Date | null {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}

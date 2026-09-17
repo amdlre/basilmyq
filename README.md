@@ -83,6 +83,6 @@ database and every action starts with `requireAuth()`.
 - [x] **Phase 2** — Single-admin authentication
 - [x] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
 - [x] **Phase 4** — Dashboard modules
-- [ ] **Phase 5** — Public site
+- [x] **Phase 5** — Public site
 - [ ] **Phase 6** — SEO, performance, accessibility
 - [ ] **Phase 7** — Deployment to Coolify

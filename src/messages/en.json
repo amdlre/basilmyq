@@ -59,7 +59,8 @@
       "commandDescription": "Jump to any page in the dashboard.",
       "commandPlaceholder": "Search…",
       "commandEmpty": "No results."
-    }
+    },
+    "downloadCv": "Download CV"
   },
   "Theme": {
     "toggle": "Toggle theme",
@@ -73,10 +74,28 @@
     "en": "English"
   },
   "Home": {
-    "eyebrow": "Under construction",
-    "title": "basilmyq.com",
-    "description": "Foundation is in place: design system, light and dark themes, and two locales with full bidirectional support.",
-    "phase": "Phase 0 — Foundation & Architecture"
+    "featuredProjects": "Selected work",
+    "featuredProjectsDesc": "Projects I am proud of.",
+    "allProjects": "All projects",
+    "skills": "What I work with",
+    "skillsDesc": "Tools and technologies I use daily.",
+    "services": "Services",
+    "servicesDesc": "How I can help.",
+    "experience": "Experience",
+    "experienceDesc": "Where I have worked.",
+    "testimonials": "What clients say",
+    "testimonialsDesc": "Words about the work.",
+    "latestPosts": "Latest writing",
+    "latestPostsDesc": "I write about what I learn.",
+    "allPosts": "All posts",
+    "ctaTitle": "Have a project in mind?",
+    "ctaDesc": "Tell me about it — I usually reply within a working day.",
+    "ctaButton": "Get in touch",
+    "aboutTitle": "About",
+    "years": "years of experience",
+    "projectsCount": "projects",
+    "clientsCount": "clients",
+    "readMore": "Read more"
   },
   "Login": {
     "title": "Sign in",
@@ -611,5 +630,84 @@
       "skillGroup": "skill group",
       "projectCategory": "category"
     }
+  },
+  "Footer": {
+    "links": "Links",
+    "rights": "© {year} {name}. All rights reserved."
+  },
+  "Maintenance": {
+    "title": "We are doing maintenance",
+    "description": "The site is being updated. Please check back shortly."
+  },
+  "ProjectsPage": {
+    "title": "Projects",
+    "description": "A selection of my work.",
+    "search": "Search projects…",
+    "allCategories": "All categories",
+    "empty": "No matching projects.",
+    "emptyHint": "Try another category or search term.",
+    "count": "{count} projects",
+    "client": "Client",
+    "year": "Year",
+    "role": "Role",
+    "tech": "Technologies",
+    "results": "Results",
+    "gallery": "Gallery",
+    "live": "Visit site",
+    "repo": "Source",
+    "nextProject": "Next project",
+    "back": "All projects"
+  },
+  "BlogPage": {
+    "title": "Blog",
+    "description": "I write about web engineering and Arabic localisation.",
+    "search": "Search posts…",
+    "empty": "No matching posts.",
+    "emptyHint": "Try another search term.",
+    "readTime": "{minutes} min read",
+    "views": "{count} views",
+    "contents": "On this page",
+    "share": "Share",
+    "copied": "Link copied.",
+    "back": "All posts",
+    "publishedOn": "Published"
+  },
+  "AboutPage": {
+    "title": "About me",
+    "description": "Who I am and what I do.",
+    "experience": "Experience",
+    "education": "Education and certificates",
+    "downloadCv": "Download CV",
+    "credential": "View credential"
+  },
+  "ContactPage": {
+    "title": "Get in touch",
+    "description": "Tell me about your project — I usually reply within a working day.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Your message",
+    "send": "Send",
+    "sending": "Sending…",
+    "success": "Your message arrived. I will reply soon.",
+    "error": "Could not send. Please try again.",
+    "tooMany": "Too many attempts. Try again in {minutes} minutes.",
+    "emailCard": "Email me directly",
+    "copy": "Copy email",
+    "copied": "Email copied.",
+    "location": "Location",
+    "phone": "Phone",
+    "social": "Follow me"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "That link is wrong, or the content was removed.",
+    "home": "Back to home"
+  },
+  "ErrorPage": {
+    "title": "Something went wrong",
+    "description": "This page could not load. Please try again.",
+    "retry": "Try again",
+    "home": "Back to home"
   }
 }

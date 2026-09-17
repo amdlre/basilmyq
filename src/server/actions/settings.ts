@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 import { requireAuth } from "@/lib/auth/require-auth";
 import {
@@ -9,6 +9,7 @@ import {
   siteSettingSchema,
 } from "@/lib/validations/content";
 import { db } from "@/server/db";
+import { PUBLIC_TAGS } from "@/server/queries/public";
 
 import type { ActionResult } from "./content";
 
@@ -29,6 +30,8 @@ function fieldErrorsFrom(
 }
 
 function revalidatePublicSite(): void {
+  // Immediate expiry, so a settings save shows on the site straight away.
+  updateTag(PUBLIC_TAGS.settings);
   for (const path of ["", "/projects", "/blog", "/about", "/contact"]) {
     revalidatePath(`/[locale]${path}`, "page");
   }

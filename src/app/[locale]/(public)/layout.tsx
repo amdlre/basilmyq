@@ -1,31 +1,51 @@
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { LocaleToggle } from "@/components/shared/locale-toggle";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { Footer } from "@/components/public/footer";
+import { Navbar } from "@/components/public/navbar";
 import { resolveLocale } from "@/i18n/resolve-locale";
-import { Link } from "@/i18n/navigation";
+import { pick } from "@/lib/i18n-content";
+import { readSocialLinks } from "@/lib/social";
+import { getSiteSettings } from "@/server/queries/public";
 
 export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
-  await resolveLocale(props.params);
-  const t = await getTranslations("Nav");
+  const locale = await resolveLocale(props.params);
+  const settings = await getSiteSettings();
+  const t = await getTranslations("Maintenance");
+
+  if (!settings) notFound();
+
+  if (settings.maintenanceMode) {
+    // The dashboard stays reachable — only the public site is closed.
+    return (
+      <main
+        id="main-content"
+        className="flex min-h-svh flex-col items-center justify-center gap-3 px-4 text-center"
+      >
+        <h1 className="font-heading text-2xl font-semibold">{t("title")}</h1>
+        <p className="max-w-sm text-balance text-muted-foreground">
+          {t("description")}
+        </p>
+      </main>
+    );
+  }
+
+  const cvUrl = locale === "ar" ? settings.cvUrlAr : settings.cvUrlEn;
 
   return (
     <>
-      {/* Navbar and Footer land in Phase 5; this is the minimal chrome for Phase 0. */}
-      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-        <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-4">
-          <Link href="/" className="font-heading text-sm font-semibold">
-            basilmyq
-          </Link>
-          <nav aria-label={t("home")} className="flex items-center gap-1">
-            <ThemeToggle />
-            <LocaleToggle />
-          </nav>
-        </div>
-      </header>
+      <Navbar
+        siteName={pick(settings, "siteName", locale)}
+        cvUrl={cvUrl ?? settings.cvUrlEn ?? settings.cvUrlAr}
+      />
       <main id="main-content" className="flex-1">
         {props.children}
       </main>
+      <Footer
+        settings={settings}
+        socialLinks={readSocialLinks(settings.socialLinks)}
+        locale={locale}
+      />
     </>
   );
 }
