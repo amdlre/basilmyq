@@ -56,13 +56,17 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
       className={`${fontLatin.variable} ${fontMono.variable} ${fontArabic.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* Visual styles are gated behind focus: `sr-only` zeroes padding, and
+            re-adding it unfocused gives the link width that shifts the page in RTL. */}
         <a
           href="#main-content"
-          className="sr-only rounded-md bg-primary px-4 py-2 text-primary-foreground focus-visible:not-sr-only focus-visible:absolute focus-visible:start-4 focus-visible:top-4 focus-visible:z-50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:start-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-primary focus-visible:px-4 focus-visible:py-2 focus-visible:text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           {t("skipToContent")}
         </a>
-        <AppProviders direction={direction}>{props.children}</AppProviders>
+        <AppProviders locale={locale} direction={direction}>
+          {props.children}
+        </AppProviders>
       </body>
     </html>
   );

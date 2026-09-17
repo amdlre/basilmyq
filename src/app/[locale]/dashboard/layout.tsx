@@ -1,20 +1,35 @@
-import { requireAuth } from "@/lib/auth/require-auth";
+import { CommandPalette } from "@/components/dashboard/command-palette";
+import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
+import { DashboardTopbar } from "@/components/dashboard/dashboard-topbar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { resolveLocale } from "@/i18n/resolve-locale";
+import { requireAuth } from "@/lib/auth/require-auth";
+import { db } from "@/server/db";
 
 /**
  * The real guard. The proxy redirects for convenience; this runs in the data
  * layer, so no dashboard route can render without a verified session.
- * Sidebar and Topbar arrive in Phase 3.
  */
 export default async function DashboardLayout(
   props: LayoutProps<"/[locale]/dashboard">,
 ) {
   await resolveLocale(props.params);
-  await requireAuth();
+  const session = await requireAuth();
+
+  const unreadMessages = await db.contactMessage.count({
+    where: { isRead: false, isArchived: false },
+  });
 
   return (
-    <main id="main-content" className="flex-1">
-      {props.children}
-    </main>
+    <SidebarProvider>
+      <DashboardSidebar unreadMessages={unreadMessages} />
+      <SidebarInset className="min-w-0">
+        <DashboardTopbar email={session.email} />
+        <main id="main-content" className="min-w-0 flex-1">
+          {props.children}
+        </main>
+      </SidebarInset>
+      <CommandPalette />
+    </SidebarProvider>
   );
 }

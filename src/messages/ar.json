@@ -13,7 +13,19 @@
     "search": "بحث",
     "close": "إغلاق",
     "confirm": "تأكيد",
-    "skipToContent": "تخطَّ إلى المحتوى"
+    "skipToContent": "تخطَّ إلى المحتوى",
+    "confirmDescription": "لا يمكن التراجع عن هذا الإجراء.",
+    "actions": "إجراءات",
+    "retry": "إعادة المحاولة",
+    "required": "حقل مطلوب",
+    "optional": "اختياري",
+    "preview": "معاينة",
+    "write": "تحرير",
+    "remove": "إزالة",
+    "saving": "جارٍ الحفظ…",
+    "saved": "تم الحفظ",
+    "deleted": "تم الحذف",
+    "somethingWentWrong": "حدث خطأ غير متوقع."
   },
   "Nav": {
     "home": "الرئيسية",
@@ -22,7 +34,32 @@
     "about": "نبذة",
     "contact": "تواصل",
     "openMenu": "فتح القائمة",
-    "closeMenu": "إغلاق القائمة"
+    "closeMenu": "إغلاق القائمة",
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "overview": "نظرة عامة",
+      "projects": "المشاريع",
+      "blog": "المدونة",
+      "services": "الخدمات",
+      "testimonials": "الآراء",
+      "experience": "الخبرات",
+      "education": "التعليم",
+      "skills": "المهارات",
+      "messages": "الرسائل",
+      "media": "الوسائط",
+      "settings": "الإعدادات",
+      "viewSite": "عرض الموقع",
+      "groups": {
+        "overview": "عام",
+        "content": "المحتوى",
+        "profile": "الملف الشخصي",
+        "system": "النظام"
+      },
+      "commandTitle": "البحث السريع",
+      "commandDescription": "انتقل إلى أي صفحة في اللوحة.",
+      "commandPlaceholder": "ابحث…",
+      "commandEmpty": "لا نتائج."
+    }
   },
   "Theme": {
     "toggle": "تبديل المظهر",
@@ -56,5 +93,130 @@
     "title": "لوحة التحكم",
     "signedInAs": "مسجّل الدخول باسم",
     "logout": "تسجيل الخروج"
+  },
+  "DataTable": {
+    "searchPlaceholder": "ابحث…",
+    "noResults": "لا نتائج.",
+    "emptyTitle": "لا توجد بيانات بعد",
+    "emptyDescription": "ابدأ بإضافة أول عنصر.",
+    "errorTitle": "تعذّر تحميل البيانات",
+    "clearFilter": "مسح الفلتر",
+    "clearAll": "مسح الكل",
+    "columns": "الأعمدة",
+    "toggleColumns": "إظهار الأعمدة",
+    "resetLayout": "إعادة تعيين التخطيط",
+    "density": "كثافة العرض",
+    "export": "تصدير",
+    "exportAs": "تصدير بصيغة",
+    "exportScope": "نطاق التصدير",
+    "currentPage": "الصفحة الحالية",
+    "allRows": "كل البيانات",
+    "exportNote": "تُصدَّر الأعمدة المرئية فقط.",
+    "format": {
+      "csv": "CSV",
+      "xlsx": "Excel (.xlsx)",
+      "json": "JSON",
+      "pdf": "PDF (طباعة)"
+    },
+    "sortAscending": "تصاعدي",
+    "sortDescending": "تنازلي",
+    "clearSort": "إلغاء الفرز",
+    "hideColumn": "إخفاء العمود",
+    "rowActions": "إجراءات الصف",
+    "reorderRow": "إعادة ترتيب الصف",
+    "selectAll": "تحديد الكل",
+    "selectRow": "تحديد الصف",
+    "selectedCount": "تم تحديد {count}",
+    "clearSelection": "إلغاء التحديد",
+    "rowCount": "{count} عنصر",
+    "rowsPerPage": "لكل صفحة",
+    "pageOf": "صفحة {page} من {total}",
+    "firstPage": "الصفحة الأولى",
+    "previousPage": "السابق",
+    "nextPage": "التالي",
+    "lastPage": "الصفحة الأخيرة"
+  },
+  "Upload": {
+    "dropHint": "اسحب صورة هنا أو اضغط للاختيار",
+    "uploading": "جارٍ الرفع…",
+    "remove": "إزالة الصورة",
+    "notAnImage": "الملف المختار ليس صورة.",
+    "uploadFailed": "فشل الرفع. حاول مرة أخرى."
+  },
+  "Form": {
+    "generateSlug": "توليد من العنوان",
+    "tagsPlaceholder": "اكتب وسماً ثم Enter",
+    "removeTag": "إزالة {tag}",
+    "bold": "عريض",
+    "italic": "مائل",
+    "heading": "عنوان",
+    "link": "رابط",
+    "list": "قائمة",
+    "quote": "اقتباس",
+    "characters": "{count} حرف",
+    "markdownHint": "يدعم Markdown."
+  },
+  "Playground": {
+    "title": "معمل المكوّنات",
+    "description": "صفحة تجريبية تستهلك كل المكوّنات المشتركة ببيانات وهمية.",
+    "newItem": "عنصر جديد",
+    "formTitle": "عنصر تجريبي",
+    "formDescription": "يعرض كل أنواع الحقول الموحّدة.",
+    "stats": {
+      "total": "الإجمالي",
+      "published": "منشورة",
+      "hidden": "مخفية",
+      "featured": "مميزة"
+    },
+    "columns": {
+      "title": "العنوان",
+      "status": "الحالة",
+      "category": "التصنيف",
+      "tags": "الوسوم",
+      "year": "السنة",
+      "views": "المشاهدات",
+      "visibility": "الظهور",
+      "featured": "مميز"
+    },
+    "visible": "ظاهر",
+    "hidden": "مخفي",
+    "yes": "نعم",
+    "status": {
+      "DRAFT": "مسودة",
+      "IN_PROGRESS": "قيد التنفيذ",
+      "COMPLETED": "مكتمل",
+      "ARCHIVED": "مؤرشف"
+    },
+    "category": {
+      "web-apps": "تطبيقات ويب",
+      "ecommerce": "تجارة إلكترونية",
+      "dashboards": "لوحات تحكم",
+      "design-systems": "أنظمة تصميم"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "duplicate": "نسخ",
+      "toggleVisibility": "إخفاء/إظهار",
+      "viewOnSite": "عرض في الموقع",
+      "delete": "حذف"
+    },
+    "bulk": {
+      "delete": "حذف",
+      "hide": "إخفاء",
+      "feature": "تمييز"
+    },
+    "fields": {
+      "titleAr": "العنوان (عربي)",
+      "titleEn": "Title (English)",
+      "slug": "الرابط",
+      "summary": "نبذة",
+      "content": "المحتوى",
+      "category": "التصنيف",
+      "tags": "الوسوم",
+      "cover": "صورة الغلاف",
+      "isVisible": "ظاهر في الموقع"
+    },
+    "demoToast": "إجراء تجريبي — لا يُعدّل أي بيانات.",
+    "reordered": "تم تغيير الترتيب (تجريبي)."
   }
 }

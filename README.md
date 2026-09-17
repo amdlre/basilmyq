@@ -65,12 +65,18 @@ npm run db:studio  # browse it
 
 Before finishing any phase: `npm run typecheck && npm run lint && npm run build`.
 
+## Shared components
+
+Every dashboard module is built from `src/components/shared/` and contributes only column
+definitions, a Zod schema and a list of fields. The live demo of all of it is at
+`/dashboard/playground`. If a module needs new UI code, the gap belongs in `shared/`.
+
 ## Build phases
 
 - [x] **Phase 0** — Foundation: design system, theming, i18n + RTL, tooling
 - [x] **Phase 1** — Database schema and seed
 - [x] **Phase 2** — Single-admin authentication
-- [ ] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
+- [x] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
 - [ ] **Phase 4** — Dashboard modules
 - [ ] **Phase 5** — Public site
 - [ ] **Phase 6** — SEO, performance, accessibility

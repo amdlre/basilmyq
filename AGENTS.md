@@ -64,6 +64,19 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   written as `$2b$12$…` loads as an empty string and auth fails with a confusing
   "must be a bcrypt hash" error. Escape every `$` as `\$`. `npm run hash-password`
   already emits it escaped.
+- **shadcn quirks found the hard way, all still true:**
+  - `CommandDialog` renders only a Dialog around its children — wrap them in `<Command>`
+    yourself or cmdk crashes on `store.subscribe`.
+  - `Sidebar`'s `side` prop is physical while its in-flow spacer follows the writing
+    direction, so it must be `right` under RTL or the content renders beneath the panel.
+  - `Button` carries `shrink-0` in its base styles; make a wrapper shrink instead of
+    fighting it with `flex-1`.
+  - `sr-only` zeroes padding. Re-adding `px-*`/`py-*` unfocused gives a skip link real
+    width and shifts the whole page sideways in RTL. Gate visual styles behind `focus-visible:`.
+- **Breadcrumbs:** `BreadcrumbSeparator` is a sibling `<li>`, never a child of
+  `BreadcrumbItem` — nesting them is invalid HTML and fails hydration.
+- **Validation messages** come from Zod's built-in locales, wired to the active language in
+  `ZodLocaleProvider`. Only override a message when the default is too vague.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

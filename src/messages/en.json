@@ -13,7 +13,19 @@
     "search": "Search",
     "close": "Close",
     "confirm": "Confirm",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "confirmDescription": "This action cannot be undone.",
+    "actions": "Actions",
+    "retry": "Try again",
+    "required": "This field is required",
+    "optional": "Optional",
+    "preview": "Preview",
+    "write": "Write",
+    "remove": "Remove",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "deleted": "Deleted",
+    "somethingWentWrong": "Something went wrong."
   },
   "Nav": {
     "home": "Home",
@@ -22,7 +34,32 @@
     "about": "About",
     "contact": "Contact",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "dashboard": {
+      "title": "Dashboard",
+      "overview": "Overview",
+      "projects": "Projects",
+      "blog": "Blog",
+      "services": "Services",
+      "testimonials": "Testimonials",
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "messages": "Messages",
+      "media": "Media",
+      "settings": "Settings",
+      "viewSite": "View site",
+      "groups": {
+        "overview": "General",
+        "content": "Content",
+        "profile": "Profile",
+        "system": "System"
+      },
+      "commandTitle": "Quick search",
+      "commandDescription": "Jump to any page in the dashboard.",
+      "commandPlaceholder": "Search…",
+      "commandEmpty": "No results."
+    }
   },
   "Theme": {
     "toggle": "Toggle theme",
@@ -56,5 +93,130 @@
     "title": "Dashboard",
     "signedInAs": "Signed in as",
     "logout": "Sign out"
+  },
+  "DataTable": {
+    "searchPlaceholder": "Search…",
+    "noResults": "No results.",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Start by adding your first item.",
+    "errorTitle": "Could not load the data",
+    "clearFilter": "Clear filter",
+    "clearAll": "Clear all",
+    "columns": "Columns",
+    "toggleColumns": "Toggle columns",
+    "resetLayout": "Reset layout",
+    "density": "Row density",
+    "export": "Export",
+    "exportAs": "Export as",
+    "exportScope": "Export scope",
+    "currentPage": "Current page",
+    "allRows": "All rows",
+    "exportNote": "Only visible columns are exported.",
+    "format": {
+      "csv": "CSV",
+      "xlsx": "Excel (.xlsx)",
+      "json": "JSON",
+      "pdf": "PDF (print)"
+    },
+    "sortAscending": "Ascending",
+    "sortDescending": "Descending",
+    "clearSort": "Clear sort",
+    "hideColumn": "Hide column",
+    "rowActions": "Row actions",
+    "reorderRow": "Reorder row",
+    "selectAll": "Select all",
+    "selectRow": "Select row",
+    "selectedCount": "{count} selected",
+    "clearSelection": "Clear selection",
+    "rowCount": "{count} items",
+    "rowsPerPage": "Per page",
+    "pageOf": "Page {page} of {total}",
+    "firstPage": "First page",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "lastPage": "Last page"
+  },
+  "Upload": {
+    "dropHint": "Drop an image here, or click to choose",
+    "uploading": "Uploading…",
+    "remove": "Remove image",
+    "notAnImage": "That file is not an image.",
+    "uploadFailed": "Upload failed. Try again."
+  },
+  "Form": {
+    "generateSlug": "Generate from title",
+    "tagsPlaceholder": "Type a tag, then Enter",
+    "removeTag": "Remove {tag}",
+    "bold": "Bold",
+    "italic": "Italic",
+    "heading": "Heading",
+    "link": "Link",
+    "list": "List",
+    "quote": "Quote",
+    "characters": "{count} characters",
+    "markdownHint": "Markdown is supported."
+  },
+  "Playground": {
+    "title": "Component playground",
+    "description": "A demo page consuming every shared component with dummy data.",
+    "newItem": "New item",
+    "formTitle": "Demo item",
+    "formDescription": "Shows every unified field type.",
+    "stats": {
+      "total": "Total",
+      "published": "Published",
+      "hidden": "Hidden",
+      "featured": "Featured"
+    },
+    "columns": {
+      "title": "Title",
+      "status": "Status",
+      "category": "Category",
+      "tags": "Tags",
+      "year": "Year",
+      "views": "Views",
+      "visibility": "Visibility",
+      "featured": "Featured"
+    },
+    "visible": "Visible",
+    "hidden": "Hidden",
+    "yes": "Yes",
+    "status": {
+      "DRAFT": "Draft",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "ARCHIVED": "Archived"
+    },
+    "category": {
+      "web-apps": "Web apps",
+      "ecommerce": "E-commerce",
+      "dashboards": "Dashboards",
+      "design-systems": "Design systems"
+    },
+    "actions": {
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "toggleVisibility": "Toggle visibility",
+      "viewOnSite": "View on site",
+      "delete": "Delete"
+    },
+    "bulk": {
+      "delete": "Delete",
+      "hide": "Hide",
+      "feature": "Feature"
+    },
+    "fields": {
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "slug": "Slug",
+      "summary": "Summary",
+      "content": "Content",
+      "category": "Category",
+      "tags": "Tags",
+      "cover": "Cover image",
+      "isVisible": "Visible on site"
+    },
+    "demoToast": "Demo action — nothing was changed.",
+    "reordered": "Order changed (demo)."
   }
 }
