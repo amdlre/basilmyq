@@ -19,6 +19,19 @@ npm run dev
 
 The site is served from `/ar` and `/en`; `/` redirects to the default locale.
 
+### Database
+
+Set `DATABASE_URL` in `.env.local`, then:
+
+```bash
+npm run db:push    # create the tables
+npm run db:seed    # load starter content
+npm run db:studio  # browse it
+```
+
+The seeded portfolio content is placeholder material with a realistic shape — replace it
+from the dashboard once Phase 4 is in place.
+
 ## Scripts
 
 | Script               | Purpose                                    |
@@ -40,7 +53,7 @@ Before finishing any phase: `npm run typecheck && npm run lint && npm run build`
 ## Build phases
 
 - [x] **Phase 0** — Foundation: design system, theming, i18n + RTL, tooling
-- [ ] **Phase 1** — Database schema and seed
+- [x] **Phase 1** — Database schema and seed
 - [ ] **Phase 2** — Single-admin authentication
 - [ ] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
 - [ ] **Phase 4** — Dashboard modules

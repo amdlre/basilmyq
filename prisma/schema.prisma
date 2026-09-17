@@ -1,0 +1,426 @@
+// basilmyq.com — data model.
+// Every content model carries the same common block (isVisible / isFeatured /
+// order / createdAt / updatedAt). That uniformity is what lets one DataTable and
+// one FormSheet drive every dashboard module.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProjectStatus {
+  DRAFT
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+enum EducationType {
+  DEGREE
+  CERTIFICATE
+}
+
+// ---------------------------------------------------------------------------
+// Singletons
+// ---------------------------------------------------------------------------
+
+/// Single row. Everything the public site renders outside of content lives here.
+model SiteSetting {
+  id String @id @default("singleton")
+
+  siteNameAr      String
+  siteNameEn      String
+  taglineAr       String
+  taglineEn       String
+  descriptionAr   String @db.Text
+  descriptionEn   String @db.Text
+
+  logoUrlAr   String?
+  logoUrlEn   String?
+  faviconUrl  String?
+  ogImageUrl  String?
+
+  email  String
+  phone  String?
+  cityAr String?
+  cityEn String?
+
+  /// [{ label, url, icon }] — dynamic list edited from Settings → Contact.
+  socialLinks Json @default("[]")
+
+  cvUrlAr         String?
+  cvUrlEn         String?
+  cvDownloadCount Int     @default(0)
+
+  seoKeywordsAr      String?
+  seoKeywordsEn      String?
+  googleVerification String?
+  analyticsId        String?
+
+  accentColor     String  @default("oklch(0.55 0.221 264.376)")
+  maintenanceMode Boolean @default(false)
+
+  // Public section switches (Settings → Advanced).
+  showProjects     Boolean @default(true)
+  showSkills       Boolean @default(true)
+  showServices     Boolean @default(true)
+  showExperience   Boolean @default(true)
+  showTestimonials Boolean @default(true)
+  showBlog         Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Single row. The homepage hero.
+model HeroSection {
+  id String @id @default("singleton")
+
+  titleAr    String
+  titleEn    String
+  subtitleAr String @db.Text
+  subtitleEn String @db.Text
+  badgeAr    String?
+  badgeEn    String?
+
+  primaryCtaLabelAr   String?
+  primaryCtaLabelEn   String?
+  primaryCtaUrl       String?
+  secondaryCtaLabelAr String?
+  secondaryCtaLabelEn String?
+  secondaryCtaUrl     String?
+
+  imageUrl String?
+
+  isAvailable        Boolean @default(true)
+  availabilityTextAr String?
+  availabilityTextEn String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Single row. The homepage "about" block and its headline numbers.
+model AboutSection {
+  id String @id @default("singleton")
+
+  titleAr String
+  titleEn String
+  bioAr   String @db.Text
+  bioEn   String @db.Text
+
+  imageUrl String?
+
+  yearsExperience Int @default(0)
+  projectsCount   Int @default(0)
+  clientsCount    Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Projects
+// ---------------------------------------------------------------------------
+
+model ProjectCategory {
+  id     String @id @default(cuid())
+  nameAr String
+  nameEn String
+  slug   String @unique
+  color  String @default("oklch(0.55 0.221 264.376)")
+
+  projects Project[]
+
+  isVisible Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isVisible, order])
+}
+
+model Project {
+  id      String @id @default(cuid())
+  titleAr String
+  titleEn String
+  slug    String @unique
+
+  summaryAr String @db.Text
+  summaryEn String @db.Text
+  contentAr String @db.Text
+  contentEn String @db.Text
+
+  coverUrl String?
+  gallery  String[] @default([])
+
+  liveUrl String?
+  repoUrl String?
+
+  status ProjectStatus @default(COMPLETED)
+
+  categoryId String?
+  category   ProjectCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  tags String[] @default([])
+
+  clientAr String?
+  clientEn String?
+  year     Int?
+  roleAr   String?
+  roleEn   String?
+
+  /// [{ labelAr, labelEn, value }] — the "results in numbers" block.
+  results Json @default("[]")
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, order])
+  @@index([isFeatured])
+  @@index([categoryId])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Skills
+// ---------------------------------------------------------------------------
+
+model SkillGroup {
+  id     String @id @default(cuid())
+  nameAr String
+  nameEn String
+
+  skills Skill[]
+
+  isVisible Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isVisible, order])
+}
+
+model Skill {
+  id     String @id @default(cuid())
+  nameAr String
+  nameEn String
+  icon   String?
+
+  /// 0–100.
+  level Int @default(80)
+
+  groupId String?
+  group   SkillGroup? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, order])
+  @@index([groupId])
+}
+
+// ---------------------------------------------------------------------------
+// Experience & education
+// ---------------------------------------------------------------------------
+
+model Experience {
+  id            String    @id @default(cuid())
+  companyAr     String
+  companyEn     String
+  roleAr        String
+  roleEn        String
+  locationAr    String?
+  locationEn    String?
+  startDate     DateTime
+  endDate       DateTime?
+  isCurrent     Boolean   @default(false)
+  descriptionAr String    @db.Text
+  descriptionEn String    @db.Text
+  logoUrl       String?
+  companyUrl    String?
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, order])
+  @@index([startDate])
+}
+
+model Education {
+  id            String        @id @default(cuid())
+  type          EducationType @default(DEGREE)
+  schoolAr      String
+  schoolEn      String
+  degreeAr      String
+  degreeEn      String
+  fieldAr       String?
+  fieldEn       String?
+  startDate     DateTime
+  endDate       DateTime?
+  credentialUrl String?
+  logoUrl       String?
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, order])
+  @@index([type])
+}
+
+// ---------------------------------------------------------------------------
+// Services & testimonials
+// ---------------------------------------------------------------------------
+
+model Service {
+  id            String @id @default(cuid())
+  titleAr       String
+  titleEn       String
+  descriptionAr String @db.Text
+  descriptionEn String @db.Text
+  icon          String?
+
+  featuresAr String[] @default([])
+  featuresEn String[] @default([])
+
+  price     String?
+  priceNote String?
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, order])
+}
+
+model Testimonial {
+  id        String  @id @default(cuid())
+  nameAr    String
+  nameEn    String
+  roleAr    String?
+  roleEn    String?
+  companyAr String?
+  companyEn String?
+  avatarUrl String?
+  quoteAr   String  @db.Text
+  quoteEn   String  @db.Text
+
+  /// 1–5.
+  rating Int @default(5)
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, order])
+}
+
+// ---------------------------------------------------------------------------
+// Blog
+// ---------------------------------------------------------------------------
+
+model Post {
+  id      String @id @default(cuid())
+  titleAr String
+  titleEn String
+  slug    String @unique
+
+  excerptAr String @db.Text
+  excerptEn String @db.Text
+  contentAr String @db.Text
+  contentEn String @db.Text
+
+  coverUrl String?
+  tags     String[] @default([])
+
+  readTimeMinutes Int @default(5)
+
+  /// Null means draft.
+  publishedAt DateTime?
+  views       Int       @default(0)
+
+  isVisible  Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isVisible, publishedAt])
+  @@index([publishedAt])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Inbox, media, audit
+// ---------------------------------------------------------------------------
+
+model ContactMessage {
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  subject String
+  message String @db.Text
+
+  isRead     Boolean @default(false)
+  isArchived Boolean @default(false)
+
+  ip        String?
+  userAgent String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isRead, isArchived])
+  @@index([createdAt])
+}
+
+model Media {
+  id       String @id @default(cuid())
+  url      String
+  filename String
+  mimeType String
+  size     Int
+  width    Int?
+  height   Int?
+  altAr    String?
+  altEn    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([mimeType])
+}
+
+model ActivityLog {
+  id       String  @id @default(cuid())
+  action   String
+  entity   String
+  entityId String?
+  meta     Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([entity, entityId])
+}

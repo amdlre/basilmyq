@@ -50,6 +50,16 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   `[dir="rtl"]`. Do not set font families on individual components.
 - The brand accent is `--primary`. `--accent` is shadcn's subtle hover token — not the
   brand colour.
+- **Prisma 7, not 6.** Three breaking changes matter here: the generator is
+  `prisma-client` (not `prisma-client-js`) and needs an explicit `output`; `datasource`
+  carries no `url` — connection config lives in `prisma7.config.ts`; and the client
+  requires a driver adapter (`@prisma/adapter-pg`). Build every client through
+  `createPrismaClient()` in `src/server/prisma-client.ts`; never call `new PrismaClient()`
+  directly. App code imports the singleton `db` from `src/server/db.ts`.
+- `src/generated/**` is written by `prisma generate` and ignored by git, ESLint and
+  Prettier. Run `npx prisma generate` after any schema change.
+- The Prisma CLI does not read `.env.local`, so `prisma7.config.ts` loads it explicitly.
+  Keep `.env.local` as the single source of environment truth in development.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React
