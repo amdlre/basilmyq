@@ -29,8 +29,11 @@ npm run db:seed    # load starter content
 npm run db:studio  # browse it
 ```
 
-The seeded portfolio content is placeholder material with a realistic shape — replace it
-from the dashboard once Phase 4 is in place.
+> **The seed is sample data, not a CV.** Every employer, client, credential and
+> testimonial in `prisma/seed.ts` is a deliberately generic placeholder — no quote was
+> said by anyone and nothing is attributed to a real company or person. It exists only to
+> give the dashboard realistically shaped rows. Replace all of it from the dashboard once
+> Phase 4 is in place.
 
 ## Scripts
 

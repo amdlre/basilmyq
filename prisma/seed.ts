@@ -10,8 +10,14 @@ loadEnv({ path: ".env.local", override: true, quiet: true });
 const db = createPrismaClient();
 
 /**
- * Placeholder biography and portfolio content with a realistic shape.
- * Replace it from the dashboard once Phase 4 lands — none of it is factual.
+ * SAMPLE DATA ONLY — none of this is factual.
+ *
+ * This repository is public, so every organisation, client, employer, credential
+ * and testimonial below is a deliberately generic placeholder. Nothing here is
+ * attributed to a real company or a real person, and no quote below was said by
+ * anyone. It exists to give the dashboard realistically shaped rows to render.
+ *
+ * Replace all of it with real content from the dashboard once Phase 4 lands.
  */
 
 async function main() {
@@ -144,9 +150,9 @@ async function main() {
   await db.project.createMany({
     data: [
       {
-        slug: "seera-booking-platform",
-        titleAr: "منصة سيرا للحجوزات",
-        titleEn: "Seera booking platform",
+        slug: "travel-booking-platform",
+        titleAr: "منصة حجوزات سفر",
+        titleEn: "Travel booking platform",
         summaryAr: "منصة حجوزات سفر متعددة اللغات تخدم آلاف الطلبات يومياً.",
         summaryEn:
           "A multilingual travel booking platform serving thousands of daily requests.",
@@ -156,8 +162,8 @@ async function main() {
           "We rebuilt the entire booking flow on Next.js with server-rendered results, cutting time to first render roughly in half. The system supports Arabic and English in both directions, with the interface unified into a single design system.",
         categoryId: categoryId("web-apps"),
         tags: ["Next.js", "TypeScript", "PostgreSQL", "Redis"],
-        clientAr: "سيرا للسفر",
-        clientEn: "Seera Travel",
+        clientAr: "عميل في قطاع السفر (عيّنة)",
+        clientEn: "A travel client (sample)",
         year: 2025,
         roleAr: "مهندس واجهات أول",
         roleEn: "Lead frontend engineer",
@@ -178,9 +184,9 @@ async function main() {
         order: 1,
       },
       {
-        slug: "mnam-admin-console",
-        titleAr: "لوحة تحكم منام",
-        titleEn: "Mnam admin console",
+        slug: "unified-admin-console",
+        titleAr: "لوحة تحكم موحّدة",
+        titleEn: "Unified admin console",
         summaryAr:
           "لوحة إدارة موحّدة لأكثر من عشرين وحدة بجدول واحد معاد استخدامه.",
         summaryEn:
@@ -191,8 +197,8 @@ async function main() {
           "Built around a single table component handling sorting, filtering, bulk selection and export. A new module needs only a column definition, which cut module delivery from days to hours.",
         categoryId: categoryId("dashboards"),
         tags: ["React", "TanStack Table", "Prisma", "Tailwind"],
-        clientAr: "منام",
-        clientEn: "Mnam",
+        clientAr: "شركة منتجات رقمية (عيّنة)",
+        clientEn: "A digital products company (sample)",
         year: 2025,
         roleAr: "مهندس full-stack",
         roleEn: "Full-stack engineer",
@@ -213,9 +219,9 @@ async function main() {
         order: 2,
       },
       {
-        slug: "amdlre-design-system",
-        titleAr: "نظام تصميم أمدلري",
-        titleEn: "AMDLRE design system",
+        slug: "shared-design-system",
+        titleAr: "نظام تصميم مشترك",
+        titleEn: "Shared design system",
         summaryAr: "مكتبة مكوّنات مشتركة تدعم RTL والوضع الداكن افتراضياً.",
         summaryEn:
           "A shared component library with RTL and dark mode built in from the start.",
@@ -241,9 +247,9 @@ async function main() {
         order: 3,
       },
       {
-        slug: "sharedtech-storefront",
-        titleAr: "متجر شيرد تك",
-        titleEn: "SharedTech storefront",
+        slug: "commerce-storefront",
+        titleAr: "واجهة متجر إلكتروني",
+        titleEn: "Commerce storefront",
         summaryAr: "واجهة متجر إلكتروني بأداء عالٍ ودفع محلي.",
         summaryEn: "A high-performance storefront with local payment methods.",
         contentAr:
@@ -252,8 +258,8 @@ async function main() {
           "A storefront built on static rendering with incremental revalidation, supporting Mada and Apple Pay. Product pages are pre-generated and regenerated when stock changes.",
         categoryId: categoryId("ecommerce"),
         tags: ["Next.js", "Medusa", "Stripe", "ISR"],
-        clientAr: "شيرد تك",
-        clientEn: "SharedTech",
+        clientAr: "متجر تجزئة (عيّنة)",
+        clientEn: "A retail client (sample)",
         year: 2024,
         roleAr: "مهندس واجهات",
         roleEn: "Frontend engineer",
@@ -273,9 +279,9 @@ async function main() {
         order: 4,
       },
       {
-        slug: "lmsat-learning-portal",
-        titleAr: "بوابة لمسات التعليمية",
-        titleEn: "Lmsat learning portal",
+        slug: "learning-portal",
+        titleAr: "بوابة تعليمية",
+        titleEn: "Learning portal",
         summaryAr: "منصة تعلّم بمسارات ومتابعة تقدّم وشهادات.",
         summaryEn:
           "A learning platform with tracks, progress tracking and certificates.",
@@ -449,8 +455,8 @@ async function main() {
   await db.experience.createMany({
     data: [
       {
-        companyAr: "شيرد تك",
-        companyEn: "SharedTech",
+        companyAr: "شركة منتجات رقمية (عيّنة)",
+        companyEn: "A digital products company (sample)",
         roleAr: "مهندس ويب أول",
         roleEn: "Senior web engineer",
         locationAr: "الرياض، السعودية",
@@ -465,8 +471,8 @@ async function main() {
         isFeatured: true,
       },
       {
-        companyAr: "سيرا",
-        companyEn: "Seera",
+        companyAr: "شركة في قطاع السفر (عيّنة)",
+        companyEn: "A travel company (sample)",
         roleAr: "مهندس واجهات أمامية",
         roleEn: "Frontend engineer",
         locationAr: "الرياض، السعودية",
@@ -480,8 +486,8 @@ async function main() {
         order: 2,
       },
       {
-        companyAr: "منام",
-        companyEn: "Mnam",
+        companyAr: "وكالة تقنية (عيّنة)",
+        companyEn: "A technology agency (sample)",
         roleAr: "مطوّر full-stack",
         roleEn: "Full-stack developer",
         locationAr: "عن بُعد",
@@ -518,8 +524,8 @@ async function main() {
     data: [
       {
         type: "DEGREE",
-        schoolAr: "جامعة الملك سعود",
-        schoolEn: "King Saud University",
+        schoolAr: "الجامعة (عيّنة)",
+        schoolEn: "University (sample)",
         degreeAr: "بكالوريوس",
         degreeEn: "Bachelor's degree",
         fieldAr: "علوم الحاسب",
@@ -530,21 +536,20 @@ async function main() {
       },
       {
         type: "CERTIFICATE",
-        schoolAr: "أمازون ويب سيرفيسز",
-        schoolEn: "Amazon Web Services",
-        degreeAr: "AWS Certified Developer – Associate",
-        degreeEn: "AWS Certified Developer – Associate",
+        schoolAr: "جهة مانحة للشهادات (عيّنة)",
+        schoolEn: "A certification body (sample)",
+        degreeAr: "شهادة احترافية في الحوسبة السحابية",
+        degreeEn: "Cloud developer certification",
         startDate: new Date("2022-04-01"),
         endDate: new Date("2022-04-30"),
-        credentialUrl: "https://aws.amazon.com/certification/",
         order: 2,
       },
       {
         type: "CERTIFICATE",
-        schoolAr: "ميتا",
-        schoolEn: "Meta",
+        schoolAr: "منصة تعليمية (عيّنة)",
+        schoolEn: "A learning platform (sample)",
         degreeAr: "شهادة تطوير الواجهات الأمامية",
-        degreeEn: "Front-End Developer Professional Certificate",
+        degreeEn: "Front-end development certificate",
         startDate: new Date("2021-01-01"),
         endDate: new Date("2021-05-31"),
         order: 3,
@@ -634,12 +639,12 @@ async function main() {
   await db.testimonial.createMany({
     data: [
       {
-        nameAr: "أحمد العتيبي",
-        nameEn: "Ahmed Alotaibi",
+        nameAr: "اسم العميل (عيّنة)",
+        nameEn: "Client name (sample)",
         roleAr: "مدير المنتج",
         roleEn: "Product Manager",
-        companyAr: "سيرا",
-        companyEn: "Seera",
+        companyAr: "شركة في قطاع السفر (عيّنة)",
+        companyEn: "A travel company (sample)",
         quoteAr:
           "سلّم أسرع مما توقعنا، وبجودة جعلت فريقنا يعيد النظر في معاييره.",
         quoteEn:
@@ -649,12 +654,12 @@ async function main() {
         isFeatured: true,
       },
       {
-        nameAr: "نورة الحربي",
-        nameEn: "Noura Alharbi",
+        nameAr: "اسم العميلة (عيّنة)",
+        nameEn: "Client name (sample)",
         roleAr: "المؤسِّسة",
         roleEn: "Founder",
-        companyAr: "لمسات",
-        companyEn: "Lmsat",
+        companyAr: "منصة تعليمية (عيّنة)",
+        companyEn: "A learning platform (sample)",
         quoteAr:
           "فهم المشكلة قبل أن يكتب سطراً واحداً. هذا وحده وفّر علينا شهرين.",
         quoteEn:
@@ -664,12 +669,12 @@ async function main() {
         isFeatured: true,
       },
       {
-        nameAr: "خالد القحطاني",
-        nameEn: "Khalid Alqahtani",
+        nameAr: "اسم العميل (عيّنة)",
+        nameEn: "Client name (sample)",
         roleAr: "المدير التقني",
         roleEn: "CTO",
-        companyAr: "شيرد تك",
-        companyEn: "SharedTech",
+        companyAr: "شركة منتجات رقمية (عيّنة)",
+        companyEn: "A digital products company (sample)",
         quoteAr: "نظام التصميم الذي بناه ما زال أساس كل منتجاتنا حتى اليوم.",
         quoteEn:
           "The design system he built is still the foundation of every product we ship.",
