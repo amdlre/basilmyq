@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# basilmyq.com
 
-## Getting Started
+Personal portfolio and full CMS for [basilmyq.com](https://basilmyq.com).
 
-First, run the development server:
+Built with Next.js 16 (App Router, Turbopack, React 19), TypeScript in strict mode,
+Tailwind CSS v4, shadcn/ui, Prisma + PostgreSQL, and `next-intl` with Arabic (default)
+and English, both fully bidirectional.
+
+The engineering rules that govern every change live in [`AGENTS.md`](./AGENTS.md).
+The full specification lives in [`SPEC.md`](./SPEC.md).
+
+## Getting started
 
 ```bash
+cp .env.example .env.local   # then fill in the values
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The site is served from `/ar` and `/en`; `/` redirects to the default locale.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script               | Purpose                                    |
+| -------------------- | ------------------------------------------ |
+| `npm run dev`        | Development server                         |
+| `npm run build`      | Production build                           |
+| `npm run start`      | Serve the production build                 |
+| `npm run typecheck`  | `tsc --noEmit`                             |
+| `npm run lint`       | ESLint                                     |
+| `npm run format`     | Prettier write                             |
+| `npm run db:push`    | Push the Prisma schema to the database     |
+| `npm run db:migrate` | Create and apply a migration (development) |
+| `npm run db:deploy`  | Apply migrations (production)              |
+| `npm run db:seed`    | Seed the database                          |
+| `npm run db:studio`  | Prisma Studio                              |
 
-## Learn More
+Before finishing any phase: `npm run typecheck && npm run lint && npm run build`.
 
-To learn more about Next.js, take a look at the following resources:
+## Build phases
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] **Phase 0** — Foundation: design system, theming, i18n + RTL, tooling
+- [ ] **Phase 1** — Database schema and seed
+- [ ] **Phase 2** — Single-admin authentication
+- [ ] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
+- [ ] **Phase 4** — Dashboard modules
+- [ ] **Phase 5** — Public site
+- [ ] **Phase 6** — SEO, performance, accessibility
+- [ ] **Phase 7** — Deployment to Coolify

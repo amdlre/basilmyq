@@ -1,0 +1,44 @@
+{
+  "Metadata": {
+    "title": "Basil Myq — Web & Product Engineer",
+    "description": "Portfolio and writing by Basil Myq: projects, experience, and web engineering services."
+  },
+  "Common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "close": "Close",
+    "confirm": "Confirm",
+    "skipToContent": "Skip to content"
+  },
+  "Nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Locale": {
+    "toggle": "Change language",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "Home": {
+    "eyebrow": "Under construction",
+    "title": "basilmyq.com",
+    "description": "Foundation is in place: design system, light and dark themes, and two locales with full bidirectional support.",
+    "phase": "Phase 0 — Foundation & Architecture"
+  }
+}
