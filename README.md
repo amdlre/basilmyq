@@ -68,8 +68,13 @@ Before finishing any phase: `npm run typecheck && npm run lint && npm run build`
 ## Shared components
 
 Every dashboard module is built from `src/components/shared/` and contributes only column
-definitions, a Zod schema and a list of fields. The live demo of all of it is at
-`/dashboard/playground`. If a module needs new UI code, the gap belongs in `shared/`.
+definitions, a Zod schema and a list of fields — `CrudModule` supplies the table, the
+create/edit sheet, the row and bulk actions and the toasts. If a module needs new UI code,
+the gap belongs in `shared/`.
+
+Writes go through one place: `src/server/actions/content.ts` resolves the target model
+through `src/server/content-registry.ts`, so an unknown entity name can never reach the
+database and every action starts with `requireAuth()`.
 
 ## Build phases
 
@@ -77,7 +82,7 @@ definitions, a Zod schema and a list of fields. The live demo of all of it is at
 - [x] **Phase 1** — Database schema and seed
 - [x] **Phase 2** — Single-admin authentication
 - [x] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
-- [ ] **Phase 4** — Dashboard modules
+- [x] **Phase 4** — Dashboard modules
 - [ ] **Phase 5** — Public site
 - [ ] **Phase 6** — SEO, performance, accessibility
 - [ ] **Phase 7** — Deployment to Coolify

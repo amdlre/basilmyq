@@ -218,5 +218,398 @@
     },
     "demoToast": "إجراء تجريبي — لا يُعدّل أي بيانات.",
     "reordered": "تم تغيير الترتيب (تجريبي)."
+  },
+  "Crud": {
+    "createNamed": "إضافة {name}",
+    "editNamed": "تعديل {name}",
+    "duplicate": "نسخ",
+    "duplicated": "تم إنشاء نسخة.",
+    "show": "إظهار",
+    "hide": "إخفاء",
+    "feature": "تمييز",
+    "updated": "تم التحديث.",
+    "reordered": "تم حفظ الترتيب.",
+    "duplicateKey": "هذه القيمة مستخدمة بالفعل (الرابط مثلاً).",
+    "viewOnSite": "عرض في الموقع"
+  },
+  "Columns": {
+    "title": "العنوان",
+    "name": "الاسم",
+    "status": "الحالة",
+    "category": "التصنيف",
+    "year": "السنة",
+    "tags": "الوسوم",
+    "order": "الترتيب",
+    "visibility": "الظهور",
+    "visible": "ظاهر",
+    "hidden": "مخفي",
+    "featured": "مميز",
+    "yes": "نعم",
+    "visibleOnSite": "ظاهر في الموقع",
+    "company": "الجهة",
+    "role": "الدور",
+    "period": "الفترة",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "level": "المستوى",
+    "group": "المجموعة",
+    "rating": "التقييم",
+    "price": "السعر",
+    "views": "المشاهدات",
+    "publishedAt": "تاريخ النشر",
+    "readTime": "وقت القراءة",
+    "type": "النوع",
+    "school": "الجهة",
+    "degree": "الشهادة",
+    "field": "التخصص",
+    "from": "المُرسِل",
+    "subject": "الموضوع",
+    "receivedAt": "تاريخ الاستلام",
+    "file": "الملف",
+    "size": "الحجم",
+    "dimensions": "الأبعاد"
+  },
+  "Projects": {
+    "title": "المشاريع",
+    "description": "إدارة معرض أعمالك.",
+    "singular": "مشروع",
+    "uncategorised": "بلا تصنيف",
+    "stats": {
+      "total": "الإجمالي",
+      "published": "منشورة",
+      "hidden": "مخفية",
+      "featured": "مميزة"
+    },
+    "status": {
+      "DRAFT": "مسودة",
+      "IN_PROGRESS": "قيد التنفيذ",
+      "COMPLETED": "مكتمل",
+      "ARCHIVED": "مؤرشف"
+    },
+    "fields": {
+      "titleAr": "العنوان (عربي)",
+      "titleEn": "Title (English)",
+      "slug": "الرابط",
+      "summaryAr": "نبذة (عربي)",
+      "summaryEn": "Summary (English)",
+      "contentAr": "المحتوى (عربي)",
+      "contentEn": "Content (English)",
+      "cover": "صورة الغلاف",
+      "clientAr": "العميل (عربي)",
+      "clientEn": "Client (English)",
+      "roleAr": "دورك (عربي)",
+      "roleEn": "Your role (English)",
+      "liveUrl": "رابط الموقع",
+      "repoUrl": "رابط المستودع"
+    }
+  },
+  "Blog": {
+    "title": "المدونة",
+    "description": "إدارة مقالاتك.",
+    "singular": "مقال",
+    "draft": "مسودة",
+    "published": "منشور",
+    "stats": {
+      "total": "الإجمالي",
+      "published": "منشورة",
+      "drafts": "مسودات",
+      "views": "إجمالي المشاهدات"
+    },
+    "fields": {
+      "titleAr": "العنوان (عربي)",
+      "titleEn": "Title (English)",
+      "slug": "الرابط",
+      "excerptAr": "المقتطف (عربي)",
+      "excerptEn": "Excerpt (English)",
+      "contentAr": "المحتوى (عربي)",
+      "contentEn": "Content (English)",
+      "cover": "صورة الغلاف",
+      "readTime": "وقت القراءة (دقائق)",
+      "publishedAt": "تاريخ النشر"
+    }
+  },
+  "Services": {
+    "title": "الخدمات",
+    "description": "ما تقدّمه لعملائك.",
+    "singular": "خدمة",
+    "stats": {
+      "total": "الإجمالي",
+      "visible": "نشطة",
+      "hidden": "مخفية"
+    },
+    "fields": {
+      "titleAr": "الاسم (عربي)",
+      "titleEn": "Name (English)",
+      "descriptionAr": "الوصف (عربي)",
+      "descriptionEn": "Description (English)",
+      "icon": "الأيقونة",
+      "featuresAr": "المزايا (عربي)",
+      "featuresEn": "Features (English)",
+      "price": "السعر",
+      "priceNote": "ملاحظة السعر"
+    }
+  },
+  "Testimonials": {
+    "title": "الآراء",
+    "description": "ما يقوله عملاؤك.",
+    "singular": "رأي",
+    "stats": {
+      "total": "الإجمالي",
+      "averageRating": "متوسط التقييم",
+      "visible": "منشورة"
+    },
+    "fields": {
+      "nameAr": "الاسم (عربي)",
+      "nameEn": "Name (English)",
+      "roleAr": "المسمى (عربي)",
+      "roleEn": "Role (English)",
+      "companyAr": "الجهة (عربي)",
+      "companyEn": "Company (English)",
+      "avatar": "الصورة",
+      "quoteAr": "الاقتباس (عربي)",
+      "quoteEn": "Quote (English)",
+      "rating": "التقييم (١-٥)"
+    }
+  },
+  "Experience": {
+    "title": "الخبرات",
+    "description": "مسارك المهني.",
+    "singular": "خبرة",
+    "current": "حالي",
+    "present": "حتى الآن",
+    "stats": {
+      "total": "عدد الوظائف",
+      "years": "سنوات الخبرة",
+      "current": "الوظيفة الحالية"
+    },
+    "fields": {
+      "companyAr": "الجهة (عربي)",
+      "companyEn": "Company (English)",
+      "roleAr": "المسمى (عربي)",
+      "roleEn": "Role (English)",
+      "locationAr": "الموقع (عربي)",
+      "locationEn": "Location (English)",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "isCurrent": "ما زلت أعمل هنا",
+      "descriptionAr": "الوصف (عربي)",
+      "descriptionEn": "Description (English)",
+      "logo": "شعار الجهة",
+      "companyUrl": "موقع الجهة"
+    }
+  },
+  "Education": {
+    "title": "التعليم",
+    "description": "مؤهلاتك وشهاداتك.",
+    "singular": "مؤهل",
+    "stats": {
+      "degrees": "المؤهلات",
+      "certificates": "الشهادات",
+      "total": "الإجمالي"
+    },
+    "type": {
+      "DEGREE": "مؤهل",
+      "CERTIFICATE": "شهادة"
+    },
+    "fields": {
+      "type": "النوع",
+      "schoolAr": "الجهة (عربي)",
+      "schoolEn": "Institution (English)",
+      "degreeAr": "الشهادة (عربي)",
+      "degreeEn": "Qualification (English)",
+      "fieldAr": "التخصص (عربي)",
+      "fieldEn": "Field (English)",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "credentialUrl": "رابط التحقق",
+      "logo": "الشعار"
+    }
+  },
+  "Skills": {
+    "title": "المهارات",
+    "description": "ما تُتقنه.",
+    "singular": "مهارة",
+    "ungrouped": "بلا مجموعة",
+    "stats": {
+      "total": "الإجمالي",
+      "groups": "عدد المجموعات",
+      "featured": "المميزة"
+    },
+    "fields": {
+      "nameAr": "الاسم (عربي)",
+      "nameEn": "Name (English)",
+      "icon": "الأيقونة",
+      "level": "المستوى (٠-١٠٠)",
+      "group": "المجموعة"
+    }
+  },
+  "Messages": {
+    "title": "الرسائل",
+    "description": "ما يصلك من نموذج التواصل.",
+    "unread": "غير مقروءة",
+    "read": "مقروءة",
+    "archived": "مؤرشفة",
+    "stats": {
+      "total": "الإجمالي",
+      "unread": "غير مقروءة",
+      "today": "اليوم",
+      "archived": "مؤرشفة"
+    },
+    "actions": {
+      "reply": "رد بالبريد",
+      "archive": "أرشفة",
+      "unarchive": "إلغاء الأرشفة",
+      "markRead": "تعليم كمقروء",
+      "markUnread": "تعليم كغير مقروء"
+    },
+    "detailTitle": "الرسالة",
+    "selectHint": "اختر رسالة لعرضها.",
+    "empty": "لا رسائل بعد.",
+    "emptyHint": "ستظهر هنا رسائل نموذج التواصل.",
+    "archivedToast": "تمت الأرشفة.",
+    "unarchivedToast": "أُلغيت الأرشفة.",
+    "readToast": "تم التحديث."
+  },
+  "Media": {
+    "title": "الوسائط",
+    "description": "مكتبة الصور والملفات.",
+    "empty": "المكتبة فارغة.",
+    "emptyHint": "ستظهر هنا الملفات التي ترفعها من النماذج.",
+    "copyUrl": "نسخ الرابط",
+    "copied": "نُسخ الرابط.",
+    "stats": {
+      "total": "عدد الملفات",
+      "size": "المساحة المستخدمة",
+      "images": "صور",
+      "files": "ملفات أخرى"
+    }
+  },
+  "Settings": {
+    "title": "الإعدادات",
+    "description": "كل ما يظهر في الموقع العام قابل للتحرير من هنا.",
+    "tabs": {
+      "general": "عام",
+      "content": "المحتوى",
+      "contact": "التواصل",
+      "cv": "السيرة الذاتية",
+      "seo": "تحسين الظهور",
+      "advanced": "متقدّم"
+    },
+    "social": {
+      "label": "الاسم",
+      "url": "الرابط",
+      "icon": "الأيقونة",
+      "add": "إضافة رابط",
+      "remove": "حذف الرابط",
+      "title": "روابط التواصل",
+      "hint": "الأيقونة اسم من lucide، مثل github أو linkedin."
+    },
+    "general": {
+      "siteNameAr": "اسم الموقع (عربي)",
+      "siteNameEn": "Site name (English)",
+      "taglineAr": "الشعار (عربي)",
+      "taglineEn": "Tagline (English)",
+      "descriptionAr": "الوصف (عربي)",
+      "descriptionEn": "Description (English)",
+      "logoAr": "الشعار (عربي)",
+      "logoEn": "Logo (English)",
+      "favicon": "الأيقونة المفضّلة",
+      "ogImage": "صورة المشاركة (OG)"
+    },
+    "hero": {
+      "title": "قسم الواجهة",
+      "titleAr": "العنوان (عربي)",
+      "titleEn": "Title (English)",
+      "subtitleAr": "العنوان الفرعي (عربي)",
+      "subtitleEn": "Subtitle (English)",
+      "badgeAr": "الشارة (عربي)",
+      "badgeEn": "Badge (English)",
+      "primaryLabelAr": "الزر الأول (عربي)",
+      "primaryLabelEn": "Primary button (English)",
+      "primaryUrl": "رابط الزر الأول",
+      "secondaryLabelAr": "الزر الثاني (عربي)",
+      "secondaryLabelEn": "Secondary button (English)",
+      "secondaryUrl": "رابط الزر الثاني",
+      "image": "الصورة",
+      "isAvailable": "متاح لمشاريع جديدة",
+      "availabilityAr": "نص التوفّر (عربي)",
+      "availabilityEn": "Availability text (English)"
+    },
+    "about": {
+      "title": "قسم النبذة",
+      "titleAr": "العنوان (عربي)",
+      "titleEn": "Title (English)",
+      "bioAr": "النبذة (عربي)",
+      "bioEn": "Bio (English)",
+      "image": "الصورة",
+      "years": "سنوات الخبرة",
+      "projects": "عدد المشاريع",
+      "clients": "عدد العملاء"
+    },
+    "contact": {
+      "email": "البريد الظاهر",
+      "phone": "الجوال",
+      "cityAr": "المدينة (عربي)",
+      "cityEn": "City (English)"
+    },
+    "cv": {
+      "ar": "السيرة الذاتية (عربي)",
+      "en": "CV (English)",
+      "downloads": "مرات التحميل",
+      "hint": "ألصق رابط ملف PDF."
+    },
+    "seo": {
+      "keywordsAr": "كلمات مفتاحية (عربي)",
+      "keywordsEn": "Keywords (English)",
+      "googleVerification": "Google verification",
+      "analyticsId": "معرّف التحليلات"
+    },
+    "advanced": {
+      "maintenance": "وضع الصيانة",
+      "maintenanceHint": "يخفي الموقع العام عن الزوار.",
+      "accent": "لون الهوية",
+      "accentHint": "قيمة CSS، مثل oklch(0.55 0.221 264).",
+      "sections": "أقسام الموقع العام",
+      "showProjects": "المشاريع",
+      "showSkills": "المهارات",
+      "showServices": "الخدمات",
+      "showExperience": "الخبرات",
+      "showTestimonials": "الآراء",
+      "showBlog": "المدونة"
+    }
+  },
+  "Overview": {
+    "title": "نظرة عامة",
+    "description": "حالة الموقع في لمحة.",
+    "stats": {
+      "projects": "المشاريع",
+      "posts": "المقالات المنشورة",
+      "unread": "رسائل غير مقروءة",
+      "views": "إجمالي المشاهدات"
+    },
+    "recentMessages": "آخر الرسائل",
+    "noMessages": "لا رسائل بعد.",
+    "activity": "آخر النشاطات",
+    "noActivity": "لا نشاط مسجّل بعد.",
+    "viewAll": "عرض الكل",
+    "actions": {
+      "create": "إنشاء",
+      "update": "تعديل",
+      "delete": "حذف",
+      "flag": "تغيير الحالة",
+      "reorder": "إعادة ترتيب",
+      "duplicate": "نسخ"
+    },
+    "entities": {
+      "project": "مشروع",
+      "post": "مقال",
+      "service": "خدمة",
+      "testimonial": "رأي",
+      "experience": "خبرة",
+      "education": "مؤهل",
+      "skill": "مهارة",
+      "skillGroup": "مجموعة مهارات",
+      "projectCategory": "تصنيف"
+    }
   }
 }

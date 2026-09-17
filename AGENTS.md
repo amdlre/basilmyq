@@ -77,6 +77,12 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   `BreadcrumbItem` — nesting them is invalid HTML and fails hydration.
 - **Validation messages** come from Zod's built-in locales, wired to the active language in
   `ZodLocaleProvider`. Only override a message when the default is too vague.
+- **Adding a dashboard module** means: a Zod schema in `lib/validations/content.ts`, an
+  entry in `server/content-registry.ts`, a `columns.tsx`, a client that renders
+  `<CrudModule>` with its fields, and a `page.tsx` that fetches rows and stats. No new
+  Server Actions and no new UI components.
+- **Arabic labels must not assume gender.** `"{name} جديد"` breaks on feminine nouns
+  (خدمة، خبرة، مهارة); use a neutral verb form such as `"إضافة {name}"`.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

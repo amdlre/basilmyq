@@ -218,5 +218,398 @@
     },
     "demoToast": "Demo action — nothing was changed.",
     "reordered": "Order changed (demo)."
+  },
+  "Crud": {
+    "createNamed": "New {name}",
+    "editNamed": "Edit {name}",
+    "duplicate": "Duplicate",
+    "duplicated": "Copy created.",
+    "show": "Show",
+    "hide": "Hide",
+    "feature": "Feature",
+    "updated": "Updated.",
+    "reordered": "Order saved.",
+    "duplicateKey": "That value is already taken (the slug, for example).",
+    "viewOnSite": "View on site"
+  },
+  "Columns": {
+    "title": "Title",
+    "name": "Name",
+    "status": "Status",
+    "category": "Category",
+    "year": "Year",
+    "tags": "Tags",
+    "order": "Order",
+    "visibility": "Visibility",
+    "visible": "Visible",
+    "hidden": "Hidden",
+    "featured": "Featured",
+    "yes": "Yes",
+    "visibleOnSite": "Visible on site",
+    "company": "Organisation",
+    "role": "Role",
+    "period": "Period",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "level": "Level",
+    "group": "Group",
+    "rating": "Rating",
+    "price": "Price",
+    "views": "Views",
+    "publishedAt": "Published",
+    "readTime": "Read time",
+    "type": "Type",
+    "school": "Institution",
+    "degree": "Qualification",
+    "field": "Field",
+    "from": "From",
+    "subject": "Subject",
+    "receivedAt": "Received",
+    "file": "File",
+    "size": "Size",
+    "dimensions": "Dimensions"
+  },
+  "Projects": {
+    "title": "Projects",
+    "description": "Manage your portfolio.",
+    "singular": "project",
+    "uncategorised": "Uncategorised",
+    "stats": {
+      "total": "Total",
+      "published": "Published",
+      "hidden": "Hidden",
+      "featured": "Featured"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "ARCHIVED": "Archived"
+    },
+    "fields": {
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "slug": "Slug",
+      "summaryAr": "Summary (Arabic)",
+      "summaryEn": "Summary (English)",
+      "contentAr": "Content (Arabic)",
+      "contentEn": "Content (English)",
+      "cover": "Cover image",
+      "clientAr": "Client (Arabic)",
+      "clientEn": "Client (English)",
+      "roleAr": "Your role (Arabic)",
+      "roleEn": "Your role (English)",
+      "liveUrl": "Live URL",
+      "repoUrl": "Repository URL"
+    }
+  },
+  "Blog": {
+    "title": "Blog",
+    "description": "Manage your writing.",
+    "singular": "post",
+    "draft": "Draft",
+    "published": "Published",
+    "stats": {
+      "total": "Total",
+      "published": "Published",
+      "drafts": "Drafts",
+      "views": "Total views"
+    },
+    "fields": {
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "slug": "Slug",
+      "excerptAr": "Excerpt (Arabic)",
+      "excerptEn": "Excerpt (English)",
+      "contentAr": "Content (Arabic)",
+      "contentEn": "Content (English)",
+      "cover": "Cover image",
+      "readTime": "Read time (minutes)",
+      "publishedAt": "Publish date"
+    }
+  },
+  "Services": {
+    "title": "Services",
+    "description": "What you offer clients.",
+    "singular": "service",
+    "stats": {
+      "total": "Total",
+      "visible": "Active",
+      "hidden": "Hidden"
+    },
+    "fields": {
+      "titleAr": "Name (Arabic)",
+      "titleEn": "Name (English)",
+      "descriptionAr": "Description (Arabic)",
+      "descriptionEn": "Description (English)",
+      "icon": "Icon",
+      "featuresAr": "Features (Arabic)",
+      "featuresEn": "Features (English)",
+      "price": "Price",
+      "priceNote": "Price note"
+    }
+  },
+  "Testimonials": {
+    "title": "Testimonials",
+    "description": "What your clients say.",
+    "singular": "testimonial",
+    "stats": {
+      "total": "Total",
+      "averageRating": "Average rating",
+      "visible": "Published"
+    },
+    "fields": {
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "roleAr": "Role (Arabic)",
+      "roleEn": "Role (English)",
+      "companyAr": "Company (Arabic)",
+      "companyEn": "Company (English)",
+      "avatar": "Photo",
+      "quoteAr": "Quote (Arabic)",
+      "quoteEn": "Quote (English)",
+      "rating": "Rating (1-5)"
+    }
+  },
+  "Experience": {
+    "title": "Experience",
+    "description": "Your career path.",
+    "singular": "role",
+    "current": "Current",
+    "present": "Present",
+    "stats": {
+      "total": "Positions",
+      "years": "Years of experience",
+      "current": "Current role"
+    },
+    "fields": {
+      "companyAr": "Company (Arabic)",
+      "companyEn": "Company (English)",
+      "roleAr": "Role (Arabic)",
+      "roleEn": "Role (English)",
+      "locationAr": "Location (Arabic)",
+      "locationEn": "Location (English)",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "isCurrent": "I still work here",
+      "descriptionAr": "Description (Arabic)",
+      "descriptionEn": "Description (English)",
+      "logo": "Company logo",
+      "companyUrl": "Company website"
+    }
+  },
+  "Education": {
+    "title": "Education",
+    "description": "Your qualifications and certificates.",
+    "singular": "entry",
+    "stats": {
+      "degrees": "Qualifications",
+      "certificates": "Certificates",
+      "total": "Total"
+    },
+    "type": {
+      "DEGREE": "Degree",
+      "CERTIFICATE": "Certificate"
+    },
+    "fields": {
+      "type": "Type",
+      "schoolAr": "Institution (Arabic)",
+      "schoolEn": "Institution (English)",
+      "degreeAr": "Qualification (Arabic)",
+      "degreeEn": "Qualification (English)",
+      "fieldAr": "Field (Arabic)",
+      "fieldEn": "Field (English)",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "credentialUrl": "Credential URL",
+      "logo": "Logo"
+    }
+  },
+  "Skills": {
+    "title": "Skills",
+    "description": "What you are good at.",
+    "singular": "skill",
+    "ungrouped": "Ungrouped",
+    "stats": {
+      "total": "Total",
+      "groups": "Groups",
+      "featured": "Featured"
+    },
+    "fields": {
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "icon": "Icon",
+      "level": "Level (0-100)",
+      "group": "Group"
+    }
+  },
+  "Messages": {
+    "title": "Messages",
+    "description": "What comes in from the contact form.",
+    "unread": "Unread",
+    "read": "Read",
+    "archived": "Archived",
+    "stats": {
+      "total": "Total",
+      "unread": "Unread",
+      "today": "Today",
+      "archived": "Archived"
+    },
+    "actions": {
+      "reply": "Reply by email",
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "markRead": "Mark as read",
+      "markUnread": "Mark as unread"
+    },
+    "detailTitle": "Message",
+    "selectHint": "Pick a message to read it.",
+    "empty": "No messages yet.",
+    "emptyHint": "Contact form submissions will appear here.",
+    "archivedToast": "Archived.",
+    "unarchivedToast": "Unarchived.",
+    "readToast": "Updated."
+  },
+  "Media": {
+    "title": "Media",
+    "description": "Your image and file library.",
+    "empty": "The library is empty.",
+    "emptyHint": "Files you upload from forms will appear here.",
+    "copyUrl": "Copy URL",
+    "copied": "URL copied.",
+    "stats": {
+      "total": "Files",
+      "size": "Storage used",
+      "images": "Images",
+      "files": "Other files"
+    }
+  },
+  "Settings": {
+    "title": "Settings",
+    "description": "Everything the public site shows is editable here.",
+    "tabs": {
+      "general": "General",
+      "content": "Content",
+      "contact": "Contact",
+      "cv": "CV",
+      "seo": "SEO",
+      "advanced": "Advanced"
+    },
+    "social": {
+      "label": "Label",
+      "url": "URL",
+      "icon": "Icon",
+      "add": "Add link",
+      "remove": "Remove link",
+      "title": "Social links",
+      "hint": "The icon is a lucide name, such as github or linkedin."
+    },
+    "general": {
+      "siteNameAr": "Site name (Arabic)",
+      "siteNameEn": "Site name (English)",
+      "taglineAr": "Tagline (Arabic)",
+      "taglineEn": "Tagline (English)",
+      "descriptionAr": "Description (Arabic)",
+      "descriptionEn": "Description (English)",
+      "logoAr": "Logo (Arabic)",
+      "logoEn": "Logo (English)",
+      "favicon": "Favicon",
+      "ogImage": "Share image (OG)"
+    },
+    "hero": {
+      "title": "Hero section",
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "subtitleAr": "Subtitle (Arabic)",
+      "subtitleEn": "Subtitle (English)",
+      "badgeAr": "Badge (Arabic)",
+      "badgeEn": "Badge (English)",
+      "primaryLabelAr": "Primary button (Arabic)",
+      "primaryLabelEn": "Primary button (English)",
+      "primaryUrl": "Primary button URL",
+      "secondaryLabelAr": "Secondary button (Arabic)",
+      "secondaryLabelEn": "Secondary button (English)",
+      "secondaryUrl": "Secondary button URL",
+      "image": "Image",
+      "isAvailable": "Available for new work",
+      "availabilityAr": "Availability text (Arabic)",
+      "availabilityEn": "Availability text (English)"
+    },
+    "about": {
+      "title": "About section",
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "bioAr": "Bio (Arabic)",
+      "bioEn": "Bio (English)",
+      "image": "Image",
+      "years": "Years of experience",
+      "projects": "Projects delivered",
+      "clients": "Clients"
+    },
+    "contact": {
+      "email": "Public email",
+      "phone": "Phone",
+      "cityAr": "City (Arabic)",
+      "cityEn": "City (English)"
+    },
+    "cv": {
+      "ar": "CV (Arabic)",
+      "en": "CV (English)",
+      "downloads": "Downloads",
+      "hint": "Paste a link to a PDF."
+    },
+    "seo": {
+      "keywordsAr": "Keywords (Arabic)",
+      "keywordsEn": "Keywords (English)",
+      "googleVerification": "Google verification",
+      "analyticsId": "Analytics ID"
+    },
+    "advanced": {
+      "maintenance": "Maintenance mode",
+      "maintenanceHint": "Hides the public site from visitors.",
+      "accent": "Brand accent",
+      "accentHint": "A CSS value, such as oklch(0.55 0.221 264).",
+      "sections": "Public sections",
+      "showProjects": "Projects",
+      "showSkills": "Skills",
+      "showServices": "Services",
+      "showExperience": "Experience",
+      "showTestimonials": "Testimonials",
+      "showBlog": "Blog"
+    }
+  },
+  "Overview": {
+    "title": "Overview",
+    "description": "The state of your site at a glance.",
+    "stats": {
+      "projects": "Projects",
+      "posts": "Published posts",
+      "unread": "Unread messages",
+      "views": "Total views"
+    },
+    "recentMessages": "Recent messages",
+    "noMessages": "No messages yet.",
+    "activity": "Recent activity",
+    "noActivity": "Nothing recorded yet.",
+    "viewAll": "View all",
+    "actions": {
+      "create": "Created",
+      "update": "Updated",
+      "delete": "Deleted",
+      "flag": "Changed",
+      "reorder": "Reordered",
+      "duplicate": "Duplicated"
+    },
+    "entities": {
+      "project": "project",
+      "post": "post",
+      "service": "service",
+      "testimonial": "testimonial",
+      "experience": "role",
+      "education": "entry",
+      "skill": "skill",
+      "skillGroup": "skill group",
+      "projectCategory": "category"
+    }
   }
 }
