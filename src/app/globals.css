@@ -120,10 +120,12 @@
 }
 
 /* Semantic status tones. Status badges and stat cards use these rather than
-   raw palette colours, so rule 8 holds: design-system variables only. */
+   raw palette colours, so rule 8 holds: design-system variables only.
+   Both light values are set to clear 4.5:1 against the background — the amber
+   at L=0.62 measured 3.72:1 and failed AA. */
 :root {
   --success: oklch(0.55 0.14 155);
-  --warning: oklch(0.62 0.15 75);
+  --warning: oklch(0.56 0.15 75);
 }
 
 .dark {
@@ -162,6 +164,29 @@
   --font-sans:
     var(--font-arabic), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     sans-serif;
+}
+
+/* Scroll-reveal used by <AnimatedIn />. Kept in CSS so the effect costs no
+   JavaScript beyond a single IntersectionObserver. */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-animate="shown"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Testimonial marquee. Half the duplicated track scrolls out, so the loop is

@@ -1,6 +1,5 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 
-import { AnimatedIn } from "@/components/shared/animated-in";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { getLocaleDirection, type AppLocale } from "@/i18n/routing";
@@ -30,7 +29,11 @@ export function Hero({ hero, locale }: { hero: HeroRow; locale: AppLocale }) {
       />
 
       <div className="mx-auto w-full max-w-6xl px-4 py-24 md:py-36">
-        <AnimatedIn className="max-w-3xl space-y-6">
+        {/*
+          Deliberately not animated: this block holds the LCP element, and a
+          fade-in would hold it at opacity 0 until hydration finishes.
+        */}
+        <div className="max-w-3xl space-y-6">
           {hero.isAvailable && availability ? (
             <p className="inline-flex items-center gap-2 rounded-full bg-success/10 px-3 py-1 text-sm font-medium text-success">
               <span className="size-1.5 rounded-full bg-success" aria-hidden />
@@ -63,7 +66,7 @@ export function Hero({ hero, locale }: { hero: HeroRow; locale: AppLocale }) {
               </Button>
             ) : null}
           </div>
-        </AnimatedIn>
+        </div>
       </div>
     </section>
   );

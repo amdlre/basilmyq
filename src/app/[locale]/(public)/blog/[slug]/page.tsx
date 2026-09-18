@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { EyeIcon } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
 
+import { BlogPostingJsonLd } from "@/components/public/json-ld";
 import { Markdown } from "@/components/public/markdown";
 import { ReadingProgress } from "@/components/public/reading-progress";
 import { ShareButton } from "@/components/public/share-button";
@@ -13,10 +15,44 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { toDate } from "@/lib/format";
+import { BLUR_DATA_URL } from "@/lib/blur";
 import { pick } from "@/lib/i18n-content";
-import { getPublicPostBySlug } from "@/server/queries/public";
+import { buildMetadata } from "@/lib/seo";
+import {
+  getPublicPostBySlug,
+  getPublicPosts,
+  getSiteSettings,
+} from "@/server/queries/public";
 
 const CONTENT_ID = "post-content";
+
+export async function generateMetadata(
+  props: PageProps<"/[locale]/blog/[slug]">,
+): Promise<Metadata> {
+  const locale = await resolveLocale(props.params);
+  const { slug } = await props.params;
+  const post = await getPublicPostBySlug(slug);
+
+  // Drafts and hidden posts must not get indexable metadata.
+  if (!post) return { robots: { index: false, follow: false } };
+
+  return buildMetadata({
+    locale,
+    path: `/blog/${slug}`,
+    title: pick(post, "title", locale),
+    description: pick(post, "excerpt", locale),
+    image: post.coverUrl,
+    type: "article",
+    publishedTime: post.publishedAt,
+    tags: post.tags,
+  });
+}
+
+/** Pre-renders every published post at build time. */
+export async function generateStaticParams() {
+  const posts = await getPublicPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export default async function PostPage(
   props: PageProps<"/[locale]/blog/[slug]">,
@@ -32,8 +68,21 @@ export default async function PostPage(
   const title = pick(post, "title", locale);
   const published = toDate(post.publishedAt);
 
+  const settings = await getSiteSettings();
+
   return (
     <>
+      <BlogPostingJsonLd
+        headline={title}
+        description={pick(post, "excerpt", locale)}
+        locale={locale}
+        slug={post.slug}
+        image={post.coverUrl}
+        datePublished={published?.toISOString()}
+        dateModified={new Date(post.updatedAt).toISOString()}
+        keywords={post.tags}
+        authorName={settings ? pick(settings, "siteName", locale) : "basilmyq"}
+      />
       <ReadingProgress />
       <ViewCounter slug={slug} />
 
@@ -86,6 +135,8 @@ export default async function PostPage(
                 height={675}
                 priority
                 className="mt-8 aspect-video w-full rounded-xl object-cover"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
               />
             ) : null}
 

@@ -1,50 +1,48 @@
 import type { ReactNode } from "react";
-import { NextIntlClientProvider } from "next-intl";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import type { AppLocale } from "@/i18n/routing";
-
+import { MessagesProvider } from "@/components/shared/messages-provider";
 import { ThemeProvider } from "@/components/shared/theme-provider";
-import { ZodLocaleProvider } from "@/components/shared/zod-locale-provider";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 type AppProvidersProps = {
-  locale: AppLocale;
   direction: "rtl" | "ltr";
+  /**
+   * Namespaces handed to the client. next-intl serialises whatever it is given
+   * into every response, so shipping the whole catalogue would put the entire
+   * dashboard vocabulary into every public page. Inner areas add their own.
+   */
+  namespaces: readonly string[];
   children: ReactNode;
 };
 
 /**
- * Server Component on purpose: `NextIntlClientProvider` needs to read the
- * request configuration before handing messages down to the client boundary.
+ * Server Component on purpose: the message provider reads the request
+ * configuration before handing anything to the client boundary.
  */
 export function AppProviders({
-  locale,
   direction,
+  namespaces,
   children,
 }: AppProvidersProps) {
   return (
-    <NextIntlClientProvider>
-      <ZodLocaleProvider locale={locale}>
-        <NuqsAdapter>
-          <ThemeProvider>
-            <DirectionProvider dir={direction}>
-              <TooltipProvider>
-                {children}
-                <Toaster
-                  position={
-                    direction === "rtl" ? "bottom-left" : "bottom-right"
-                  }
-                  dir={direction}
-                  richColors
-                />
-              </TooltipProvider>
-            </DirectionProvider>
-          </ThemeProvider>
-        </NuqsAdapter>
-      </ZodLocaleProvider>
-    </NextIntlClientProvider>
+    <MessagesProvider namespaces={namespaces}>
+      <NuqsAdapter>
+        <ThemeProvider>
+          <DirectionProvider dir={direction}>
+            <TooltipProvider>
+              {children}
+              <Toaster
+                position={direction === "rtl" ? "bottom-left" : "bottom-right"}
+                dir={direction}
+                richColors
+              />
+            </TooltipProvider>
+          </DirectionProvider>
+        </ThemeProvider>
+      </NuqsAdapter>
+    </MessagesProvider>
   );
 }

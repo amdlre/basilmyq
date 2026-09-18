@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
+
+import { BLUR_DATA_URL } from "@/lib/blur";
 import { CopyIcon, ImageIcon, Trash2Icon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -47,6 +49,8 @@ export function MediaClient({ rows }: { rows: MediaRow[] }) {
                   fill
                   sizes="(max-width: 640px) 100vw, 25vw"
                   className="object-cover"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-muted-foreground">

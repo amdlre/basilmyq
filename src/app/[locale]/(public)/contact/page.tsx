@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { MailIcon, MapPinIcon, PhoneIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -8,10 +9,25 @@ import { Section } from "@/components/shared/section";
 import { Card, CardContent } from "@/components/ui/card";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { pickOptional } from "@/lib/i18n-content";
+import { buildMetadata } from "@/lib/seo";
 import { readSocialLinks } from "@/lib/social";
 import { getSiteSettings } from "@/server/queries/public";
 
 import { ContactForm } from "./contact-form";
+
+export async function generateMetadata(
+  props: PageProps<"/[locale]/contact">,
+): Promise<Metadata> {
+  const locale = await resolveLocale(props.params);
+  const t = await getTranslations({ locale, namespace: "ContactPage" });
+
+  return buildMetadata({
+    locale,
+    path: "/contact",
+    title: t("title"),
+    description: t("description"),
+  });
+}
 
 export default async function ContactPage(
   props: PageProps<"/[locale]/contact">,

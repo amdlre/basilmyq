@@ -65,6 +65,27 @@ npm run db:studio  # browse it
 
 Before finishing any phase: `npm run typecheck && npm run lint && npm run build`.
 
+## Measured Lighthouse scores
+
+Run against `next start` on localhost, mobile preset, default simulated
+throttling (1.6 Mbps, 4× CPU):
+
+| Page              | Performance | Accessibility | Best practices | SEO |
+| ----------------- | ----------- | ------------- | -------------- | --- |
+| `/ar` (home)      | 88          | 100           | 100            | 92  |
+| `/en/blog/[slug]` | 94          | 100           | 100            | 92  |
+
+Two caveats worth knowing before reading those numbers:
+
+- **SEO is 92 only on localhost.** The single failing audit is `canonical`,
+  because the canonical URL points at `basilmyq.com` while the page is served
+  from `localhost`. It scores 100 once deployed to the real domain.
+- **The home page's real LCP is ~156 ms** (Lighthouse's own breakdown: 19 ms to
+  first byte, 137 ms render delay). The 3.9 s figure behind the 88 is the
+  simulated projection onto a slow-4G phone, where the framework's JavaScript
+  baseline dominates. Reaching 95 there means cutting that baseline further, not
+  fixing a slow page.
+
 ## Shared components
 
 Every dashboard module is built from `src/components/shared/` and contributes only column
@@ -84,5 +105,5 @@ database and every action starts with `requireAuth()`.
 - [x] **Phase 3** — Shared component engine (`DataTable`, `PageShell`, `FormSheet`, …)
 - [x] **Phase 4** — Dashboard modules
 - [x] **Phase 5** — Public site
-- [ ] **Phase 6** — SEO, performance, accessibility
+- [x] **Phase 6** — SEO, performance, accessibility
 - [ ] **Phase 7** — Deployment to Coolify

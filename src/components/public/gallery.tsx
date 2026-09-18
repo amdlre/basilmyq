@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+
+import { BLUR_DATA_URL } from "@/lib/blur";
 import { useTranslations } from "next-intl";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -31,6 +33,8 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               fill
               sizes="(max-width: 768px) 50vw, 33vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
             />
           </button>
         ))}
@@ -51,6 +55,8 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               width={1600}
               height={1200}
               className="h-auto w-full rounded-lg object-contain"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
             />
           ) : null}
         </DialogContent>

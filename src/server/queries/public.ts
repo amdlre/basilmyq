@@ -41,12 +41,36 @@ export const getAboutSection = unstable_cache(
   { tags: [PUBLIC_TAGS.settings] },
 );
 
+/**
+ * List queries select only what a card needs.
+ *
+ * The full `content` of every project and post is measured in kilobytes, and
+ * shipping it inside the RSC payload of a page that renders titles and
+ * summaries bloats every public response. Detail pages use the by-slug queries
+ * below, which return everything.
+ */
 export const getPublicProjects = unstable_cache(
   async () =>
     db.project.findMany({
       where: { isVisible: true },
       orderBy: [{ order: "asc" }, { createdAt: "desc" }],
-      include: { category: true },
+      select: {
+        id: true,
+        slug: true,
+        titleAr: true,
+        titleEn: true,
+        summaryAr: true,
+        summaryEn: true,
+        coverUrl: true,
+        tags: true,
+        year: true,
+        categoryId: true,
+        isFeatured: true,
+        updatedAt: true,
+        category: {
+          select: { id: true, nameAr: true, nameEn: true, slug: true },
+        },
+      },
     }),
   ["public-projects"],
   { tags: [PUBLIC_TAGS.projects] },
@@ -67,6 +91,20 @@ export const getPublicPosts = unstable_cache(
     db.post.findMany({
       where: { isVisible: true, publishedAt: { not: null } },
       orderBy: [{ publishedAt: "desc" }],
+      select: {
+        id: true,
+        slug: true,
+        titleAr: true,
+        titleEn: true,
+        excerptAr: true,
+        excerptEn: true,
+        coverUrl: true,
+        tags: true,
+        readTimeMinutes: true,
+        publishedAt: true,
+        views: true,
+        updatedAt: true,
+      },
     }),
   ["public-posts"],
   { tags: [PUBLIC_TAGS.posts] },

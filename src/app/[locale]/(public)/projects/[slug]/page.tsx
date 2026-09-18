@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
@@ -5,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 
 import { GithubIcon } from "@/components/public/brand-icons";
 import { Gallery } from "@/components/public/gallery";
+import { CreativeWorkJsonLd } from "@/components/public/json-ld";
 import { Markdown } from "@/components/public/markdown";
 import { AnimatedIn } from "@/components/shared/animated-in";
 import { Badge } from "@/components/ui/badge";
@@ -12,10 +14,13 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { getLocaleDirection } from "@/i18n/routing";
+import { BLUR_DATA_URL } from "@/lib/blur";
 import { pick, pickOptional } from "@/lib/i18n-content";
+import { buildMetadata } from "@/lib/seo";
 import {
   getPublicProjectBySlug,
   getPublicProjects,
+  getSiteSettings,
 } from "@/server/queries/public";
 
 type ResultEntry = { labelAr: string; labelEn: string; value: string };
@@ -42,6 +47,33 @@ function readResults(value: unknown): ResultEntry[] {
       },
     ];
   });
+}
+
+export async function generateMetadata(
+  props: PageProps<"/[locale]/projects/[slug]">,
+): Promise<Metadata> {
+  const locale = await resolveLocale(props.params);
+  const { slug } = await props.params;
+  const project = await getPublicProjectBySlug(slug);
+
+  // A hidden or missing project must not get indexable metadata.
+  if (!project) return { robots: { index: false, follow: false } };
+
+  return buildMetadata({
+    locale,
+    path: `/projects/${slug}`,
+    title: pick(project, "title", locale),
+    description: pick(project, "summary", locale),
+    image: project.coverUrl,
+    type: "article",
+    tags: project.tags,
+  });
+}
+
+/** Pre-renders every published project at build time. */
+export async function generateStaticParams() {
+  const projects = await getPublicProjects();
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
 export default async function ProjectDetailPage(
@@ -71,8 +103,21 @@ export default async function ProjectDetailPage(
     { label: t("role"), value: pickOptional(project, "role", locale) },
   ].filter((entry) => entry.value);
 
+  const settings = await getSiteSettings();
+
   return (
     <article className="mx-auto w-full max-w-4xl px-4 py-14">
+      <CreativeWorkJsonLd
+        name={title}
+        description={pick(project, "summary", locale)}
+        locale={locale}
+        slug={project.slug}
+        image={project.coverUrl}
+        datePublished={new Date(project.createdAt).toISOString()}
+        keywords={project.tags}
+        authorName={settings ? pick(settings, "siteName", locale) : "basilmyq"}
+      />
+
       <Button asChild variant="ghost" size="sm" className="-ms-2 mb-6">
         <Link href="/projects">{t("back")}</Link>
       </Button>
@@ -130,6 +175,8 @@ export default async function ProjectDetailPage(
             height={900}
             priority
             className="aspect-video w-full rounded-xl object-cover"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
           />
         </AnimatedIn>
       ) : null}

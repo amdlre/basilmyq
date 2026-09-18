@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { DownloadIcon, ExternalLinkIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -10,13 +11,33 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { toDate } from "@/lib/format";
+import { BLUR_DATA_URL } from "@/lib/blur";
 import { pick, pickOptional } from "@/lib/i18n-content";
+import { buildMetadata } from "@/lib/seo";
 import {
   getAboutSection,
   getPublicEducation,
   getPublicExperiences,
   getSiteSettings,
 } from "@/server/queries/public";
+
+export async function generateMetadata(
+  props: PageProps<"/[locale]/about">,
+): Promise<Metadata> {
+  const locale = await resolveLocale(props.params);
+  const [about, t] = await Promise.all([
+    getAboutSection(),
+    getTranslations({ locale, namespace: "AboutPage" }),
+  ]);
+
+  return buildMetadata({
+    locale,
+    path: "/about",
+    title: about ? pick(about, "title", locale) : t("title"),
+    description: t("description"),
+    image: about?.imageUrl,
+  });
+}
 
 export default async function AboutPage(props: PageProps<"/[locale]/about">) {
   const locale = await resolveLocale(props.params);
@@ -72,6 +93,8 @@ export default async function AboutPage(props: PageProps<"/[locale]/about">) {
                 width={512}
                 height={640}
                 className="w-full rounded-xl object-cover"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
               />
             </AnimatedIn>
           ) : null}
@@ -90,8 +113,11 @@ export default async function AboutPage(props: PageProps<"/[locale]/about">) {
         <Section title={t("education")} className="bg-muted/30">
           <ul className="grid gap-4 md:grid-cols-2">
             {education.map((entry, index) => (
-              <AnimatedIn key={entry.id} delay={index * 0.05}>
-                <li className="h-full rounded-xl border bg-card p-5">
+              <li
+                key={entry.id}
+                className="h-full rounded-xl border bg-card p-5"
+              >
+                <AnimatedIn delay={index * 0.05}>
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-heading font-semibold text-balance">
                       {pick(entry, "degree", locale)}
@@ -133,8 +159,8 @@ export default async function AboutPage(props: PageProps<"/[locale]/about">) {
                       </a>
                     </Button>
                   ) : null}
-                </li>
-              </AnimatedIn>
+                </AnimatedIn>
+              </li>
             ))}
           </ul>
         </Section>

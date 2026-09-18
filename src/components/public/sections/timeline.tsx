@@ -47,8 +47,8 @@ export function TimelineSection({
     // The rail sits on the inline-start edge, so it mirrors with the direction.
     <ol className="relative space-y-8 border-s border-border ps-6">
       {experiences.map((experience, index) => (
-        <AnimatedIn key={experience.id} delay={index * 0.05}>
-          <li className="relative">
+        <li key={experience.id} className="relative">
+          <AnimatedIn delay={index * 0.05}>
             <span
               aria-hidden
               className="absolute -start-[1.9rem] top-1.5 size-2.5 rounded-full bg-primary ring-4 ring-[var(--background)]"
@@ -74,8 +74,8 @@ export function TimelineSection({
             <p className="mt-2 text-sm leading-relaxed text-balance">
               {pick(experience, "description", locale)}
             </p>
-          </li>
-        </AnimatedIn>
+          </AnimatedIn>
+        </li>
       ))}
     </ol>
   );

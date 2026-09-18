@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { pick } from "@/lib/i18n-content";
+import { BLUR_DATA_URL } from "@/lib/blur";
 import { cn } from "@/lib/utils";
 
 type ProjectCardRow = Record<string, unknown> & {
@@ -47,6 +48,8 @@ export function ProjectCard({
                 : "(max-width: 768px) 100vw, 33vw"
             }
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
           />
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-primary/15 to-transparent" />

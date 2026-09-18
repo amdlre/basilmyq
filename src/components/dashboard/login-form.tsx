@@ -6,6 +6,7 @@ import { LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
+import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,6 +29,8 @@ import { type LoginState, login } from "@/server/actions/auth";
 const INITIAL_STATE: LoginState = {};
 
 export function LoginForm() {
+  // Validation messages follow the active language.
+  useZodLocale();
   const t = useTranslations("Login");
   const [state, formAction] = useActionState(login, INITIAL_STATE);
   const [isPending, startTransition] = useTransition();

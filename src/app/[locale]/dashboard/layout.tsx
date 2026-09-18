@@ -1,7 +1,9 @@
 import { CommandPalette } from "@/components/dashboard/command-palette";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardTopbar } from "@/components/dashboard/dashboard-topbar";
+import { MessagesProvider } from "@/components/shared/messages-provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { DASHBOARD_NAMESPACES } from "@/i18n/namespaces";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { requireAuth } from "@/lib/auth/require-auth";
 import { db } from "@/server/db";
@@ -21,15 +23,17 @@ export default async function DashboardLayout(
   });
 
   return (
-    <SidebarProvider>
-      <DashboardSidebar unreadMessages={unreadMessages} />
-      <SidebarInset className="min-w-0">
-        <DashboardTopbar email={session.email} />
-        <main id="main-content" className="min-w-0 flex-1">
-          {props.children}
-        </main>
-      </SidebarInset>
-      <CommandPalette />
-    </SidebarProvider>
+    <MessagesProvider namespaces={DASHBOARD_NAMESPACES}>
+      <SidebarProvider>
+        <DashboardSidebar unreadMessages={unreadMessages} />
+        <SidebarInset className="min-w-0">
+          <DashboardTopbar email={session.email} />
+          <main id="main-content" className="min-w-0 flex-1">
+            {props.children}
+          </main>
+        </SidebarInset>
+        <CommandPalette />
+      </SidebarProvider>
+    </MessagesProvider>
   );
 }

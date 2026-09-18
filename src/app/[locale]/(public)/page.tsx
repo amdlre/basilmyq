@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
 
@@ -7,6 +8,7 @@ import { SkillsSection } from "@/components/public/sections/skills";
 import { TestimonialsSection } from "@/components/public/sections/testimonials";
 import { TimelineSection } from "@/components/public/sections/timeline";
 import { ProjectCard } from "@/components/public/project-card";
+import { PersonJsonLd } from "@/components/public/json-ld";
 import { Markdown } from "@/components/public/markdown";
 import { AnimatedIn } from "@/components/shared/animated-in";
 import { Section } from "@/components/shared/section";
@@ -17,6 +19,8 @@ import { resolveLocale } from "@/i18n/resolve-locale";
 import { getLocaleDirection } from "@/i18n/routing";
 import { toDate } from "@/lib/format";
 import { pick } from "@/lib/i18n-content";
+import { buildMetadata } from "@/lib/seo";
+import { readSocialLinks } from "@/lib/social";
 import {
   getAboutSection,
   getHeroSection,
@@ -28,6 +32,24 @@ import {
   getSiteSettings,
   getPublicExperiences,
 } from "@/server/queries/public";
+
+export async function generateMetadata(
+  props: PageProps<"/[locale]">,
+): Promise<Metadata> {
+  const locale = await resolveLocale(props.params);
+  const settings = await getSiteSettings();
+  if (!settings) return {};
+
+  const siteName = pick(settings, "siteName", locale);
+
+  return buildMetadata({
+    locale,
+    siteName,
+    title: `${siteName} — ${pick(settings, "tagline", locale)}`,
+    description: pick(settings, "description", locale),
+    image: settings.ogImageUrl,
+  });
+}
 
 export default async function HomePage(props: PageProps<"/[locale]">) {
   const locale = await resolveLocale(props.params);
@@ -67,6 +89,18 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
 
   return (
     <>
+      {settings ? (
+        <PersonJsonLd
+          name={pick(settings, "siteName", locale)}
+          description={pick(settings, "description", locale)}
+          locale={locale}
+          email={settings.email}
+          image={about?.imageUrl}
+          jobTitle={pick(settings, "tagline", locale)}
+          sameAs={readSocialLinks(settings.socialLinks).map((link) => link.url)}
+        />
+      ) : null}
+
       {hero ? <Hero hero={hero} locale={locale} /> : null}
 
       {about ? (
@@ -224,7 +258,11 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
               {t("ctaDesc")}
             </p>
             <Button asChild size="lg" variant="secondary" className="mt-6">
-              <Link href="/contact">{t("ctaButton")}</Link>
+              {/* Bottom of the page: no reason to pull the contact bundle
+                  before the reader has scrolled to it. */}
+              <Link href="/contact" prefetch={false}>
+                {t("ctaButton")}
+              </Link>
             </Button>
           </div>
         </AnimatedIn>

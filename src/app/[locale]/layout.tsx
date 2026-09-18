@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import { AppProviders } from "@/components/shared/app-providers";
 import { resolveLocale } from "@/i18n/resolve-locale";
+import { PUBLIC_NAMESPACES } from "@/i18n/namespaces";
 import { getLocaleDirection, routing } from "@/i18n/routing";
 
 import "../globals.css";
@@ -18,11 +19,16 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
   display: "swap",
+  // Only the dashboard's markdown editor uses it, so it is fetched on demand
+  // rather than preloaded on every page.
+  preload: false,
 });
 
 const fontArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["arabic"],
+  // Two weights, not five: each extra weight is another ~35 KB preloaded on
+  // every page, and the design only ever uses body and semibold.
+  weight: ["400", "600"],
   variable: "--font-arabic",
   display: "swap",
 });
@@ -64,7 +70,7 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
         >
           {t("skipToContent")}
         </a>
-        <AppProviders locale={locale} direction={direction}>
+        <AppProviders direction={direction} namespaces={PUBLIC_NAMESPACES}>
           {props.children}
         </AppProviders>
       </body>

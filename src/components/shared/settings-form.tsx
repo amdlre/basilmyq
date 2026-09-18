@@ -13,6 +13,7 @@ import {
 import { toast } from "sonner";
 import type { ZodType } from "zod";
 
+import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
@@ -36,6 +37,8 @@ export function SettingsForm<TValues extends FieldValues>({
   action,
   children,
 }: SettingsFormProps<TValues>) {
+  // Validation messages follow the active language.
+  useZodLocale();
   const t = useTranslations("Common");
   const [isPending, startTransition] = useTransition();
 

@@ -94,6 +94,15 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   any prerendered page, because it calls `useSearchParams`.
 - **lucide-react v1 has no brand icons.** GitHub, LinkedIn, X, Instagram and YouTube live
   in `components/public/brand-icons.tsx` as inline paths.
+- **Never wrap above-the-fold content in `<AnimatedIn>`.** Anything that starts at
+  `opacity: 0` cannot count as the largest contentful paint until hydration runs. That
+  single mistake cost several seconds of LCP twice — once via the hero, once via the
+  section reveals. `AnimatedIn` now hides only what is already below the fold.
+- **Client message namespaces are explicit.** next-intl serialises whatever it is handed,
+  so `AppProviders` takes a namespace list and the dashboard nests its own provider. Add a
+  new namespace to `i18n/namespaces.ts` or its strings will be missing on the client.
+- **Satori (`next/og`) shapes Arabic letters but has no bidi algorithm**, so word order
+  comes out reversed. The OG route reverses tokens for Arabic before rendering.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

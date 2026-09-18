@@ -8,6 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { TextField } from "@/components/shared/form-fields";
+import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import { contactSchema, type ContactInput } from "@/lib/validations/contact";
 import { submitContact } from "@/server/actions/contact";
@@ -21,6 +22,8 @@ const EMPTY: ContactInput = {
 };
 
 export function ContactForm() {
+  // Validation messages follow the active language.
+  useZodLocale();
   const t = useTranslations("ContactPage");
   const [isPending, startTransition] = useTransition();
 

@@ -14,6 +14,7 @@ import {
 import { toast } from "sonner";
 import type { ZodType } from "zod";
 
+import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -61,6 +62,8 @@ export function FormSheet<TValues extends FieldValues>({
   submitLabel,
   children,
 }: FormSheetProps<TValues>) {
+  // Validation messages follow the active language.
+  useZodLocale();
   const t = useTranslations("Common");
   const [isPending, startTransition] = useTransition();
 
