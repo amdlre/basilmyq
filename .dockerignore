@@ -1,0 +1,26 @@
+# Build artefacts and local state — never copied into the image.
+.next
+node_modules
+npm-debug.log*
+
+# Local environment and secrets.
+.env
+.env.*
+!.env.example
+
+# Version control and editor noise.
+.git
+.gitignore
+.claude
+.DS_Store
+
+# Generated at build time inside the image.
+src/generated
+
+# Documentation and specs are not needed at runtime.
+SPEC.md
+DEPLOYMENT.md
+README.md
+AGENTS.md
+CLAUDE.md
+backups
