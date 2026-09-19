@@ -46,3 +46,6 @@ next-env.d.ts
 
 # Uploaded images (UPLOAD_DIR)
 /uploads
+
+# Database dumps — may hold personal data; never commit them.
+/*.sql

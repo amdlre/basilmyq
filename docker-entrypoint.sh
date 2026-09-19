@@ -5,7 +5,7 @@ set -e
 # applies committed migrations and never resets data — unlike `db push`, which
 # must not touch production.
 echo "> Applying database migrations…"
-./node_modules/.bin/prisma migrate deploy
+(cd /app/migrate && node node_modules/prisma/build/index.js migrate deploy --config prisma7.config.ts)
 
 echo "> Starting basilmyq…"
 exec "$@"

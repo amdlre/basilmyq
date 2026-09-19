@@ -39,7 +39,28 @@ ENV DATABASE_URL=${DATABASE_URL}
 RUN npm run build
 
 # ---------------------------------------------------------------------------
-# 3. Runtime
+# 3. Migrator — the Prisma CLI, installed on its own
+# ---------------------------------------------------------------------------
+# Copying `node_modules/prisma` out of the build stage is not enough: the CLI
+# needs its full dependency tree (mysql2, postgres, c12, effect, …) and
+# `node_modules/.bin/prisma` is a symlink that COPY flattens into a broken
+# file. Installing it here, at the exact versions from the lockfile, gives a
+# small self-contained folder that runs `migrate deploy`.
+FROM node:${NODE_VERSION} AS migrator
+WORKDIR /migrate
+
+COPY --from=deps /app/node_modules/prisma/package.json /tmp/prisma.json
+COPY --from=deps /app/node_modules/dotenv/package.json /tmp/dotenv.json
+RUN npm init -y > /dev/null \
+  && npm install --omit=dev --no-audit --no-fund \
+    "prisma@$(node -p "require('/tmp/prisma.json').version")" \
+    "dotenv@$(node -p "require('/tmp/dotenv.json').version")"
+
+COPY prisma ./prisma
+COPY prisma7.config.ts ./prisma7.config.ts
+
+# ---------------------------------------------------------------------------
+# 4. Runtime
 # ---------------------------------------------------------------------------
 FROM node:${NODE_VERSION} AS runner
 WORKDIR /app
@@ -58,14 +79,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Needed at boot to apply migrations: the schema, the Prisma config, and the
-# CLI itself along with its engine.
-COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-COPY --from=builder --chown=nextjs:nodejs /app/prisma7.config.ts ./prisma7.config.ts
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/dotenv ./node_modules/dotenv
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
+# Needed at boot to apply migrations. The Prisma CLI lives in its own folder
+# with a complete dependency tree (see the `migrator` stage): the standalone
+# bundle's pruned node_modules cannot run it.
+COPY --from=migrator --chown=nextjs:nodejs /migrate ./migrate
 
 # Uploaded images. Mount a persistent volume at /app/uploads, or every
 # redeploy empties the media library.
