@@ -24,3 +24,12 @@ export function pickOptional<T extends Record<string, unknown>>(
   const value = pick(row, field, locale);
   return value === "" ? null : value;
 }
+
+/** The logo for the active language, falling back to the other one. */
+export function pickLogo(
+  settings: { logoUrlAr: string | null; logoUrlEn: string | null },
+  locale: AppLocale,
+): string | null {
+  const own = locale === "ar" ? settings.logoUrlAr : settings.logoUrlEn;
+  return own ?? settings.logoUrlAr ?? settings.logoUrlEn;
+}

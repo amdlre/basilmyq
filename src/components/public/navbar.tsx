@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { DownloadIcon, MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { BrandMark } from "@/components/shared/brand-mark";
 import { LocaleToggle } from "@/components/shared/locale-toggle";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -27,10 +28,11 @@ const LINKS = [
 
 type NavbarProps = {
   siteName: string;
+  logoUrl: string | null;
   cvUrl: string | null;
 };
 
-export function Navbar({ siteName, cvUrl }: NavbarProps) {
+export function Navbar({ siteName, logoUrl, cvUrl }: NavbarProps) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,8 +54,8 @@ export function Navbar({ siteName, cvUrl }: NavbarProps) {
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="font-heading font-semibold tracking-tight">
-          {siteName}
+        <Link href="/">
+          <BrandMark name={siteName} logoUrl={logoUrl} eager />
         </Link>
 
         <nav
@@ -100,7 +102,9 @@ export function Navbar({ siteName, cvUrl }: NavbarProps) {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>{siteName}</SheetTitle>
+                <SheetTitle>
+                  <BrandMark name={siteName} logoUrl={logoUrl} />
+                </SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-1 p-4">
                 {LINKS.map((link) => (

@@ -1,8 +1,9 @@
 import { getTranslations } from "next-intl/server";
 
+import { BrandMark } from "@/components/shared/brand-mark";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
-import { pick } from "@/lib/i18n-content";
+import { pick, pickLogo } from "@/lib/i18n-content";
 import type { PublicSettings } from "@/server/queries/public";
 
 import { SocialLinks, type SocialLink } from "./social-links";
@@ -31,7 +32,9 @@ export async function Footer({ settings, socialLinks, locale }: FooterProps) {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12">
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="space-y-2">
-            <p className="font-heading font-semibold">{siteName}</p>
+            <p>
+              <BrandMark name={siteName} logoUrl={pickLogo(settings, locale)} />
+            </p>
             <p className="max-w-xs text-sm text-balance text-muted-foreground">
               {pick(settings, "tagline", locale)}
             </p>

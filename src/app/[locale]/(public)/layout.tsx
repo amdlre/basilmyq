@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Footer } from "@/components/public/footer";
 import { Navbar } from "@/components/public/navbar";
 import { resolveLocale } from "@/i18n/resolve-locale";
-import { pick } from "@/lib/i18n-content";
+import { pick, pickLogo } from "@/lib/i18n-content";
 import { readSocialLinks } from "@/lib/social";
 import { getSiteSettings } from "@/server/queries/public";
 
@@ -36,6 +36,7 @@ export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
     <>
       <Navbar
         siteName={pick(settings, "siteName", locale)}
+        logoUrl={pickLogo(settings, locale)}
         cvUrl={cvUrl ?? settings.cvUrlEn ?? settings.cvUrlAr}
       />
       <main id="main-content" className="flex-1">
