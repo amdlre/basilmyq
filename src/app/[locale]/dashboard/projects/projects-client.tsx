@@ -55,9 +55,10 @@ const EMPTY: ProjectInput = {
 type Props = {
   rows: ProjectRow[];
   categories: ProjectCategoryRow[];
+  tagSuggestions: string[];
 };
 
-export function ProjectsClient({ rows, categories }: Props) {
+export function ProjectsClient({ rows, categories, tagSuggestions }: Props) {
   const t = useTranslations("Projects");
   const tc = useTranslations("Columns");
   const tCrud = useTranslations("Crud");
@@ -197,7 +198,11 @@ export function ProjectsClient({ rows, categories }: Props) {
       </FormStep>
       <FormStep id="details">
         <ImageField name="coverUrl" label={t("fields.cover")} />
-        <TagsField name="tags" label={tc("tags")} />
+        <TagsField
+          name="tags"
+          label={tc("tags")}
+          suggestions={tagSuggestions}
+        />
         <TextField name="clientAr" label={t("fields.clientAr")} />
         <TextField name="clientEn" label={t("fields.clientEn")} dir="ltr" />
         <TextField name="year" label={tc("year")} type="number" dir="ltr" />

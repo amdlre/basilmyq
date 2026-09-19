@@ -55,7 +55,8 @@ export const projectCategorySchema = z.object({
   nameAr: z.string().min(2),
   nameEn: z.string().min(2),
   slug,
-  color: z.string().min(1),
+  // Not edited in the dashboard yet; the database default applies.
+  color: z.string().min(1).optional(),
   isVisible: z.boolean(),
   order: z.number().int().min(0),
 });
@@ -150,6 +151,12 @@ export const skillGroupSchema = z.object({
   order: z.number().int().min(0),
 });
 
+/** A lookup-list entry offered as a suggestion in the tag fields. */
+export const tagSchema = z.object({
+  name: z.string().trim().min(1).max(40),
+  order: z.number().int().min(0),
+});
+
 export const mediaSchema = z.object({
   altAr: optionalText,
   altEn: optionalText,
@@ -164,6 +171,7 @@ export type ExperienceInput = z.infer<typeof experienceSchema>;
 export type EducationInput = z.infer<typeof educationSchema>;
 export type SkillInput = z.infer<typeof skillSchema>;
 export type SkillGroupInput = z.infer<typeof skillGroupSchema>;
+export type TagInput = z.infer<typeof tagSchema>;
 
 /** Settings and the two singleton content sections. */
 

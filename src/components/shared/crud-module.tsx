@@ -56,6 +56,8 @@ type CrudModuleProps<TRow extends CrudRow, TValues extends FieldValues> = {
 
   singularLabel: string;
   storageKey: string;
+  /** See `DataTable`'s `queryPrefix`: set when several modules share a page. */
+  queryPrefix?: string;
   exportFileName: string;
   searchKeys?: string[];
   filters?: FilterConfig[];
@@ -81,6 +83,7 @@ export function CrudModule<TRow extends CrudRow, TValues extends FieldValues>({
   children,
   singularLabel,
   storageKey,
+  queryPrefix,
   exportFileName,
   searchKeys = [],
   filters = [],
@@ -248,6 +251,7 @@ export function CrudModule<TRow extends CrudRow, TValues extends FieldValues>({
         bulkActions={bulkActions}
         exportFileName={exportFileName}
         storageKey={storageKey}
+        queryPrefix={queryPrefix}
         enableRowReorder={enableRowReorder}
         onRowReorder={async (orderedIds) =>
           report(await reorderContent(entity, orderedIds), t("reordered"))

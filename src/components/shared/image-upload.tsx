@@ -4,28 +4,46 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { ImagePlusIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+type UploadResponse = { url?: string; error?: string };
+
+class UploadError extends Error {}
+
+/** Posts one file to the dashboard's upload route and returns its URL. */
+async function uploadToLibrary(file: File): Promise<string> {
+  const body = new FormData();
+  body.append("file", file);
+
+  const response = await fetch("/api/upload", { method: "POST", body });
+  const result = (await response.json().catch(() => ({}))) as UploadResponse;
+
+  if (!response.ok || !result.url) {
+    throw new UploadError(result.error ?? "UPLOAD_FAILED");
+  }
+  return result.url;
+}
+
 type ImageUploadProps = {
   value: string | null;
   onChange: (value: string | null) => void;
-  /** Uploads the file and resolves to its public URL. */
+  /** Uploads the file and resolves to its public URL. Defaults to the library. */
   onUpload?: (file: File) => Promise<string>;
   disabled?: boolean;
   alt?: string;
 };
 
 /**
- * Drag-and-drop image field with preview and removal. The actual transport is
- * injected via `onUpload`, so the component does not care whether the file goes
- * to local storage or UploadThing (decided in Phase 4).
+ * Drag-and-drop image field with preview and removal. Files go to the media
+ * library unless another transport is injected via `onUpload`.
  */
 export function ImageUpload({
   value,
   onChange,
-  onUpload,
+  onUpload = uploadToLibrary,
   disabled = false,
   alt = "",
 }: ImageUploadProps) {
@@ -36,7 +54,7 @@ export function ImageUpload({
   const [error, setError] = useState<string | null>(null);
 
   const handleFile = async (file: File | undefined) => {
-    if (!file || !onUpload) return;
+    if (!file) return;
 
     if (!file.type.startsWith("image/")) {
       setError(t("notAnImage"));
@@ -47,8 +65,17 @@ export function ImageUpload({
     setIsUploading(true);
     try {
       onChange(await onUpload(file));
-    } catch {
-      setError(t("uploadFailed"));
+      toast.success(t("uploaded"));
+    } catch (caught) {
+      const reason = caught instanceof UploadError ? caught.message : "";
+      const message =
+        reason === "TOO_LARGE"
+          ? t("tooLarge")
+          : reason === "INVALID_TYPE"
+            ? t("notAnImage")
+            : t("uploadFailed");
+      setError(message);
+      toast.error(message);
     } finally {
       setIsUploading(false);
     }
@@ -115,7 +142,11 @@ export function ImageUpload({
         accept="image/*"
         className="sr-only"
         tabIndex={-1}
-        onChange={(event) => void handleFile(event.target.files?.[0])}
+        onChange={(event) => {
+          void handleFile(event.target.files?.[0]);
+          // Allows choosing the same file again after an error.
+          event.target.value = "";
+        }}
       />
 
       {error ? <p className="text-sm text-destructive">{error}</p> : null}

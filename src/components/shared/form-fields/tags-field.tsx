@@ -1,16 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { XIcon } from "lucide-react";
+import { PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Controller, useFormContext } from "react-hook-form";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { FieldWrapper, type BaseFieldProps } from "./field-wrapper";
 
-export function TagsField(base: BaseFieldProps) {
+type TagsFieldProps = BaseFieldProps & {
+  /** Offered as one-click chips, filtered by what is being typed. */
+  suggestions?: string[];
+};
+
+export function TagsField({ suggestions = [], ...base }: TagsFieldProps) {
   const t = useTranslations("Form");
   const { control } = useFormContext();
   const [draft, setDraft] = useState("");
@@ -25,6 +31,13 @@ export function TagsField(base: BaseFieldProps) {
             const tags: string[] = Array.isArray(field.value)
               ? (field.value as string[])
               : [];
+
+            const needle = draft.trim().toLowerCase();
+            const offered = suggestions.filter(
+              (suggestion) =>
+                !tags.includes(suggestion) &&
+                suggestion.toLowerCase().includes(needle),
+            );
 
             const add = (value: string) => {
               const tag = value.trim();
@@ -72,6 +85,31 @@ export function TagsField(base: BaseFieldProps) {
                           <XIcon className="size-3" />
                         </button>
                       </Badge>
+                    ))}
+                  </div>
+                ) : null}
+
+                {offered.length > 0 ? (
+                  <div
+                    role="group"
+                    className="flex flex-wrap gap-1.5"
+                    aria-label={t("suggestedTags")}
+                  >
+                    {offered.map((suggestion) => (
+                      <Button
+                        key={suggestion}
+                        type="button"
+                        variant="outline"
+                        size="xs"
+                        disabled={base.disabled}
+                        // Keeps focus in the input, so its blur does not
+                        // commit a half-typed draft first.
+                        onMouseDown={(event) => event.preventDefault()}
+                        onClick={() => add(suggestion)}
+                      >
+                        <PlusIcon />
+                        {suggestion}
+                      </Button>
                     ))}
                   </div>
                 ) : null}

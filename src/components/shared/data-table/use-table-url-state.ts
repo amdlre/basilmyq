@@ -35,7 +35,7 @@ function serializeSortParam(sorting: SortEntry[]): string {
  * Filter keys are dynamic, so the raw nuqs record is not statically indexable.
  * The narrowing is done once here and every caller gets a typed API.
  */
-export function useTableUrlState(filterKeys: string[]) {
+export function useTableUrlState(filterKeys: string[], queryPrefix?: string) {
   const parsers = useMemo(() => {
     const filterParsers = Object.fromEntries(
       filterKeys.map((key) => [
@@ -53,9 +53,20 @@ export function useTableUrlState(filterKeys: string[]) {
     };
   }, [filterKeys]);
 
+  const urlKeys = useMemo(
+    () =>
+      queryPrefix
+        ? Object.fromEntries(
+            Object.keys(parsers).map((key) => [key, `${queryPrefix}_${key}`]),
+          )
+        : undefined,
+    [parsers, queryPrefix],
+  );
+
   const [rawState, setRawState] = useQueryStates(parsers, {
     history: "replace",
     clearOnDefault: true,
+    urlKeys,
   });
 
   const state = rawState as unknown as Record<string, unknown>;

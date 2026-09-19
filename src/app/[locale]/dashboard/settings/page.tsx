@@ -8,7 +8,12 @@ import type {
   HeroSectionInput,
   SiteSettingInput,
 } from "@/lib/validations/content";
-import { getSingletons } from "@/server/queries/dashboard";
+import {
+  getProjectCategories,
+  getSingletons,
+  getSkillGroups,
+  getTags,
+} from "@/server/queries/dashboard";
 
 import { SettingsClient } from "./settings-client";
 
@@ -36,7 +41,13 @@ export default async function SettingsPage(
   props: PageProps<"/[locale]/dashboard/settings">,
 ) {
   await resolveLocale(props.params);
-  const { settings, hero, about } = await getSingletons();
+  const [{ settings, hero, about }, tags, categories, groups] =
+    await Promise.all([
+      getSingletons(),
+      getTags(),
+      getProjectCategories(),
+      getSkillGroups(),
+    ]);
   const t = await getTranslations("Settings");
   const tNav = await getTranslations("Nav");
 
@@ -99,6 +110,7 @@ export default async function SettingsPage(
       hero={heroValues}
       about={aboutValues}
       cvDownloadCount={cvDownloadCount}
+      lookups={{ tags, categories, groups }}
     />,
   );
 }

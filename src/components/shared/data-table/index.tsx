@@ -73,6 +73,7 @@ export function DataTable<TData>({
   enableRowReorder = false,
   onRowReorder,
   storageKey,
+  queryPrefix,
   isLoading = false,
   error = null,
   emptyTitle,
@@ -83,7 +84,7 @@ export function DataTable<TData>({
     useTablePreferences(storageKey);
 
   const filterKeys = useMemo(() => filters.map((f) => f.key), [filters]);
-  const urlState = useTableUrlState(filterKeys);
+  const urlState = useTableUrlState(filterKeys, queryPrefix);
 
   const [rowSelection, setRowSelection] = useState({});
   const [, startReorder] = useTransition();

@@ -43,3 +43,6 @@ next-env.d.ts
 
 # generated prisma client
 /src/generated
+
+# Uploaded images (UPLOAD_DIR)
+/uploads

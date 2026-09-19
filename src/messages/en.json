@@ -162,7 +162,9 @@
     "uploading": "Uploading…",
     "remove": "Remove image",
     "notAnImage": "That file is not an image.",
-    "uploadFailed": "Upload failed. Try again."
+    "uploadFailed": "Upload failed. Try again.",
+    "tooLarge": "The image is larger than 5 MB.",
+    "uploaded": "Image uploaded"
   },
   "Form": {
     "generateSlug": "Generate from title",
@@ -175,7 +177,8 @@
     "list": "List",
     "quote": "Quote",
     "characters": "{count} characters",
-    "markdownHint": "Markdown is supported."
+    "markdownHint": "Markdown is supported.",
+    "suggestedTags": "Suggested tags"
   },
   "Playground": {
     "title": "Component playground",
@@ -532,7 +535,8 @@
       "contact": "Contact",
       "cv": "CV",
       "seo": "SEO",
-      "advanced": "Advanced"
+      "advanced": "Advanced",
+      "lookups": "Lookup lists"
     },
     "social": {
       "label": "Label",
@@ -615,6 +619,27 @@
       "showExperience": "Experience",
       "showTestimonials": "Testimonials",
       "showBlog": "Blog"
+    },
+    "lookups": {
+      "description": "Values repeated across forms. Add them once here and pick them with one click.",
+      "tags": {
+        "title": "Tags",
+        "singular": "tag",
+        "hint": "Suggested in the project and post tag fields."
+      },
+      "categories": {
+        "title": "Project categories",
+        "singular": "category"
+      },
+      "groups": {
+        "title": "Skill groups",
+        "singular": "group"
+      },
+      "fields": {
+        "nameAr": "Name (Arabic)",
+        "nameEn": "Name (English)",
+        "slug": "Slug"
+      }
     }
   },
   "Overview": {

@@ -24,12 +24,24 @@ import {
   saveHeroSection,
   saveSiteSettings,
 } from "@/server/actions/settings";
+import type {
+  ProjectCategoryRow,
+  SkillGroupRow,
+  TagRow,
+} from "@/server/queries/dashboard";
+
+import { LookupLists } from "./lookup-lists";
 
 type Props = {
   settings: SiteSettingInput;
   hero: HeroSectionInput;
   about: AboutSectionInput;
   cvDownloadCount: number;
+  lookups: {
+    tags: TagRow[];
+    categories: ProjectCategoryRow[];
+    groups: SkillGroupRow[];
+  };
 };
 
 export function SettingsClient({
@@ -37,6 +49,7 @@ export function SettingsClient({
   hero,
   about,
   cvDownloadCount,
+  lookups,
 }: Props) {
   const t = useTranslations("Settings");
 
@@ -48,6 +61,7 @@ export function SettingsClient({
         <TabsTrigger value="contact">{t("tabs.contact")}</TabsTrigger>
         <TabsTrigger value="cv">{t("tabs.cv")}</TabsTrigger>
         <TabsTrigger value="seo">{t("tabs.seo")}</TabsTrigger>
+        <TabsTrigger value="lookups">{t("tabs.lookups")}</TabsTrigger>
         <TabsTrigger value="advanced">{t("tabs.advanced")}</TabsTrigger>
       </TabsList>
 
@@ -249,6 +263,11 @@ export function SettingsClient({
             dir="ltr"
           />
         </SettingsForm>
+      </TabsContent>
+
+      {/* Lookup lists: values the other forms pick from */}
+      <TabsContent value="lookups">
+        <LookupLists {...lookups} />
       </TabsContent>
 
       {/* 6 — Advanced */}

@@ -45,7 +45,12 @@ const EMPTY: PostInput = {
   order: 0,
 };
 
-export function BlogClient({ rows }: { rows: PostRow[] }) {
+type Props = {
+  rows: PostRow[];
+  tagSuggestions: string[];
+};
+
+export function BlogClient({ rows, tagSuggestions }: Props) {
   const t = useTranslations("Blog");
   const tc = useTranslations("Columns");
   const tCrud = useTranslations("Crud");
@@ -190,7 +195,11 @@ export function BlogClient({ rows }: { rows: PostRow[] }) {
       </FormStep>
       <FormStep id="details">
         <ImageField name="coverUrl" label={t("fields.cover")} />
-        <TagsField name="tags" label={tc("tags")} />
+        <TagsField
+          name="tags"
+          label={tc("tags")}
+          suggestions={tagSuggestions}
+        />
         <TextField
           name="readTimeMinutes"
           label={t("fields.readTime")}

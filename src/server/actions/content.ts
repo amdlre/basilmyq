@@ -37,7 +37,7 @@ async function revalidateFor(entity: ContentEntity): Promise<void> {
   // `updateTag`, not `revalidateTag`: it expires the tag immediately so the
   // next request waits for fresh data instead of being served the stale copy.
   // That is what makes a dashboard edit visible on the site straight away.
-  updateTag(tag);
+  if (tag) updateTag(tag);
   for (const path of paths) {
     revalidatePath(`/[locale]${path === "/" ? "" : path}`, "page");
   }

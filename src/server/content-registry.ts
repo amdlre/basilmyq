@@ -13,6 +13,7 @@ import {
   serviceSchema,
   skillGroupSchema,
   skillSchema,
+  tagSchema,
   testimonialSchema,
 } from "@/lib/validations/content";
 import { db } from "@/server/db";
@@ -47,8 +48,8 @@ type ContentConfig = {
   schema: ZodType<Record<string, unknown>, Record<string, unknown>>;
   /** Public paths to revalidate after a write. */
   paths: string[];
-  /** Cache tag of the public query this model feeds. */
-  tag: string;
+  /** Cache tag of the public query this model feeds, if it feeds one. */
+  tag?: string;
   /** Fields cleared when duplicating, because they must stay unique. */
   uniqueFields?: string[];
   supportsVisibility: boolean;
@@ -133,6 +134,15 @@ export const CONTENT_ENTITIES = {
     paths: ["/"],
     tag: PUBLIC_TAGS.skills,
     supportsVisibility: true,
+    supportsFeatured: false,
+  },
+  tag: {
+    delegate: db.tag as unknown as ContentDelegate,
+    schema: tagSchema as unknown as ContentConfig["schema"],
+    // Dashboard-only: tag suggestions never reach the public site.
+    paths: [],
+    uniqueFields: ["name"],
+    supportsVisibility: false,
     supportsFeatured: false,
   },
 } as const satisfies Record<string, ContentConfig>;

@@ -85,6 +85,12 @@ export type DataTableProps<TData> = {
   /** Persists column order, visibility, sizing and density in localStorage. */
   storageKey: string;
 
+  /**
+   * Prefixes the query-string keys. Needed only when several tables share one
+   * page, so their search, sort and page do not overwrite each other.
+   */
+  queryPrefix?: string;
+
   isLoading?: boolean;
   error?: string | null;
   emptyTitle?: string;

@@ -4,7 +4,11 @@ import { getTranslations } from "next-intl/server";
 import { PageShell } from "@/components/shared/page-shell";
 import { StatsGrid } from "@/components/shared/stats-grid";
 import { resolveLocale } from "@/i18n/resolve-locale";
-import { getProjectCategories, getProjects } from "@/server/queries/dashboard";
+import {
+  getProjectCategories,
+  getProjects,
+  getTags,
+} from "@/server/queries/dashboard";
 import { getProjectStats } from "@/server/queries/stats";
 
 import { ProjectsClient } from "./projects-client";
@@ -14,9 +18,10 @@ export default async function ProjectsPage(
 ) {
   await resolveLocale(props.params);
 
-  const [rows, categories, stats] = await Promise.all([
+  const [rows, categories, tags, stats] = await Promise.all([
     getProjects(),
     getProjectCategories(),
+    getTags(),
     getProjectStats(),
   ]);
 
@@ -59,7 +64,11 @@ export default async function ProjectsPage(
           },
         ]}
       />
-      <ProjectsClient rows={rows} categories={categories} />
+      <ProjectsClient
+        rows={rows}
+        categories={categories}
+        tagSuggestions={tags.map((tag) => tag.name)}
+      />
     </PageShell>
   );
 }

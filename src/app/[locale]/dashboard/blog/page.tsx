@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { PageShell } from "@/components/shared/page-shell";
 import { StatsGrid } from "@/components/shared/stats-grid";
 import { resolveLocale } from "@/i18n/resolve-locale";
-import { getPosts } from "@/server/queries/dashboard";
+import { getPosts, getTags } from "@/server/queries/dashboard";
 import { getPostStats } from "@/server/queries/stats";
 
 import { BlogClient } from "./blog-client";
@@ -13,7 +13,11 @@ export default async function BlogPage(
   props: PageProps<"/[locale]/dashboard/blog">,
 ) {
   await resolveLocale(props.params);
-  const [rows, stats] = await Promise.all([getPosts(), getPostStats()]);
+  const [rows, tags, stats] = await Promise.all([
+    getPosts(),
+    getTags(),
+    getPostStats(),
+  ]);
   const t = await getTranslations("Blog");
   const tNav = await getTranslations("Nav");
 
@@ -49,7 +53,7 @@ export default async function BlogPage(
           },
         ]}
       />
-      <BlogClient rows={rows} />
+      <BlogClient rows={rows} tagSuggestions={tags.map((tag) => tag.name)} />
     </PageShell>
   );
 }
