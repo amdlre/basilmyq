@@ -310,7 +310,9 @@ export function DataTable<TData>({
                   modifiers={[restrictToVerticalAxis]}
                   onDragEnd={handleRowDragEnd}
                 >
-                  <Table style={{ width: table.getTotalSize() }}>
+                  {/* Fill the container; column sizes are the minimum, and only
+                      scroll once they no longer fit. */}
+                  <Table style={{ minWidth: table.getTotalSize() }}>
                     <TableHeader className="sticky top-0 z-10 bg-muted/50">
                       {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>

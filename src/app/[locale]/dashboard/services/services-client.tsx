@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
   bilingualColumn,
@@ -117,26 +118,32 @@ export function ServicesClient({ rows }: { rows: ServiceRow[] }) {
         },
       ]}
     >
-      <TextField name="titleAr" label={t("fields.titleAr")} />
-      <TextField name="titleEn" label={t("fields.titleEn")} dir="ltr" />
-      <TextField
-        name="descriptionAr"
-        label={t("fields.descriptionAr")}
-        multiline
-      />
-      <TextField
-        name="descriptionEn"
-        label={t("fields.descriptionEn")}
-        multiline
-      />
-      <TextField name="icon" label={t("fields.icon")} dir="ltr" />
-      <TagsField name="featuresAr" label={t("fields.featuresAr")} />
-      <TagsField name="featuresEn" label={t("fields.featuresEn")} />
-      <TextField name="price" label={t("fields.price")} />
-      <TextField name="priceNote" label={t("fields.priceNote")} />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-      <SwitchField name="isFeatured" label={tc("featured")} />
+      <FormStep id="basics">
+        <TextField name="titleAr" label={t("fields.titleAr")} />
+        <TextField name="titleEn" label={t("fields.titleEn")} dir="ltr" />
+        <TextField
+          name="descriptionAr"
+          label={t("fields.descriptionAr")}
+          multiline
+        />
+        <TextField
+          name="descriptionEn"
+          label={t("fields.descriptionEn")}
+          multiline
+        />
+        <TextField name="icon" label={t("fields.icon")} dir="ltr" />
+      </FormStep>
+      <FormStep id="details">
+        <TagsField name="featuresAr" label={t("fields.featuresAr")} />
+        <TagsField name="featuresEn" label={t("fields.featuresEn")} />
+        <TextField name="price" label={t("fields.price")} />
+        <TextField name="priceNote" label={t("fields.priceNote")} />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+        <SwitchField name="isFeatured" label={tc("featured")} />
+      </FormStep>
     </CrudModule>
   );
 }

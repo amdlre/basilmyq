@@ -25,7 +25,9 @@
     "saving": "Saving…",
     "saved": "Saved",
     "deleted": "Deleted",
-    "somethingWentWrong": "Something went wrong."
+    "somethingWentWrong": "Something went wrong.",
+    "next": "Next",
+    "back": "Back"
   },
   "Nav": {
     "home": "Home",
@@ -250,6 +252,24 @@
     "reordered": "Order saved.",
     "duplicateKey": "That value is already taken (the slug, for example).",
     "viewOnSite": "View on site"
+  },
+  "FormSteps": {
+    "basics": {
+      "title": "Basics",
+      "description": "Name and category"
+    },
+    "content": {
+      "title": "Content",
+      "description": "Displayed text"
+    },
+    "details": {
+      "title": "Details",
+      "description": "Media and links"
+    },
+    "publishing": {
+      "title": "Publishing",
+      "description": "Order and visibility"
+    }
   },
   "Columns": {
     "title": "Title",

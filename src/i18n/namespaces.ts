@@ -25,6 +25,7 @@ export const DASHBOARD_NAMESPACES = [
   "DataTable",
   "Columns",
   "Crud",
+  "FormSteps",
   "Settings",
   "Projects",
   "Blog",

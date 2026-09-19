@@ -5,6 +5,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import type { FilterConfig } from "@/components/shared/data-table/types";
 import {
   ImageField,
@@ -170,48 +171,56 @@ export function ProjectsClient({ rows, categories }: Props) {
         },
       ]}
     >
-      <TextField name="titleAr" label={t("fields.titleAr")} />
-      <TextField name="titleEn" label={t("fields.titleEn")} dir="ltr" />
-      <SlugField name="slug" source="titleEn" label={t("fields.slug")} />
-      <SelectField
-        name="status"
-        label={tc("status")}
-        options={STATUSES.map((value) => ({
-          value,
-          label: statusLabels[value],
-        }))}
-      />
-      <SelectField
-        name="categoryId"
-        label={tc("category")}
-        options={categoryOptions}
-      />
-      <TextField name="summaryAr" label={t("fields.summaryAr")} multiline />
-      <TextField name="summaryEn" label={t("fields.summaryEn")} multiline />
-      <RichTextField name="contentAr" label={t("fields.contentAr")} />
-      <RichTextField name="contentEn" label={t("fields.contentEn")} />
-      <ImageField name="coverUrl" label={t("fields.cover")} />
-      <TagsField name="tags" label={tc("tags")} />
-      <TextField name="clientAr" label={t("fields.clientAr")} />
-      <TextField name="clientEn" label={t("fields.clientEn")} dir="ltr" />
-      <TextField name="year" label={tc("year")} type="number" dir="ltr" />
-      <TextField name="roleAr" label={t("fields.roleAr")} />
-      <TextField name="roleEn" label={t("fields.roleEn")} dir="ltr" />
-      <TextField
-        name="liveUrl"
-        label={t("fields.liveUrl")}
-        type="url"
-        dir="ltr"
-      />
-      <TextField
-        name="repoUrl"
-        label={t("fields.repoUrl")}
-        type="url"
-        dir="ltr"
-      />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-      <SwitchField name="isFeatured" label={tc("featured")} />
+      <FormStep id="basics">
+        <TextField name="titleAr" label={t("fields.titleAr")} />
+        <TextField name="titleEn" label={t("fields.titleEn")} dir="ltr" />
+        <SlugField name="slug" source="titleEn" label={t("fields.slug")} />
+        <SelectField
+          name="status"
+          label={tc("status")}
+          options={STATUSES.map((value) => ({
+            value,
+            label: statusLabels[value],
+          }))}
+        />
+        <SelectField
+          name="categoryId"
+          label={tc("category")}
+          options={categoryOptions}
+        />
+      </FormStep>
+      <FormStep id="content">
+        <TextField name="summaryAr" label={t("fields.summaryAr")} multiline />
+        <TextField name="summaryEn" label={t("fields.summaryEn")} multiline />
+        <RichTextField name="contentAr" label={t("fields.contentAr")} />
+        <RichTextField name="contentEn" label={t("fields.contentEn")} />
+      </FormStep>
+      <FormStep id="details">
+        <ImageField name="coverUrl" label={t("fields.cover")} />
+        <TagsField name="tags" label={tc("tags")} />
+        <TextField name="clientAr" label={t("fields.clientAr")} />
+        <TextField name="clientEn" label={t("fields.clientEn")} dir="ltr" />
+        <TextField name="year" label={tc("year")} type="number" dir="ltr" />
+        <TextField name="roleAr" label={t("fields.roleAr")} />
+        <TextField name="roleEn" label={t("fields.roleEn")} dir="ltr" />
+        <TextField
+          name="liveUrl"
+          label={t("fields.liveUrl")}
+          type="url"
+          dir="ltr"
+        />
+        <TextField
+          name="repoUrl"
+          label={t("fields.repoUrl")}
+          type="url"
+          dir="ltr"
+        />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+        <SwitchField name="isFeatured" label={tc("featured")} />
+      </FormStep>
     </CrudModule>
   );
 }

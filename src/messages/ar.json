@@ -25,7 +25,9 @@
     "saving": "جارٍ الحفظ…",
     "saved": "تم الحفظ",
     "deleted": "تم الحذف",
-    "somethingWentWrong": "حدث خطأ غير متوقع."
+    "somethingWentWrong": "حدث خطأ غير متوقع.",
+    "next": "التالي",
+    "back": "السابق"
   },
   "Nav": {
     "home": "الرئيسية",
@@ -250,6 +252,24 @@
     "reordered": "تم حفظ الترتيب.",
     "duplicateKey": "هذه القيمة مستخدمة بالفعل (الرابط مثلاً).",
     "viewOnSite": "عرض في الموقع"
+  },
+  "FormSteps": {
+    "basics": {
+      "title": "الأساسيات",
+      "description": "العنوان والتصنيف"
+    },
+    "content": {
+      "title": "المحتوى",
+      "description": "النصوص المعروضة"
+    },
+    "details": {
+      "title": "التفاصيل",
+      "description": "الصور والروابط"
+    },
+    "publishing": {
+      "title": "النشر",
+      "description": "الترتيب والظهور"
+    }
   },
   "Columns": {
     "title": "العنوان",

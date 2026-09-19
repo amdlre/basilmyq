@@ -6,6 +6,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
   bilingualColumn,
@@ -176,25 +177,33 @@ export function BlogClient({ rows }: { rows: PostRow[] }) {
         },
       ]}
     >
-      <TextField name="titleAr" label={t("fields.titleAr")} />
-      <TextField name="titleEn" label={t("fields.titleEn")} dir="ltr" />
-      <SlugField name="slug" source="titleEn" label={t("fields.slug")} />
-      <TextField name="excerptAr" label={t("fields.excerptAr")} multiline />
-      <TextField name="excerptEn" label={t("fields.excerptEn")} multiline />
-      <RichTextField name="contentAr" label={t("fields.contentAr")} />
-      <RichTextField name="contentEn" label={t("fields.contentEn")} />
-      <ImageField name="coverUrl" label={t("fields.cover")} />
-      <TagsField name="tags" label={tc("tags")} />
-      <TextField
-        name="readTimeMinutes"
-        label={t("fields.readTime")}
-        type="number"
-        dir="ltr"
-      />
-      <DateField name="publishedAt" label={t("fields.publishedAt")} />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-      <SwitchField name="isFeatured" label={tc("featured")} />
+      <FormStep id="basics">
+        <TextField name="titleAr" label={t("fields.titleAr")} />
+        <TextField name="titleEn" label={t("fields.titleEn")} dir="ltr" />
+        <SlugField name="slug" source="titleEn" label={t("fields.slug")} />
+        <TextField name="excerptAr" label={t("fields.excerptAr")} multiline />
+        <TextField name="excerptEn" label={t("fields.excerptEn")} multiline />
+      </FormStep>
+      <FormStep id="content">
+        <RichTextField name="contentAr" label={t("fields.contentAr")} />
+        <RichTextField name="contentEn" label={t("fields.contentEn")} />
+      </FormStep>
+      <FormStep id="details">
+        <ImageField name="coverUrl" label={t("fields.cover")} />
+        <TagsField name="tags" label={tc("tags")} />
+        <TextField
+          name="readTimeMinutes"
+          label={t("fields.readTime")}
+          type="number"
+          dir="ltr"
+        />
+        <DateField name="publishedAt" label={t("fields.publishedAt")} />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+        <SwitchField name="isFeatured" label={tc("featured")} />
+      </FormStep>
     </CrudModule>
   );
 }

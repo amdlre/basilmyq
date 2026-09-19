@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
   bilingualColumn,
@@ -155,34 +156,42 @@ export function ExperienceClient({ rows }: { rows: ExperienceRow[] }) {
         },
       ]}
     >
-      <TextField name="roleAr" label={t("fields.roleAr")} />
-      <TextField name="roleEn" label={t("fields.roleEn")} dir="ltr" />
-      <TextField name="companyAr" label={t("fields.companyAr")} />
-      <TextField name="companyEn" label={t("fields.companyEn")} dir="ltr" />
-      <TextField name="locationAr" label={t("fields.locationAr")} />
-      <TextField name="locationEn" label={t("fields.locationEn")} dir="ltr" />
-      <DateField name="startDate" label={t("fields.startDate")} />
-      <DateField name="endDate" label={t("fields.endDate")} />
-      <SwitchField name="isCurrent" label={t("fields.isCurrent")} />
-      <TextField
-        name="descriptionAr"
-        label={t("fields.descriptionAr")}
-        multiline
-      />
-      <TextField
-        name="descriptionEn"
-        label={t("fields.descriptionEn")}
-        multiline
-      />
-      <ImageField name="logoUrl" label={t("fields.logo")} />
-      <TextField
-        name="companyUrl"
-        label={t("fields.companyUrl")}
-        type="url"
-        dir="ltr"
-      />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+      <FormStep id="basics">
+        <TextField name="roleAr" label={t("fields.roleAr")} />
+        <TextField name="roleEn" label={t("fields.roleEn")} dir="ltr" />
+        <TextField name="companyAr" label={t("fields.companyAr")} />
+        <TextField name="companyEn" label={t("fields.companyEn")} dir="ltr" />
+        <TextField name="locationAr" label={t("fields.locationAr")} />
+        <TextField name="locationEn" label={t("fields.locationEn")} dir="ltr" />
+      </FormStep>
+      <FormStep id="details">
+        <DateField name="startDate" label={t("fields.startDate")} />
+        <DateField name="endDate" label={t("fields.endDate")} />
+        <SwitchField name="isCurrent" label={t("fields.isCurrent")} />
+      </FormStep>
+      <FormStep id="content">
+        <TextField
+          name="descriptionAr"
+          label={t("fields.descriptionAr")}
+          multiline
+        />
+        <TextField
+          name="descriptionEn"
+          label={t("fields.descriptionEn")}
+          multiline
+        />
+        <ImageField name="logoUrl" label={t("fields.logo")} />
+        <TextField
+          name="companyUrl"
+          label={t("fields.companyUrl")}
+          type="url"
+          dir="ltr"
+        />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+      </FormStep>
     </CrudModule>
   );
 }

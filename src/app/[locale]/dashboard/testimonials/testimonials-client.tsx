@@ -6,6 +6,7 @@ import { StarIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
   bilingualColumn,
@@ -148,24 +149,30 @@ export function TestimonialsClient({ rows }: { rows: TestimonialRow[] }) {
         },
       ]}
     >
-      <TextField name="nameAr" label={t("fields.nameAr")} />
-      <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
-      <TextField name="roleAr" label={t("fields.roleAr")} />
-      <TextField name="roleEn" label={t("fields.roleEn")} dir="ltr" />
-      <TextField name="companyAr" label={t("fields.companyAr")} />
-      <TextField name="companyEn" label={t("fields.companyEn")} dir="ltr" />
-      <ImageField name="avatarUrl" label={t("fields.avatar")} />
-      <TextField name="quoteAr" label={t("fields.quoteAr")} multiline />
-      <TextField name="quoteEn" label={t("fields.quoteEn")} multiline />
-      <TextField
-        name="rating"
-        label={t("fields.rating")}
-        type="number"
-        dir="ltr"
-      />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-      <SwitchField name="isFeatured" label={tc("featured")} />
+      <FormStep id="basics">
+        <TextField name="nameAr" label={t("fields.nameAr")} />
+        <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
+        <TextField name="roleAr" label={t("fields.roleAr")} />
+        <TextField name="roleEn" label={t("fields.roleEn")} dir="ltr" />
+        <TextField name="companyAr" label={t("fields.companyAr")} />
+        <TextField name="companyEn" label={t("fields.companyEn")} dir="ltr" />
+        <ImageField name="avatarUrl" label={t("fields.avatar")} />
+      </FormStep>
+      <FormStep id="content">
+        <TextField name="quoteAr" label={t("fields.quoteAr")} multiline />
+        <TextField name="quoteEn" label={t("fields.quoteEn")} multiline />
+        <TextField
+          name="rating"
+          label={t("fields.rating")}
+          type="number"
+          dir="ltr"
+        />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+        <SwitchField name="isFeatured" label={tc("featured")} />
+      </FormStep>
     </CrudModule>
   );
 }

@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
   bilingualColumn,
@@ -144,23 +145,27 @@ export function SkillsClient({ rows, groups }: Props) {
       enableRowReorder
       filters={[{ key: "group", label: tc("group"), options: groupOptions }]}
     >
-      <TextField name="nameAr" label={t("fields.nameAr")} />
-      <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
-      <SelectField
-        name="groupId"
-        label={t("fields.group")}
-        options={groupOptions}
-      />
-      <TextField
-        name="level"
-        label={t("fields.level")}
-        type="number"
-        dir="ltr"
-      />
-      <TextField name="icon" label={t("fields.icon")} dir="ltr" />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-      <SwitchField name="isFeatured" label={tc("featured")} />
+      <FormStep id="basics">
+        <TextField name="nameAr" label={t("fields.nameAr")} />
+        <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
+        <SelectField
+          name="groupId"
+          label={t("fields.group")}
+          options={groupOptions}
+        />
+        <TextField
+          name="level"
+          label={t("fields.level")}
+          type="number"
+          dir="ltr"
+        />
+        <TextField name="icon" label={t("fields.icon")} dir="ltr" />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+        <SwitchField name="isFeatured" label={tc("featured")} />
+      </FormStep>
     </CrudModule>
   );
 }

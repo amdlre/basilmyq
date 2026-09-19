@@ -1,9 +1,13 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { useEffect, useTransition } from "react";
+import type { FormEvent, ReactNode } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircleIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  LoaderCircleIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
   FormProvider,
@@ -14,6 +18,11 @@ import {
 import { toast } from "sonner";
 import type { ZodType } from "zod";
 
+import {
+  collectSteps,
+  FormStepperNav,
+  type FormStepId,
+} from "@/components/shared/form-stepper";
 import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +33,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 export type FormActionResult = {
   ok: boolean;
@@ -49,7 +59,8 @@ type FormSheetProps<TValues extends FieldValues> = {
  * The single host for every create and edit form in the dashboard.
  *
  * It owns validation, submission, toasts and server-side field errors, so a
- * module contributes nothing but a schema and a list of fields.
+ * module contributes nothing but a schema and a list of fields. Grouping those
+ * fields in `<FormStep>` turns the sheet into a stepper.
  */
 export function FormSheet<TValues extends FieldValues>({
   open,
@@ -72,13 +83,55 @@ export function FormSheet<TValues extends FieldValues>({
     defaultValues,
   });
 
+  const steps = useMemo(() => collectSteps(children), [children]);
+  const isStepped = steps.length > 0;
+  const firstStep = steps[0]?.id;
+  const [currentStep, setCurrentStep] = useState<FormStepId | undefined>(
+    firstStep,
+  );
+  const stepIndex = steps.findIndex((step) => step.id === currentStep);
+  const isLastStep = !isStepped || stepIndex === steps.length - 1;
+
+  // Every opening starts from the first step.
+  const [wasOpen, setWasOpen] = useState(open);
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (open) setCurrentStep(firstStep);
+  }
+
   // Re-seed when switching between records without unmounting the sheet.
   useEffect(() => {
     if (open) form.reset(defaultValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, defaultValues]);
 
-  const onSubmit = form.handleSubmit((values) => {
+  const stepsWithErrors = (errors: object): FormStepId[] => {
+    const invalid = Object.keys(errors);
+    return steps
+      .filter((step) => step.fields.some((field) => invalid.includes(field)))
+      .map((step) => step.id);
+  };
+
+  const invalidSteps = stepsWithErrors(form.formState.errors);
+
+  const goToStep = (offset: number) => {
+    const next = steps[stepIndex + offset];
+    if (next) setCurrentStep(next.id);
+  };
+
+  // Moving forward validates only the step being left.
+  const goForward = async () => {
+    const fields = steps[stepIndex]?.fields ?? [];
+    if (await form.trigger(fields as never)) goToStep(1);
+  };
+
+  // A failed submit opens the first step that holds an error.
+  const showFirstInvalidStep = (errors: object) => {
+    const [first] = stepsWithErrors(errors);
+    if (first) setCurrentStep(first);
+  };
+
+  const submit = form.handleSubmit((values) => {
     startTransition(async () => {
       const result = await action(values);
 
@@ -93,10 +146,18 @@ export function FormSheet<TValues extends FieldValues>({
         for (const [field, message] of Object.entries(result.fieldErrors)) {
           form.setError(field as never, { type: "server", message });
         }
+        showFirstInvalidStep(result.fieldErrors);
       }
       toast.error(result.message ?? t("somethingWentWrong"));
     });
-  });
+  }, showFirstInvalidStep);
+
+  // Enter inside a field advances the stepper instead of saving early.
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (isLastStep) return submit(event);
+    event.preventDefault();
+    return goForward();
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -114,11 +175,47 @@ export function FormSheet<TValues extends FieldValues>({
             noValidate
             className="flex min-h-0 flex-1 flex-col"
           >
+            {isStepped && currentStep ? (
+              <div className="border-b p-4">
+                <FormStepperNav
+                  steps={steps}
+                  current={currentStep}
+                  onChange={setCurrentStep}
+                  invalid={invalidSteps}
+                />
+              </div>
+            ) : null}
+
             <div className="flex-1 space-y-5 overflow-y-auto p-4">
-              {children}
+              {isStepped
+                ? steps.map((step) => (
+                    // Hidden rather than unmounted, so editors keep their state.
+                    <div
+                      key={step.id}
+                      role="tabpanel"
+                      id={`stepper-panel-${step.id}`}
+                      aria-labelledby={`stepper-tab-${step.id}`}
+                      hidden={step.id !== currentStep}
+                    >
+                      {step.content}
+                    </div>
+                  ))
+                : children}
             </div>
 
             <SheetFooter className="flex-row justify-end gap-2 border-t">
+              {isStepped && stepIndex > 0 ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="me-auto"
+                  disabled={isPending}
+                  onClick={() => goToStep(-1)}
+                >
+                  <ChevronLeftIcon className="rtl:rotate-180" />
+                  {t("back")}
+                </Button>
+              ) : null}
               <Button
                 type="button"
                 variant="outline"
@@ -127,7 +224,17 @@ export function FormSheet<TValues extends FieldValues>({
               >
                 {t("cancel")}
               </Button>
-              <Button type="submit" disabled={isPending}>
+              {isLastStep ? null : (
+                <Button type="button" onClick={() => void goForward()}>
+                  {t("next")}
+                  <ChevronRightIcon className="rtl:rotate-180" />
+                </Button>
+              )}
+              <Button
+                type="submit"
+                disabled={isPending}
+                className={cn(!isLastStep && "hidden")}
+              >
                 {isPending ? (
                   <>
                     <LoaderCircleIcon className="size-4 animate-spin" />

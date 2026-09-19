@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CrudModule } from "@/components/shared/crud-module";
+import { FormStep } from "@/components/shared/form-stepper";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
   bilingualColumn,
@@ -149,28 +150,34 @@ export function EducationClient({ rows }: { rows: EducationRow[] }) {
         },
       ]}
     >
-      <SelectField
-        name="type"
-        label={t("fields.type")}
-        options={TYPES.map((value) => ({ value, label: typeLabels[value] }))}
-      />
-      <TextField name="degreeAr" label={t("fields.degreeAr")} />
-      <TextField name="degreeEn" label={t("fields.degreeEn")} dir="ltr" />
-      <TextField name="schoolAr" label={t("fields.schoolAr")} />
-      <TextField name="schoolEn" label={t("fields.schoolEn")} dir="ltr" />
-      <TextField name="fieldAr" label={t("fields.fieldAr")} />
-      <TextField name="fieldEn" label={t("fields.fieldEn")} dir="ltr" />
-      <DateField name="startDate" label={t("fields.startDate")} />
-      <DateField name="endDate" label={t("fields.endDate")} />
-      <TextField
-        name="credentialUrl"
-        label={t("fields.credentialUrl")}
-        type="url"
-        dir="ltr"
-      />
-      <ImageField name="logoUrl" label={t("fields.logo")} />
-      <TextField name="order" label={tc("order")} type="number" dir="ltr" />
-      <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+      <FormStep id="basics">
+        <SelectField
+          name="type"
+          label={t("fields.type")}
+          options={TYPES.map((value) => ({ value, label: typeLabels[value] }))}
+        />
+        <TextField name="degreeAr" label={t("fields.degreeAr")} />
+        <TextField name="degreeEn" label={t("fields.degreeEn")} dir="ltr" />
+        <TextField name="schoolAr" label={t("fields.schoolAr")} />
+        <TextField name="schoolEn" label={t("fields.schoolEn")} dir="ltr" />
+        <TextField name="fieldAr" label={t("fields.fieldAr")} />
+        <TextField name="fieldEn" label={t("fields.fieldEn")} dir="ltr" />
+      </FormStep>
+      <FormStep id="details">
+        <DateField name="startDate" label={t("fields.startDate")} />
+        <DateField name="endDate" label={t("fields.endDate")} />
+        <TextField
+          name="credentialUrl"
+          label={t("fields.credentialUrl")}
+          type="url"
+          dir="ltr"
+        />
+        <ImageField name="logoUrl" label={t("fields.logo")} />
+      </FormStep>
+      <FormStep id="publishing">
+        <TextField name="order" label={tc("order")} type="number" dir="ltr" />
+        <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+      </FormStep>
     </CrudModule>
   );
 }
