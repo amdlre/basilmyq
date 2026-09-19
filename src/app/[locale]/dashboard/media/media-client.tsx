@@ -98,9 +98,8 @@ export function MediaClient({ rows }: { rows: MediaRow[] }) {
         onOpenChange={(open) => {
           if (!open) setPending(null);
         }}
-        title={tCommon("delete")}
         itemName={pending?.filename}
-        variant="destructive"
+        status="error"
         onConfirm={() => {
           const target = pending;
           setPending(null);

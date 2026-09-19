@@ -20,6 +20,8 @@ type AnimatedTabsProps = {
   tabs: AnimatedTab[];
   defaultValue?: string;
   className?: string;
+  /** Keeps the tab strip under the dashboard top bar while the page scrolls. */
+  sticky?: boolean;
 };
 
 /**
@@ -33,6 +35,7 @@ export function AnimatedTabs({
   tabs,
   defaultValue,
   className,
+  sticky = false,
 }: AnimatedTabsProps) {
   const id = useId();
   const [active, setActive] = useState(defaultValue ?? tabs[0]?.value ?? "");
@@ -45,7 +48,13 @@ export function AnimatedTabs({
       className={cn("gap-4", className)}
     >
       {/* Scrolls rather than wraps, so the highlight stays on one row. */}
-      <div className="no-scrollbar max-w-full overflow-x-auto">
+      <div
+        className={cn(
+          "no-scrollbar max-w-full overflow-x-auto",
+          // `top-14` matches the height of the dashboard top bar.
+          sticky && "sticky top-14 z-20 -mx-1 bg-background px-1 py-2",
+        )}
+      >
         <TabsList>
           {tabs.map((tab) => (
             <TabsTrigger

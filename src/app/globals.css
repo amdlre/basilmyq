@@ -214,10 +214,10 @@
 }
 
 /*
- * A modal Radix sheet sets `pointer-events: none` on <body>. The base-ui
+ * A modal Radix dialog sets `pointer-events: none` on <body>. The base-ui
  * combobox portals its popup to <body>, so it inherits that and every click
  * falls through to the form underneath. Radix still treats the popup as inside
- * the sheet, because React portal events bubble through the component tree.
+ * the dialog, because React portal events bubble through the component tree.
  */
 [data-slot="combobox-content"] {
   pointer-events: auto;

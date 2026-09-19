@@ -34,6 +34,8 @@ type ImageUploadProps = {
   onUpload?: (file: File) => Promise<string>;
   disabled?: boolean;
   alt?: string;
+  /** A short strip instead of a 16:9 box — for logos and icons. */
+  compact?: boolean;
 };
 
 /**
@@ -46,6 +48,7 @@ export function ImageUpload({
   onUpload = uploadToLibrary,
   disabled = false,
   alt = "",
+  compact = false,
 }: ImageUploadProps) {
   const t = useTranslations("Upload");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -89,7 +92,12 @@ export function ImageUpload({
           alt={alt}
           width={640}
           height={360}
-          className="aspect-video w-full object-cover"
+          className={cn(
+            "w-full",
+            compact
+              ? "h-20 bg-muted object-contain p-2"
+              : "aspect-video object-cover",
+          )}
         />
         <Button
           type="button"
@@ -123,7 +131,8 @@ export function ImageUpload({
           void handleFile(event.dataTransfer.files[0]);
         }}
         className={cn(
-          "flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed transition-colors",
+          "flex w-full items-center justify-center gap-2 rounded-lg border border-dashed transition-colors",
+          compact ? "h-20 px-3" : "aspect-video flex-col",
           "hover:border-primary/50 hover:bg-accent/50",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
           isDragging && "border-primary bg-accent",

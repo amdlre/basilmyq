@@ -81,10 +81,8 @@ export function RowActions<TData>({ row, actions }: RowActionsProps<TData>) {
         onOpenChange={(open) => {
           if (!open) setPendingAction(null);
         }}
-        title={pendingAction ? labelOf(pendingAction) : ""}
-        variant={
-          pendingAction?.variant === "destructive" ? "destructive" : "default"
-        }
+        status={pendingAction?.variant === "destructive" ? "error" : "warning"}
+        confirmLabel={pendingAction ? labelOf(pendingAction) : undefined}
         onConfirm={() => {
           if (pendingAction) run(pendingAction);
           setPendingAction(null);

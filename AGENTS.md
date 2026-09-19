@@ -7,7 +7,7 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
 1. **Zero duplication.** Any UI pattern that appears twice is extracted immediately into
    `src/components/shared/`. Search `shared/` before writing a new component.
 2. **One component per concept.** One table (`DataTable`), one stat card (`StatCard`), one
-   page shell (`PageShell`), one form host (`FormSheet`). Every dashboard page consumes
+   page shell (`PageShell`), one form host (`FormDialog`). Every dashboard page consumes
    these same components and differs only by props.
 3. **Strict TypeScript.** `strict: true`, `noUncheckedIndexedAccess: true`. `any` is
    forbidden. `@ts-ignore` is forbidden. Both are enforced by ESLint.

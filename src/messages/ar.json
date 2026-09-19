@@ -27,7 +27,9 @@
     "deleted": "تم الحذف",
     "somethingWentWrong": "حدث خطأ غير متوقع.",
     "next": "التالي",
-    "back": "السابق"
+    "back": "السابق",
+    "confirmTitle": "هل أنت متأكد؟",
+    "confirmDeleteTitle": "هل أنت متأكد من الحذف؟"
   },
   "Nav": {
     "home": "الرئيسية",

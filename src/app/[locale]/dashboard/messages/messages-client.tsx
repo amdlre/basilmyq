@@ -215,9 +215,8 @@ export function MessagesClient({ rows }: { rows: MessageRow[] }) {
       <ConfirmDialog
         open={confirmDelete}
         onOpenChange={setConfirmDelete}
-        title={tCommon("delete")}
         itemName={selected?.subject}
-        variant="destructive"
+        status="error"
         onConfirm={() => {
           if (!selected) return;
           startTransition(async () => {

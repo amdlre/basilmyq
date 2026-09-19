@@ -26,7 +26,7 @@ import type {
   FilterConfig,
   RowAction,
 } from "@/components/shared/data-table/types";
-import { FormSheet } from "@/components/shared/form-sheet";
+import { FormDialog } from "@/components/shared/form-dialog";
 import { Button } from "@/components/ui/button";
 import {
   deleteContent,
@@ -69,7 +69,7 @@ type CrudModuleProps<TRow extends CrudRow, TValues extends FieldValues> = {
 /**
  * One component, every CRUD module.
  *
- * It owns the create/edit sheet, the row and bulk actions, and the toasts, so a
+ * It owns the create/edit dialog, the row and bulk actions, and the toasts, so a
  * module page supplies only its columns, its schema and its fields. If a module
  * ever needs UI code of its own, the gap belongs here or in `shared/`.
  */
@@ -258,7 +258,7 @@ export function CrudModule<TRow extends CrudRow, TValues extends FieldValues>({
         }
       />
 
-      <FormSheet
+      <FormDialog
         open={isOpen}
         onOpenChange={setIsOpen}
         title={
@@ -273,7 +273,7 @@ export function CrudModule<TRow extends CrudRow, TValues extends FieldValues>({
         }
       >
         {children}
-      </FormSheet>
+      </FormDialog>
     </div>
   );
 }

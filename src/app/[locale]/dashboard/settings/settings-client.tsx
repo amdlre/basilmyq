@@ -55,50 +55,61 @@ export function SettingsClient({
 
   return (
     <AnimatedTabs
+      sticky
       tabs={[
         // 1 — General
         {
           value: "general",
           label: t("tabs.general"),
           content: (
-            <>
-              <SettingsForm
-                schema={siteSettingSchema}
-                defaultValues={settings}
-                action={saveSiteSettings}
-              >
-                <TextField name="siteNameAr" label={t("general.siteNameAr")} />
-                <TextField
-                  name="siteNameEn"
-                  label={t("general.siteNameEn")}
-                  dir="ltr"
-                />
-                <TextField name="taglineAr" label={t("general.taglineAr")} />
-                <TextField
-                  name="taglineEn"
-                  label={t("general.taglineEn")}
-                  dir="ltr"
-                />
-                <TextField
-                  name="descriptionAr"
-                  label={t("general.descriptionAr")}
-                  multiline
-                />
-                <TextField
-                  name="descriptionEn"
-                  label={t("general.descriptionEn")}
-                  multiline
-                />
-                <ImageField name="logoUrlAr" label={t("general.logoAr")} />
-                <ImageField name="logoUrlEn" label={t("general.logoEn")} />
-                <TextField
-                  name="faviconUrl"
-                  label={t("general.favicon")}
-                  dir="ltr"
-                />
-                <ImageField name="ogImageUrl" label={t("general.ogImage")} />
-              </SettingsForm>
-            </>
+            <SettingsForm
+              schema={siteSettingSchema}
+              defaultValues={settings}
+              action={saveSiteSettings}
+            >
+              <TextField name="siteNameAr" label={t("general.siteNameAr")} />
+              <TextField
+                name="siteNameEn"
+                label={t("general.siteNameEn")}
+                dir="ltr"
+              />
+              <TextField name="taglineAr" label={t("general.taglineAr")} />
+              <TextField
+                name="taglineEn"
+                label={t("general.taglineEn")}
+                dir="ltr"
+              />
+              <TextField
+                name="descriptionAr"
+                label={t("general.descriptionAr")}
+                multiline
+              />
+              <TextField
+                name="descriptionEn"
+                label={t("general.descriptionEn")}
+                multiline
+              />
+              <ImageField
+                compact
+                name="logoUrlAr"
+                label={t("general.logoAr")}
+              />
+              <ImageField
+                compact
+                name="logoUrlEn"
+                label={t("general.logoEn")}
+              />
+              <TextField
+                name="faviconUrl"
+                label={t("general.favicon")}
+                dir="ltr"
+              />
+              <ImageField
+                compact
+                name="ogImageUrl"
+                label={t("general.ogImage")}
+              />
+            </SettingsForm>
           ),
         },
 
@@ -156,7 +167,7 @@ export function SettingsClient({
                   label={t("hero.secondaryUrl")}
                   dir="ltr"
                 />
-                <ImageField name="imageUrl" label={t("hero.image")} />
+                <ImageField compact name="imageUrl" label={t("hero.image")} />
                 <SwitchField name="isAvailable" label={t("hero.isAvailable")} />
                 <TextField
                   name="availabilityTextAr"
@@ -183,7 +194,7 @@ export function SettingsClient({
                 />
                 <RichTextField name="bioAr" label={t("about.bioAr")} rows={8} />
                 <RichTextField name="bioEn" label={t("about.bioEn")} rows={8} />
-                <ImageField name="imageUrl" label={t("about.image")} />
+                <ImageField compact name="imageUrl" label={t("about.image")} />
                 <TextField
                   name="yearsExperience"
                   label={t("about.years")}
@@ -212,32 +223,26 @@ export function SettingsClient({
           value: "contact",
           label: t("tabs.contact"),
           content: (
-            <>
-              <SettingsForm
-                schema={siteSettingSchema}
-                defaultValues={settings}
-                action={saveSiteSettings}
-              >
-                <TextField
-                  name="email"
-                  label={t("contact.email")}
-                  type="email"
-                  dir="ltr"
-                />
-                <TextField name="phone" label={t("contact.phone")} dir="ltr" />
-                <TextField name="cityAr" label={t("contact.cityAr")} />
-                <TextField
-                  name="cityEn"
-                  label={t("contact.cityEn")}
-                  dir="ltr"
-                />
-                <SocialLinksField
-                  name="socialLinks"
-                  label={t("social.title")}
-                  description={t("social.hint")}
-                />
-              </SettingsForm>
-            </>
+            <SettingsForm
+              schema={siteSettingSchema}
+              defaultValues={settings}
+              action={saveSiteSettings}
+            >
+              <TextField
+                name="email"
+                label={t("contact.email")}
+                type="email"
+                dir="ltr"
+              />
+              <TextField name="phone" label={t("contact.phone")} dir="ltr" />
+              <TextField name="cityAr" label={t("contact.cityAr")} />
+              <TextField name="cityEn" label={t("contact.cityEn")} dir="ltr" />
+              <SocialLinksField
+                name="socialLinks"
+                label={t("social.title")}
+                description={t("social.hint")}
+              />
+            </SettingsForm>
           ),
         },
 
@@ -246,27 +251,25 @@ export function SettingsClient({
           value: "cv",
           label: t("tabs.cv"),
           content: (
-            <>
-              <SettingsForm
-                schema={siteSettingSchema}
-                defaultValues={settings}
-                action={saveSiteSettings}
-              >
-                <TextField
-                  name="cvUrlAr"
-                  label={t("cv.ar")}
-                  dir="ltr"
-                  description={t("cv.hint")}
-                />
-                <TextField name="cvUrlEn" label={t("cv.en")} dir="ltr" />
-                <p className="text-sm text-muted-foreground">
-                  {t("cv.downloads")}:{" "}
-                  <span className="font-medium text-foreground tabular-nums">
-                    {cvDownloadCount}
-                  </span>
-                </p>
-              </SettingsForm>
-            </>
+            <SettingsForm
+              schema={siteSettingSchema}
+              defaultValues={settings}
+              action={saveSiteSettings}
+            >
+              <TextField
+                name="cvUrlAr"
+                label={t("cv.ar")}
+                dir="ltr"
+                description={t("cv.hint")}
+              />
+              <TextField name="cvUrlEn" label={t("cv.en")} dir="ltr" />
+              <p className="text-sm text-muted-foreground">
+                {t("cv.downloads")}:{" "}
+                <span className="font-medium text-foreground tabular-nums">
+                  {cvDownloadCount}
+                </span>
+              </p>
+            </SettingsForm>
           ),
         },
 
@@ -275,34 +278,32 @@ export function SettingsClient({
           value: "seo",
           label: t("tabs.seo"),
           content: (
-            <>
-              <SettingsForm
-                schema={siteSettingSchema}
-                defaultValues={settings}
-                action={saveSiteSettings}
-              >
-                <TextField
-                  name="seoKeywordsAr"
-                  label={t("seo.keywordsAr")}
-                  multiline
-                />
-                <TextField
-                  name="seoKeywordsEn"
-                  label={t("seo.keywordsEn")}
-                  multiline
-                />
-                <TextField
-                  name="googleVerification"
-                  label={t("seo.googleVerification")}
-                  dir="ltr"
-                />
-                <TextField
-                  name="analyticsId"
-                  label={t("seo.analyticsId")}
-                  dir="ltr"
-                />
-              </SettingsForm>
-            </>
+            <SettingsForm
+              schema={siteSettingSchema}
+              defaultValues={settings}
+              action={saveSiteSettings}
+            >
+              <TextField
+                name="seoKeywordsAr"
+                label={t("seo.keywordsAr")}
+                multiline
+              />
+              <TextField
+                name="seoKeywordsEn"
+                label={t("seo.keywordsEn")}
+                multiline
+              />
+              <TextField
+                name="googleVerification"
+                label={t("seo.googleVerification")}
+                dir="ltr"
+              />
+              <TextField
+                name="analyticsId"
+                label={t("seo.analyticsId")}
+                dir="ltr"
+              />
+            </SettingsForm>
           ),
         },
 
@@ -310,11 +311,7 @@ export function SettingsClient({
         {
           value: "lookups",
           label: t("tabs.lookups"),
-          content: (
-            <>
-              <LookupLists {...lookups} />
-            </>
-          ),
+          content: <LookupLists {...lookups} />,
         },
 
         // 6 — Advanced
@@ -322,49 +319,44 @@ export function SettingsClient({
           value: "advanced",
           label: t("tabs.advanced"),
           content: (
-            <>
-              <SettingsForm
-                schema={siteSettingSchema}
-                defaultValues={settings}
-                action={saveSiteSettings}
-              >
-                <SwitchField
-                  name="maintenanceMode"
-                  label={t("advanced.maintenance")}
-                  description={t("advanced.maintenanceHint")}
-                />
-                <TextField
-                  name="accentColor"
-                  label={t("advanced.accent")}
-                  dir="ltr"
-                  description={t("advanced.accentHint")}
-                />
-                <p className="pt-2 font-heading font-semibold">
-                  {t("advanced.sections")}
-                </p>
-                <SwitchField
-                  name="showProjects"
-                  label={t("advanced.showProjects")}
-                />
-                <SwitchField
-                  name="showSkills"
-                  label={t("advanced.showSkills")}
-                />
-                <SwitchField
-                  name="showServices"
-                  label={t("advanced.showServices")}
-                />
-                <SwitchField
-                  name="showExperience"
-                  label={t("advanced.showExperience")}
-                />
-                <SwitchField
-                  name="showTestimonials"
-                  label={t("advanced.showTestimonials")}
-                />
-                <SwitchField name="showBlog" label={t("advanced.showBlog")} />
-              </SettingsForm>
-            </>
+            <SettingsForm
+              schema={siteSettingSchema}
+              defaultValues={settings}
+              action={saveSiteSettings}
+            >
+              <SwitchField
+                name="maintenanceMode"
+                label={t("advanced.maintenance")}
+                description={t("advanced.maintenanceHint")}
+              />
+              <TextField
+                name="accentColor"
+                label={t("advanced.accent")}
+                dir="ltr"
+                description={t("advanced.accentHint")}
+              />
+              <p className="pt-2 font-heading font-semibold">
+                {t("advanced.sections")}
+              </p>
+              <SwitchField
+                name="showProjects"
+                label={t("advanced.showProjects")}
+              />
+              <SwitchField name="showSkills" label={t("advanced.showSkills")} />
+              <SwitchField
+                name="showServices"
+                label={t("advanced.showServices")}
+              />
+              <SwitchField
+                name="showExperience"
+                label={t("advanced.showExperience")}
+              />
+              <SwitchField
+                name="showTestimonials"
+                label={t("advanced.showTestimonials")}
+              />
+              <SwitchField name="showBlog" label={t("advanced.showBlog")} />
+            </SettingsForm>
           ),
         },
       ]}

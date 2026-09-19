@@ -87,9 +87,9 @@ export function BulkBar<TData>({
         onOpenChange={(open) => {
           if (!open) setPending(null);
         }}
-        title={pending?.label ?? ""}
         itemName={t("selectedCount", { count: selectedRows.length })}
-        variant={pending?.variant === "destructive" ? "destructive" : "default"}
+        status={pending?.variant === "destructive" ? "error" : "warning"}
+        confirmLabel={pending?.label}
         onConfirm={() => {
           if (pending) run(pending);
           setPending(null);

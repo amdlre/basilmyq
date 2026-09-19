@@ -25,7 +25,7 @@ export function SocialLinksField({
   const { fields, append, remove } = useFieldArray({ control, name });
 
   return (
-    <Field>
+    <Field className="col-span-full">
       <FieldLabel>{label}</FieldLabel>
       {description ? <FieldDescription>{description}</FieldDescription> : null}
 

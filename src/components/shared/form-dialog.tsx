@@ -26,13 +26,13 @@ import {
 import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 export type FormActionResult = {
@@ -42,7 +42,7 @@ export type FormActionResult = {
   fieldErrors?: Record<string, string>;
 };
 
-type FormSheetProps<TValues extends FieldValues> = {
+type FormDialogProps<TValues extends FieldValues> = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -60,9 +60,9 @@ type FormSheetProps<TValues extends FieldValues> = {
  *
  * It owns validation, submission, toasts and server-side field errors, so a
  * module contributes nothing but a schema and a list of fields. Grouping those
- * fields in `<FormStep>` turns the sheet into a stepper.
+ * fields in `<FormStep>` turns the dialog into a stepper.
  */
-export function FormSheet<TValues extends FieldValues>({
+export function FormDialog<TValues extends FieldValues>({
   open,
   onOpenChange,
   title,
@@ -72,7 +72,7 @@ export function FormSheet<TValues extends FieldValues>({
   action,
   submitLabel,
   children,
-}: FormSheetProps<TValues>) {
+}: FormDialogProps<TValues>) {
   // Validation messages follow the active language.
   useZodLocale();
   const t = useTranslations("Common");
@@ -99,7 +99,7 @@ export function FormSheet<TValues extends FieldValues>({
     if (open) setCurrentStep(firstStep);
   }
 
-  // Re-seed when switching between records without unmounting the sheet.
+  // Re-seed when switching between records without unmounting the dialog.
   useEffect(() => {
     if (open) form.reset(defaultValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,14 +160,17 @@ export function FormSheet<TValues extends FieldValues>({
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-xl">
-        <SheetHeader className="border-b">
-          <SheetTitle>{title}</SheetTitle>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {/* shadcn studio's dialog-26 zoom-in, at a large size so a four-step
+          stepper and a rich-text editor fit without cramping. The body
+          scrolls; header, stepper and footer stay put. */}
+      <DialogContent className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 p-0 sm:max-w-3xl data-open:duration-600 data-open:zoom-in-0!">
+        <DialogHeader className="border-b p-4 pe-12">
+          <DialogTitle>{title}</DialogTitle>
           {description ? (
-            <SheetDescription>{description}</SheetDescription>
+            <DialogDescription>{description}</DialogDescription>
           ) : null}
-        </SheetHeader>
+        </DialogHeader>
 
         <FormProvider {...form}>
           <form
@@ -203,7 +206,7 @@ export function FormSheet<TValues extends FieldValues>({
                 : children}
             </div>
 
-            <SheetFooter className="flex-row justify-end gap-2 border-t">
+            <DialogFooter className="m-0 flex-row justify-end">
               {isStepped && stepIndex > 0 ? (
                 <Button
                   type="button"
@@ -244,10 +247,10 @@ export function FormSheet<TValues extends FieldValues>({
                   (submitLabel ?? t("save"))
                 )}
               </Button>
-            </SheetFooter>
+            </DialogFooter>
           </form>
         </FormProvider>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 }

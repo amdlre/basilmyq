@@ -8,9 +8,11 @@ import { FieldWrapper, type BaseFieldProps } from "./field-wrapper";
 
 type ImageFieldProps = BaseFieldProps & {
   onUpload?: (file: File) => Promise<string>;
+  /** A short strip instead of a 16:9 box — for logos and icons. */
+  compact?: boolean;
 };
 
-export function ImageField({ onUpload, ...base }: ImageFieldProps) {
+export function ImageField({ onUpload, compact, ...base }: ImageFieldProps) {
   const { control } = useFormContext();
 
   return (
@@ -24,6 +26,7 @@ export function ImageField({ onUpload, ...base }: ImageFieldProps) {
               value={typeof field.value === "string" ? field.value : null}
               onChange={field.onChange}
               onUpload={onUpload}
+              compact={compact}
               disabled={base.disabled}
               alt={base.label}
             />

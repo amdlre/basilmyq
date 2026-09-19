@@ -93,7 +93,7 @@ export function RichTextField({ rows = 12, ...base }: RichTextFieldProps) {
   const characterCount = typeof value === "string" ? value.length : 0;
 
   return (
-    <FieldWrapper {...base}>
+    <FieldWrapper {...base} wide>
       {({ id, invalid }) => (
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-1 rounded-md border p-1">

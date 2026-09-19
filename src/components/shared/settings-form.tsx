@@ -17,7 +17,7 @@ import { useZodLocale } from "@/components/shared/zod-locale-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
-import type { FormActionResult } from "./form-sheet";
+import type { FormActionResult } from "./form-dialog";
 
 type SettingsFormProps<TValues extends FieldValues> = {
   schema: ZodType<TValues, TValues>;
@@ -27,7 +27,7 @@ type SettingsFormProps<TValues extends FieldValues> = {
 };
 
 /**
- * The inline sibling of FormSheet: same validation, same field components, same
+ * The inline sibling of FormDialog: same validation, same field components, same
  * toast contract, but for editing something that already exists in place rather
  * than creating a record in a modal.
  */
@@ -70,9 +70,15 @@ export function SettingsForm<TValues extends FieldValues>({
   return (
     <FormProvider {...form}>
       <form onSubmit={onSubmit} noValidate>
-        <Card>
-          <CardContent className="space-y-5 pt-6">{children}</CardContent>
-          <CardFooter className="justify-end border-t">
+        {/* `overflow-visible` lets the footer stick; Card clips by default. */}
+        <Card className="overflow-visible">
+          {/* One column on phones, three on wide screens. Long text, rich
+              text and section headings span the full row. */}
+          <CardContent className="grid gap-5 pt-6 md:grid-cols-2 xl:grid-cols-3 [&>p]:col-span-full">
+            {children}
+          </CardContent>
+          {/* Save stays in reach however long the form is. */}
+          <CardFooter className="sticky bottom-0 z-10 justify-end border-t bg-card">
             <Button type="submit" disabled={isPending}>
               {isPending ? (
                 <>

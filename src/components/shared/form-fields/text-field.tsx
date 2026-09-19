@@ -27,7 +27,7 @@ export function TextField({
   const { register } = useFormContext();
 
   return (
-    <FieldWrapper {...base}>
+    <FieldWrapper {...base} wide={multiline}>
       {({ id, invalid }) =>
         multiline ? (
           <Textarea

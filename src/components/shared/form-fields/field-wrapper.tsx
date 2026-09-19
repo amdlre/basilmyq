@@ -20,6 +20,8 @@ export type BaseFieldProps = {
 type FieldWrapperProps = BaseFieldProps & {
   children: (props: { id: string; invalid: boolean }) => ReactNode;
   orientation?: "vertical" | "horizontal";
+  /** Spans every column when the form lays its fields out in a grid. */
+  wide?: boolean;
 };
 
 /**
@@ -34,6 +36,7 @@ export function FieldWrapper({
   description,
   children,
   orientation = "vertical",
+  wide = false,
 }: FieldWrapperProps) {
   const {
     formState: { errors },
@@ -47,6 +50,7 @@ export function FieldWrapper({
   return (
     <Field
       orientation={orientation === "horizontal" ? "horizontal" : "vertical"}
+      className={wide ? "col-span-full" : undefined}
     >
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
       {children({ id, invalid: Boolean(error) })}
