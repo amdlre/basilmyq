@@ -70,10 +70,9 @@ export async function generateMetadata(
   });
 }
 
-/** Pre-renders every published project at build time. */
-export async function generateStaticParams() {
-  const projects = await getPublicProjects();
-  return projects.map((project) => ({ slug: project.slug }));
+/** Rendered on first visit and then cached; see the `[locale]` layout. */
+export function generateStaticParams(): { slug: string }[] {
+  return [];
 }
 
 export default async function ProjectDetailPage(

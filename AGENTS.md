@@ -103,6 +103,11 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   new namespace to `i18n/namespaces.ts` or its strings will be missing on the client.
 - **Satori (`next/og`) shapes Arabic letters but has no bidi algorithm**, so word order
   comes out reversed. The OG route reverses tokens for Arabic before rendering.
+- **`next build` must never touch the database.** The Docker build has no
+  `DATABASE_URL`. Public pages return `[]` from `generateStaticParams` and are
+  rendered on first request, then cached (ISR); the dashboard layout is
+  `force-dynamic`; `sitemap.ts` is `force-dynamic`. A new route that queries at
+  build time will break every deploy — check with `DATABASE_URL="" npm run build`.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

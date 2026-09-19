@@ -4,6 +4,10 @@ import { LOCALES } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/seo";
 import { getPublicPosts, getPublicProjects } from "@/server/queries/public";
 
+// Built per request (its queries are cached), so `next build` never needs the
+// database. See the `[locale]` layout.
+export const dynamic = "force-dynamic";
+
 const STATIC_PATHS = ["", "/projects", "/blog", "/about", "/contact"];
 
 /**

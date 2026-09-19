@@ -18,11 +18,7 @@ import { toDate } from "@/lib/format";
 import { BLUR_DATA_URL } from "@/lib/blur";
 import { pick } from "@/lib/i18n-content";
 import { buildMetadata } from "@/lib/seo";
-import {
-  getPublicPostBySlug,
-  getPublicPosts,
-  getSiteSettings,
-} from "@/server/queries/public";
+import { getPublicPostBySlug, getSiteSettings } from "@/server/queries/public";
 
 const CONTENT_ID = "post-content";
 
@@ -48,10 +44,9 @@ export async function generateMetadata(
   });
 }
 
-/** Pre-renders every published post at build time. */
-export async function generateStaticParams() {
-  const posts = await getPublicPosts();
-  return posts.map((post) => ({ slug: post.slug }));
+/** Rendered on first visit and then cached; see the `[locale]` layout. */
+export function generateStaticParams(): { slug: string }[] {
+  return [];
 }
 
 export default async function PostPage(

@@ -8,6 +8,11 @@ import { resolveLocale } from "@/i18n/resolve-locale";
 import { requireAuth } from "@/lib/auth/require-auth";
 import { db } from "@/server/db";
 
+// Per-request, always: every dashboard page reads the session cookie. Without
+// this the empty `generateStaticParams` in the `[locale]` layout would mark
+// these routes as ISR-cacheable.
+export const dynamic = "force-dynamic";
+
 /**
  * The real guard. The proxy redirects for convenience; this runs in the data
  * layer, so no dashboard route can render without a verified session.

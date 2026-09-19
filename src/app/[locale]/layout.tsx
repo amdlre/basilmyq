@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { AppProviders } from "@/components/shared/app-providers";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { PUBLIC_NAMESPACES } from "@/i18n/namespaces";
-import { getLocaleDirection, routing } from "@/i18n/routing";
+import { getLocaleDirection } from "@/i18n/routing";
 
 import "../globals.css";
 
@@ -33,8 +33,14 @@ const fontArabic = IBM_Plex_Sans_Arabic({
   display: "swap",
 });
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+/**
+ * Empty on purpose: every public page is rendered on its first request and
+ * cached from then on (ISR), rather than at build time. The Docker build has no
+ * database, and building against production would bake stale content into
+ * the image anyway. Dashboard writes still refresh pages through `updateTag`.
+ */
+export function generateStaticParams(): { locale: string }[] {
+  return [];
 }
 
 export async function generateMetadata(
