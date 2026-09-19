@@ -51,12 +51,12 @@ export function createActionsColumn<TData>(
 ): ColumnDef<TData, unknown> {
   return {
     id: "actions",
-    size: 56,
+    size: 104,
     enableSorting: false,
     enableHiding: false,
     enableResizing: false,
     meta: { excludeFromExport: true, pinned: true, label, align: "end" },
-    header: () => <span className="sr-only">{label}</span>,
+    header: () => <span className="block w-full text-end">{label}</span>,
     cell: ({ row }) => <RowActions row={row.original} actions={actions} />,
   };
 }

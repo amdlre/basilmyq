@@ -178,7 +178,8 @@
     "quote": "Quote",
     "characters": "{count} characters",
     "markdownHint": "Markdown is supported.",
-    "suggestedTags": "Suggested tags"
+    "createTag": "Add “{tag}”",
+    "noTags": "No matching tags."
   },
   "Playground": {
     "title": "Component playground",

@@ -15,7 +15,7 @@
     "confirm": "تأكيد",
     "skipToContent": "تخطَّ إلى المحتوى",
     "confirmDescription": "لا يمكن التراجع عن هذا الإجراء.",
-    "actions": "إجراءات",
+    "actions": "الإجراءات",
     "retry": "إعادة المحاولة",
     "required": "حقل مطلوب",
     "optional": "اختياري",
@@ -178,7 +178,8 @@
     "quote": "اقتباس",
     "characters": "{count} حرف",
     "markdownHint": "يدعم Markdown.",
-    "suggestedTags": "وسوم مقترحة"
+    "createTag": "إضافة «{tag}»",
+    "noTags": "لا توجد وسوم مطابقة."
   },
   "Playground": {
     "title": "معمل المكوّنات",

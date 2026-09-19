@@ -205,6 +205,24 @@
   animation-direction: reverse;
 }
 
+/* Used by the generated combobox list and the tab strip. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * A modal Radix sheet sets `pointer-events: none` on <body>. The base-ui
+ * combobox portals its popup to <body>, so it inherits that and every click
+ * falls through to the form underneath. Radix still treats the popup as inside
+ * the sheet, because React portal events bubble through the component tree.
+ */
+[data-slot="combobox-content"] {
+  pointer-events: auto;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

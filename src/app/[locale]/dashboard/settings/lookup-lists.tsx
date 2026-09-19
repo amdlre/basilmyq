@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useLocale, useTranslations } from "next-intl";
 
+import { AnimatedTabs } from "@/components/shared/animated-tabs";
 import { CrudModule } from "@/components/shared/crud-module";
 import { ColumnHeader } from "@/components/shared/data-table/column-header";
 import {
@@ -15,7 +16,6 @@ import {
   SwitchField,
   TextField,
 } from "@/components/shared/form-fields";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { AppLocale } from "@/i18n/routing";
 import {
   projectCategorySchema,
@@ -138,91 +138,107 @@ export function LookupLists({ tags, categories, groups }: Props) {
   );
 
   return (
-    <Tabs defaultValue="tags" className="gap-4">
+    // These tables hold one or two short columns, so half the width reads
+    // better than a full-bleed table.
+    <div className="mx-auto w-full space-y-4 lg:w-1/2">
       <p className="text-sm text-muted-foreground">{t("description")}</p>
 
-      <TabsList variant="line">
-        <TabsTrigger value="tags">{t("tags.title")}</TabsTrigger>
-        <TabsTrigger value="categories">{t("categories.title")}</TabsTrigger>
-        <TabsTrigger value="groups">{t("groups.title")}</TabsTrigger>
-      </TabsList>
+      <AnimatedTabs
+        tabs={[
+          {
+            value: "tags",
+            label: t("tags.title"),
+            content: (
+              <CrudModule<TagRow, TagInput>
+                entity="tag"
+                rows={tags}
+                columns={tagColumns}
+                schema={tagSchema}
+                emptyValues={EMPTY_TAG}
+                toFormValues={(row) => ({ name: row.name, order: row.order })}
+                singularLabel={t("tags.singular")}
+                storageKey="lookup-tags"
+                queryPrefix="tags"
+                exportFileName="tags"
+                searchKeys={["name"]}
+                enableRowReorder
+              >
+                <TextField
+                  name="name"
+                  label={tc("name")}
+                  description={t("tags.hint")}
+                />
+              </CrudModule>
+            ),
+          },
 
-      <TabsContent value="tags">
-        <CrudModule<TagRow, TagInput>
-          entity="tag"
-          rows={tags}
-          columns={tagColumns}
-          schema={tagSchema}
-          emptyValues={EMPTY_TAG}
-          toFormValues={(row) => ({ name: row.name, order: row.order })}
-          singularLabel={t("tags.singular")}
-          storageKey="lookup-tags"
-          queryPrefix="tags"
-          exportFileName="tags"
-          searchKeys={["name"]}
-          enableRowReorder
-        >
-          <TextField
-            name="name"
-            label={tc("name")}
-            description={t("tags.hint")}
-          />
-        </CrudModule>
-      </TabsContent>
+          {
+            value: "categories",
+            label: t("categories.title"),
+            content: (
+              <CrudModule<ProjectCategoryRow, ProjectCategoryInput>
+                entity="projectCategory"
+                rows={categories}
+                columns={categoryColumns}
+                schema={projectCategorySchema}
+                emptyValues={EMPTY_CATEGORY}
+                toFormValues={(row) => ({
+                  nameAr: row.nameAr,
+                  nameEn: row.nameEn,
+                  slug: row.slug,
+                  isVisible: row.isVisible,
+                  order: row.order,
+                })}
+                singularLabel={t("categories.singular")}
+                storageKey="lookup-categories"
+                queryPrefix="categories"
+                exportFileName="project-categories"
+                searchKeys={["name"]}
+                enableRowReorder
+              >
+                <TextField name="nameAr" label={t("fields.nameAr")} />
+                <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
+                <SlugField
+                  name="slug"
+                  source="nameEn"
+                  label={t("fields.slug")}
+                />
+                <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+              </CrudModule>
+            ),
+          },
 
-      <TabsContent value="categories">
-        <CrudModule<ProjectCategoryRow, ProjectCategoryInput>
-          entity="projectCategory"
-          rows={categories}
-          columns={categoryColumns}
-          schema={projectCategorySchema}
-          emptyValues={EMPTY_CATEGORY}
-          toFormValues={(row) => ({
-            nameAr: row.nameAr,
-            nameEn: row.nameEn,
-            slug: row.slug,
-            isVisible: row.isVisible,
-            order: row.order,
-          })}
-          singularLabel={t("categories.singular")}
-          storageKey="lookup-categories"
-          queryPrefix="categories"
-          exportFileName="project-categories"
-          searchKeys={["name"]}
-          enableRowReorder
-        >
-          <TextField name="nameAr" label={t("fields.nameAr")} />
-          <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
-          <SlugField name="slug" source="nameEn" label={t("fields.slug")} />
-          <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-        </CrudModule>
-      </TabsContent>
-
-      <TabsContent value="groups">
-        <CrudModule<SkillGroupRow, SkillGroupInput>
-          entity="skillGroup"
-          rows={groups}
-          columns={groupColumns}
-          schema={skillGroupSchema}
-          emptyValues={EMPTY_GROUP}
-          toFormValues={(row) => ({
-            nameAr: row.nameAr,
-            nameEn: row.nameEn,
-            isVisible: row.isVisible,
-            order: row.order,
-          })}
-          singularLabel={t("groups.singular")}
-          storageKey="lookup-groups"
-          queryPrefix="groups"
-          exportFileName="skill-groups"
-          searchKeys={["name"]}
-          enableRowReorder
-        >
-          <TextField name="nameAr" label={t("fields.nameAr")} />
-          <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
-          <SwitchField name="isVisible" label={tc("visibleOnSite")} />
-        </CrudModule>
-      </TabsContent>
-    </Tabs>
+          {
+            value: "groups",
+            label: t("groups.title"),
+            content: (
+              <CrudModule<SkillGroupRow, SkillGroupInput>
+                entity="skillGroup"
+                rows={groups}
+                columns={groupColumns}
+                schema={skillGroupSchema}
+                emptyValues={EMPTY_GROUP}
+                toFormValues={(row) => ({
+                  nameAr: row.nameAr,
+                  nameEn: row.nameEn,
+                  isVisible: row.isVisible,
+                  order: row.order,
+                })}
+                singularLabel={t("groups.singular")}
+                storageKey="lookup-groups"
+                queryPrefix="groups"
+                exportFileName="skill-groups"
+                searchKeys={["name"]}
+                enableRowReorder
+              >
+                <TextField name="nameAr" label={t("fields.nameAr")} />
+                <TextField name="nameEn" label={t("fields.nameEn")} dir="ltr" />
+                <SwitchField name="isVisible" label={tc("visibleOnSite")} />
+              </CrudModule>
+            ),
+          },
+        ]}
+      />
+    </div>
   );
 }
