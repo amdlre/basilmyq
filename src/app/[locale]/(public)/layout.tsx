@@ -1,6 +1,5 @@
-import { getTranslations } from "next-intl/server";
-
 import { Footer } from "@/components/public/footer";
+import { MaintenanceScreen } from "@/components/public/maintenance-screen";
 import { Navbar } from "@/components/public/navbar";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { pick, pickLogo } from "@/lib/i18n-content";
@@ -21,20 +20,15 @@ export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
   // failing the request: visitors see the maintenance screen instead of the
   // host's "Bad Gateway".
   const settings = await getSiteSettings().catch(() => null);
-  const t = await getTranslations("Maintenance");
 
-  // The dashboard stays reachable — only the public site is closed.
+  // The dashboard stays reachable — only the public site is closed. During an
+  // outage there are no settings to show, hence the optional props.
   if (!settings || settings.maintenanceMode) {
     return (
-      <main
-        id="main-content"
-        className="flex min-h-svh flex-col items-center justify-center gap-3 px-4 text-center"
-      >
-        <h1 className="font-heading text-2xl font-semibold">{t("title")}</h1>
-        <p className="max-w-sm text-balance text-muted-foreground">
-          {t("description")}
-        </p>
-      </main>
+      <MaintenanceScreen
+        siteName={settings ? pick(settings, "siteName", locale) : null}
+        email={settings?.email}
+      />
     );
   }
 

@@ -701,7 +701,10 @@
   },
   "Maintenance": {
     "title": "We are doing maintenance",
-    "description": "The site is being updated. Please check back shortly."
+    "description": "The site is being updated. Please check back shortly.",
+    "badge": "Scheduled maintenance",
+    "contactLead": "Something urgent? Email me at",
+    "backSoon": "Back shortly"
   },
   "ProjectsPage": {
     "title": "Projects",
