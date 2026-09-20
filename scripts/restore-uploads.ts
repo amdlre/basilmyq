@@ -14,8 +14,10 @@
  *   AUTH_SECRET="…" ADMIN_EMAIL="…" \
  *   npx tsx scripts/restore-uploads.ts
  *
- * It is safe to run twice: files already present are uploaded again only if
- * something still points at a missing path.
+ * It is safe to run more than once. Each file is matched by its original name,
+ * so a re-run also repairs references left dangling by an earlier run — which
+ * is what happens when a deployment restarts without a persistent volume
+ * mounted at UPLOAD_DIR.
  */
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
@@ -124,7 +126,17 @@ async function main(): Promise<void> {
 
   try {
     for (const file of files) {
-      const oldUrl = `/uploads/${file}`;
+      // Everything this file has ever been called: the local path from the
+      // dump, plus the URL of every earlier upload of the same original file.
+      const { rows } = await pool.query<{ url: string }>(
+        `SELECT "url" FROM "Media" WHERE "filename" = $1`,
+        [file],
+      );
+      const staleUrls = [
+        `/uploads/${file}`,
+        ...rows.map((row) => row.url),
+      ].filter((url, index, all) => all.indexOf(url) === index);
+
       const result = await upload(file, token);
 
       if ("error" in result) {
@@ -132,32 +144,37 @@ async function main(): Promise<void> {
         continue;
       }
 
+      const live = staleUrls.filter((url) => url !== result.url);
+
       let updated = 0;
       for (const [table, column] of IMAGE_COLUMNS) {
         const { rowCount } = await pool.query(
-          `UPDATE "${table}" SET "${column}" = $1 WHERE "${column}" = $2`,
-          [result.url, oldUrl],
+          `UPDATE "${table}" SET "${column}" = $1 WHERE "${column}" = ANY($2::text[])`,
+          [result.url, live],
         );
         updated += rowCount ?? 0;
       }
       for (const [table, column] of ARRAY_COLUMNS) {
-        const { rowCount } = await pool.query(
-          `UPDATE "${table}" SET "${column}" = array_replace("${column}", $2, $1) WHERE $2 = ANY("${column}")`,
-          [result.url, oldUrl],
-        );
-        updated += rowCount ?? 0;
+        for (const stale of live) {
+          const { rowCount } = await pool.query(
+            `UPDATE "${table}" SET "${column}" = array_replace("${column}", $2, $1) WHERE $2 = ANY("${column}")`,
+            [result.url, stale],
+          );
+          updated += rowCount ?? 0;
+        }
       }
 
-      console.log(`✓ ${file} → ${result.url} (${updated} reference(s))`);
-    }
+      // The upload route logs every file in the library, so the rows behind
+      // the paths just replaced would otherwise linger as broken thumbnails.
+      const { rowCount: removed } = await pool.query(
+        `DELETE FROM "Media" WHERE "url" = ANY($1::text[])`,
+        [live],
+      );
 
-    // The upload route logs every file in the media library, so the rows that
-    // came from the dump now point at files that no longer exist.
-    const { rowCount } = await pool.query(
-      `DELETE FROM "Media" WHERE "url" = ANY($1::text[])`,
-      [files.map((file) => `/uploads/${file}`)],
-    );
-    if (rowCount) console.log(`Removed ${rowCount} stale media row(s).`);
+      console.log(
+        `✓ ${file} → ${result.url} (${updated} reference(s), ${removed ?? 0} stale row(s) removed)`,
+      );
+    }
   } finally {
     await pool.end();
   }
