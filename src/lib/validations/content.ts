@@ -213,6 +213,7 @@ export const siteSettingSchema = z.object({
   googleVerification: optionalText,
   analyticsId: optionalText,
   accentColor: z.string().min(1),
+  accentForeground: z.enum(["auto", "light", "dark"]),
   maintenanceMode: z.boolean(),
   showProjects: z.boolean(),
   showSkills: z.boolean(),

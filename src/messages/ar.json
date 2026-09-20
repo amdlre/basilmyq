@@ -622,14 +622,19 @@
       "maintenance": "وضع الصيانة",
       "maintenanceHint": "يخفي الموقع العام عن الزوار.",
       "accent": "لون الهوية",
-      "accentHint": "قيمة CSS، مثل oklch(0.55 0.221 264).",
+      "accentHint": "قيمة CSS أو لون hex، مثل #4E8D9C أو oklch(0.55 0.221 264). يُحسب لون النص فوقه تلقائياً.",
       "sections": "أقسام الموقع العام",
       "showProjects": "المشاريع",
       "showSkills": "المهارات",
       "showServices": "الخدمات",
       "showExperience": "الخبرات",
       "showTestimonials": "الآراء",
-      "showBlog": "المدونة"
+      "showBlog": "المدونة",
+      "accentForeground": "لون النص فوق لون الهوية",
+      "accentForegroundHint": "«تلقائي» يختار الأوضح. اختر أبيض أو داكن لتفرضه بنفسك.",
+      "accentAuto": "تلقائي (الأوضح)",
+      "accentLight": "أبيض",
+      "accentDark": "داكن"
     },
     "lookups": {
       "description": "قيم تتكرر في النماذج. أضفها مرة هنا واخترها بضغطة عند الإدخال.",

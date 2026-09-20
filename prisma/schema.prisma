@@ -62,6 +62,9 @@ model SiteSetting {
   analyticsId        String?
 
   accentColor     String  @default("oklch(0.55 0.221 264.376)")
+  /// Text drawn on the accent: "auto" picks the higher-contrast option,
+  /// "light" and "dark" force it.
+  accentForeground String @default("auto")
   maintenanceMode Boolean @default(false)
 
   // Public section switches (Settings → Advanced).

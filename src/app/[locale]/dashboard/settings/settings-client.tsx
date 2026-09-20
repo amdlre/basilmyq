@@ -7,6 +7,7 @@ import {
   FileField,
   ImageField,
   RichTextField,
+  SelectField,
   SocialLinksField,
   SwitchField,
   TextField,
@@ -337,6 +338,16 @@ export function SettingsClient({
                 name="maintenanceMode"
                 label={t("advanced.maintenance")}
                 description={t("advanced.maintenanceHint")}
+              />
+              <SelectField
+                name="accentForeground"
+                label={t("advanced.accentForeground")}
+                description={t("advanced.accentForegroundHint")}
+                options={[
+                  { value: "auto", label: t("advanced.accentAuto") },
+                  { value: "light", label: t("advanced.accentLight") },
+                  { value: "dark", label: t("advanced.accentDark") },
+                ]}
               />
               <TextField
                 name="accentColor"

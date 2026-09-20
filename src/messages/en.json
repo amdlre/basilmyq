@@ -622,14 +622,19 @@
       "maintenance": "Maintenance mode",
       "maintenanceHint": "Hides the public site from visitors.",
       "accent": "Brand accent",
-      "accentHint": "A CSS value, such as oklch(0.55 0.221 264).",
+      "accentHint": "A CSS value or hex colour, such as #4E8D9C or oklch(0.55 0.221 264). The text colour on top is worked out for you.",
       "sections": "Public sections",
       "showProjects": "Projects",
       "showSkills": "Skills",
       "showServices": "Services",
       "showExperience": "Experience",
       "showTestimonials": "Testimonials",
-      "showBlog": "Blog"
+      "showBlog": "Blog",
+      "accentForeground": "Text on the accent",
+      "accentForegroundHint": "“Auto” picks whichever reads better. Choose white or dark to force it.",
+      "accentAuto": "Auto (highest contrast)",
+      "accentLight": "White",
+      "accentDark": "Dark"
     },
     "lookups": {
       "description": "Values repeated across forms. Add them once here and pick them with one click.",

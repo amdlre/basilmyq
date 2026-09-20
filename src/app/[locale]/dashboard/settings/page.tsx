@@ -88,6 +88,12 @@ export default async function SettingsPage(
   const settingsValues: SiteSettingInput = {
     ...rest,
     socialLinks: readSocialLinks(socialLinks),
+    // Stored as a plain column; narrowed to the union the form expects, with
+    // anything unrecognised falling back to the computed choice.
+    accentForeground:
+      rest.accentForeground === "light" || rest.accentForeground === "dark"
+        ? rest.accentForeground
+        : "auto",
   };
 
   const {

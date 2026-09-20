@@ -6,6 +6,8 @@ import { AppProviders } from "@/components/shared/app-providers";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { PUBLIC_NAMESPACES } from "@/i18n/namespaces";
 import { getLocaleDirection } from "@/i18n/routing";
+import { accentStyleSheet, type AccentForeground } from "@/lib/accent";
+import { getSiteSettings } from "@/server/queries/public";
 
 import "../globals.css";
 
@@ -60,6 +62,16 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
   const direction = getLocaleDirection(locale);
   const t = await getTranslations({ locale, namespace: "Common" });
 
+  // The accent chosen in Settings overrides the design-system default. Read
+  // here rather than in the public layout so the dashboard is themed too, and
+  // guarded so an unreachable database falls back to the built-in accent
+  // instead of failing the whole document.
+  const settings = await getSiteSettings().catch(() => null);
+  const accent = accentStyleSheet(
+    settings?.accentColor,
+    settings?.accentForeground as AccentForeground | undefined,
+  );
+
   return (
     <html
       lang={locale}
@@ -67,6 +79,17 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
       suppressHydrationWarning
       className={`${fontLatin.variable} ${fontMono.variable} ${fontArabic.variable} h-full antialiased`}
     >
+      {accent ? (
+        <head>
+          {/*
+            Injected rather than written into globals.css because the value
+            lives in the database. It is generated from parsed numbers, never
+            interpolated from the raw input, so nothing the field accepts can
+            escape the declaration.
+          */}
+          <style id="accent-tokens">{accent}</style>
+        </head>
+      ) : null}
       <body className="flex min-h-full flex-col">
         {/* Visual styles are gated behind focus: `sr-only` zeroes padding, and
             re-adding it unfocused gives the link width that shifts the page in RTL. */}
