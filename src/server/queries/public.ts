@@ -43,13 +43,32 @@ export const getSiteSettings = unstable_cache(
 export const getHeroSection = unstable_cache(
   async () => db.heroSection.findUnique({ where: { id: "singleton" } }),
   ["hero-section"],
-  { tags: [PUBLIC_TAGS.settings] },
+  {
+    tags: [PUBLIC_TAGS.settings],
+    revalidate: SETTINGS_REVALIDATE_SECONDS,
+  },
+);
+
+export const getHeroCards = unstable_cache(
+  async () =>
+    db.heroCard.findMany({
+      where: { isVisible: true },
+      orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+    }),
+  ["hero-cards"],
+  {
+    tags: [PUBLIC_TAGS.settings],
+    revalidate: SETTINGS_REVALIDATE_SECONDS,
+  },
 );
 
 export const getAboutSection = unstable_cache(
   async () => db.aboutSection.findUnique({ where: { id: "singleton" } }),
   ["about-section"],
-  { tags: [PUBLIC_TAGS.settings] },
+  {
+    tags: [PUBLIC_TAGS.settings],
+    revalidate: SETTINGS_REVALIDATE_SECONDS,
+  },
 );
 
 /**

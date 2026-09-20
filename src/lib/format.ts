@@ -24,3 +24,22 @@ export function toDate(value: Date | string | null | undefined): Date | null {
   const date = value instanceof Date ? value : new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 }
+
+/**
+ * Whole years since `start`, rounded up: two and a half years reads as three.
+ * Returns null when no start date is set, so callers can fall back.
+ */
+export function yearsSince(
+  start: Date | string | null | undefined,
+  now: Date = new Date(),
+): number | null {
+  const from = toDate(start);
+  if (!from) return null;
+
+  const months =
+    (now.getFullYear() - from.getFullYear()) * 12 +
+    (now.getMonth() - from.getMonth());
+  if (months <= 0) return 1;
+
+  return Math.max(1, Math.ceil(months / 12));
+}

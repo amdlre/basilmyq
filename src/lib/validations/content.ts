@@ -157,6 +157,15 @@ export const tagSchema = z.object({
   order: z.number().int().min(0),
 });
 
+/** A card under the intro: a label and an image. */
+export const heroCardSchema = z.object({
+  titleAr: z.string().min(1),
+  titleEn: z.string().min(1),
+  imageUrl: optionalText,
+  isVisible: z.boolean(),
+  order: z.number().int().min(0),
+});
+
 export const mediaSchema = z.object({
   altAr: optionalText,
   altEn: optionalText,
@@ -172,6 +181,7 @@ export type EducationInput = z.infer<typeof educationSchema>;
 export type SkillInput = z.infer<typeof skillSchema>;
 export type SkillGroupInput = z.infer<typeof skillGroupSchema>;
 export type TagInput = z.infer<typeof tagSchema>;
+export type HeroCardInput = z.infer<typeof heroCardSchema>;
 
 /** Settings and the two singleton content sections. */
 
@@ -216,6 +226,9 @@ export const siteSettingSchema = z.object({
 export const heroSectionSchema = z.object({
   titleAr: z.string().min(1),
   titleEn: z.string().min(1),
+  highlightAr: optionalText,
+  highlightEn: optionalText,
+  careerStartDate: z.date().nullable(),
   subtitleAr: z.string().min(1),
   subtitleEn: z.string().min(1),
   badgeAr: optionalText,

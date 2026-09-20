@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
 
-import { Hero } from "@/components/public/sections/hero";
+import { Intro } from "@/components/public/sections/intro";
 import { ServicesSection } from "@/components/public/sections/services";
 import { SkillsSection } from "@/components/public/sections/skills";
 import { TestimonialsSection } from "@/components/public/sections/testimonials";
 import { TimelineSection } from "@/components/public/sections/timeline";
 import { ProjectCard } from "@/components/public/project-card";
 import { PersonJsonLd } from "@/components/public/json-ld";
-import { Markdown } from "@/components/public/markdown";
 import { AnimatedIn } from "@/components/shared/animated-in";
 import { Section } from "@/components/shared/section";
 import { Button } from "@/components/ui/button";
@@ -23,6 +22,7 @@ import { buildMetadata } from "@/lib/seo";
 import { readSocialLinks } from "@/lib/social";
 import {
   getAboutSection,
+  getHeroCards,
   getHeroSection,
   getPublicPosts,
   getPublicProjects,
@@ -58,6 +58,7 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
     settings,
     hero,
     about,
+    heroCards,
     projects,
     skillGroups,
     services,
@@ -68,6 +69,7 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
     getSiteSettings(),
     getHeroSection(),
     getAboutSection(),
+    getHeroCards(),
     getPublicProjects(),
     getPublicSkillGroups(),
     getPublicServices(),
@@ -101,37 +103,20 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
         />
       ) : null}
 
-      {hero ? <Hero hero={hero} locale={locale} /> : null}
-
-      {about ? (
-        <Section title={t("aboutTitle")}>
-          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
-            <AnimatedIn>
-              <Markdown
-                content={pick(about, "bio", locale)}
-                className="max-w-prose"
-              />
-            </AnimatedIn>
-            <AnimatedIn delay={0.1}>
-              <dl className="grid grid-cols-3 gap-6 md:grid-cols-1 md:gap-5">
-                {[
-                  { value: about.yearsExperience, label: t("years") },
-                  { value: about.projectsCount, label: t("projectsCount") },
-                  { value: about.clientsCount, label: t("clientsCount") },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <dt className="font-heading text-3xl font-semibold tabular-nums">
-                      {format.number(stat.value)}
-                    </dt>
-                    <dd className="text-sm text-muted-foreground">
-                      {stat.label}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </AnimatedIn>
-          </div>
-        </Section>
+      {/* Hero and "about" are one section: portrait, pitch, stats and cards. */}
+      {hero ? (
+        <Intro
+          hero={hero}
+          about={about}
+          cards={heroCards}
+          cvUrl={
+            (locale === "ar" ? settings?.cvUrlAr : settings?.cvUrlEn) ??
+            settings?.cvUrlAr ??
+            settings?.cvUrlEn ??
+            null
+          }
+          locale={locale}
+        />
       ) : null}
 
       {settings?.showProjects && featured.length > 0 ? (

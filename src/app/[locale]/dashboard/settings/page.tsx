@@ -9,6 +9,7 @@ import type {
   SiteSettingInput,
 } from "@/lib/validations/content";
 import {
+  getHeroCards,
   getProjectCategories,
   getSingletons,
   getSkillGroups,
@@ -41,9 +42,10 @@ export default async function SettingsPage(
   props: PageProps<"/[locale]/dashboard/settings">,
 ) {
   await resolveLocale(props.params);
-  const [{ settings, hero, about }, tags, categories, groups] =
+  const [{ settings, hero, about }, heroCards, tags, categories, groups] =
     await Promise.all([
       getSingletons(),
+      getHeroCards(),
       getTags(),
       getProjectCategories(),
       getSkillGroups(),
@@ -110,6 +112,7 @@ export default async function SettingsPage(
       hero={heroValues}
       about={aboutValues}
       cvDownloadCount={cvDownloadCount}
+      heroCards={heroCards}
       lookups={{ tags, categories, groups }}
     />,
   );

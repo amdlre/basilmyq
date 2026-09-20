@@ -579,7 +579,12 @@
       "image": "الصورة",
       "isAvailable": "متاح لمشاريع جديدة",
       "availabilityAr": "نص التوفّر (عربي)",
-      "availabilityEn": "Availability text (English)"
+      "availabilityEn": "Availability text (English)",
+      "highlightAr": "الكلمة المميّزة (عربي)",
+      "highlightEn": "Highlighted word (English)",
+      "highlightHint": "تظهر في آخر العنوان بخلفية لونية.",
+      "careerStart": "تاريخ بدء الخبرة",
+      "careerStartHint": "تُحسب سنوات الخبرة منه تلقائياً، مع تقريب الكسر لأعلى."
     },
     "about": {
       "title": "قسم النبذة",
@@ -643,6 +648,14 @@
         "nameEn": "الاسم بالإنجليزية",
         "slug": "المعرّف في الرابط"
       }
+    },
+    "heroCards": {
+      "title": "بطاقات الواجهة",
+      "singular": "بطاقة",
+      "description": "بطاقات صغيرة تظهر أسفل قسم الواجهة.",
+      "titleAr": "النص (عربي)",
+      "titleEn": "النص (إنجليزي)",
+      "image": "الصورة"
     }
   },
   "Overview": {

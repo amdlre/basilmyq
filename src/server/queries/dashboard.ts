@@ -58,6 +58,11 @@ export async function getSkillGroups() {
   return db.skillGroup.findMany({ orderBy: [...byOrder] });
 }
 
+export async function getHeroCards() {
+  await requireAuth();
+  return db.heroCard.findMany({ orderBy: [...byOrder] });
+}
+
 export async function getTags() {
   await requireAuth();
   return db.tag.findMany({ orderBy: [...byOrder] });
@@ -83,6 +88,7 @@ export type ExperienceRow = Awaited<ReturnType<typeof getExperiences>>[number];
 export type EducationRow = Awaited<ReturnType<typeof getEducation>>[number];
 export type SkillRow = Awaited<ReturnType<typeof getSkills>>[number];
 export type SkillGroupRow = Awaited<ReturnType<typeof getSkillGroups>>[number];
+export type HeroCardRow = Awaited<ReturnType<typeof getHeroCards>>[number];
 export type TagRow = Awaited<ReturnType<typeof getTags>>[number];
 export type MessageRow = Awaited<ReturnType<typeof getMessages>>[number];
 export type MediaRow = Awaited<ReturnType<typeof getMedia>>[number];

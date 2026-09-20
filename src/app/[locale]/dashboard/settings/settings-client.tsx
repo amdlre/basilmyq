@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import {
+  DateField,
   ImageField,
   RichTextField,
   SocialLinksField,
@@ -25,11 +26,13 @@ import {
   saveSiteSettings,
 } from "@/server/actions/settings";
 import type {
+  HeroCardRow,
   ProjectCategoryRow,
   SkillGroupRow,
   TagRow,
 } from "@/server/queries/dashboard";
 
+import { HeroCards } from "./hero-cards";
 import { LookupLists } from "./lookup-lists";
 
 type Props = {
@@ -37,6 +40,7 @@ type Props = {
   hero: HeroSectionInput;
   about: AboutSectionInput;
   cvDownloadCount: number;
+  heroCards: HeroCardRow[];
   lookups: {
     tags: TagRow[];
     categories: ProjectCategoryRow[];
@@ -49,6 +53,7 @@ export function SettingsClient({
   hero,
   about,
   cvDownloadCount,
+  heroCards,
   lookups,
 }: Props) {
   const t = useTranslations("Settings");
@@ -137,6 +142,21 @@ export function SettingsClient({
                   label={t("hero.subtitleEn")}
                   multiline
                 />
+                <TextField
+                  name="highlightAr"
+                  label={t("hero.highlightAr")}
+                  description={t("hero.highlightHint")}
+                />
+                <TextField
+                  name="highlightEn"
+                  label={t("hero.highlightEn")}
+                  dir="ltr"
+                />
+                <DateField
+                  name="careerStartDate"
+                  label={t("hero.careerStart")}
+                  description={t("hero.careerStartHint")}
+                />
                 <TextField name="badgeAr" label={t("hero.badgeAr")} />
                 <TextField name="badgeEn" label={t("hero.badgeEn")} dir="ltr" />
                 <TextField
@@ -179,6 +199,8 @@ export function SettingsClient({
                   dir="ltr"
                 />
               </SettingsForm>
+
+              <HeroCards rows={heroCards} />
 
               <SettingsForm
                 schema={aboutSectionSchema}

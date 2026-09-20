@@ -6,6 +6,7 @@ import type { Prisma } from "@/generated/prisma/client";
 
 import {
   educationSchema,
+  heroCardSchema,
   experienceSchema,
   postSchema,
   projectCategorySchema,
@@ -133,6 +134,14 @@ export const CONTENT_ENTITIES = {
     schema: skillGroupSchema as unknown as ContentConfig["schema"],
     paths: ["/"],
     tag: PUBLIC_TAGS.skills,
+    supportsVisibility: true,
+    supportsFeatured: false,
+  },
+  heroCard: {
+    delegate: db.heroCard as unknown as ContentDelegate,
+    schema: heroCardSchema as unknown as ContentConfig["schema"],
+    paths: ["/"],
+    tag: PUBLIC_TAGS.settings,
     supportsVisibility: true,
     supportsFeatured: false,
   },

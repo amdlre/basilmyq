@@ -579,7 +579,12 @@
       "image": "Image",
       "isAvailable": "Available for new work",
       "availabilityAr": "Availability text (Arabic)",
-      "availabilityEn": "Availability text (English)"
+      "availabilityEn": "Availability text (English)",
+      "highlightAr": "Highlighted word (Arabic)",
+      "highlightEn": "Highlighted word (English)",
+      "highlightHint": "Ends the title, with an accent behind it.",
+      "careerStart": "Career start date",
+      "careerStartHint": "Years of experience are counted from here, rounded up."
     },
     "about": {
       "title": "About section",
@@ -643,6 +648,14 @@
         "nameEn": "Name (English)",
         "slug": "Slug"
       }
+    },
+    "heroCards": {
+      "title": "Intro cards",
+      "singular": "card",
+      "description": "Small cards shown under the intro section.",
+      "titleAr": "Label (Arabic)",
+      "titleEn": "Label (English)",
+      "image": "Image"
     }
   },
   "Overview": {

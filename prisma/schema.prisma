@@ -82,10 +82,16 @@ model HeroSection {
 
   titleAr    String
   titleEn    String
+  /// The tail of the title, rendered with an accent behind it.
+  highlightAr String?
+  highlightEn String?
   subtitleAr String @db.Text
   subtitleEn String @db.Text
   badgeAr    String?
   badgeEn    String?
+
+  /// Years of experience are counted from here rather than typed by hand.
+  careerStartDate DateTime?
 
   primaryCtaLabelAr   String?
   primaryCtaLabelEn   String?
@@ -385,6 +391,22 @@ model Tag {
   updatedAt DateTime @updatedAt
 
   @@index([order])
+}
+
+/// The small cards under the intro: a label and an image, nothing else.
+model HeroCard {
+  id      String  @id @default(cuid())
+  titleAr String
+  titleEn String
+
+  imageUrl String?
+
+  isVisible Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isVisible, order])
 }
 
 model ContactMessage {
