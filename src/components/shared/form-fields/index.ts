@@ -1,4 +1,5 @@
 export { DateField } from "./date-field";
+export { DateRangeField } from "./date-range-field";
 export { ImageField } from "./image-field";
 export { RichTextField } from "./rich-text-field";
 export { SelectField, type SelectOption } from "./select-field";

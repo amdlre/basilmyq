@@ -181,7 +181,11 @@
     "characters": "{count} حرف",
     "markdownHint": "يدعم Markdown.",
     "createTag": "إضافة «{tag}»",
-    "noTags": "لا توجد وسوم مطابقة."
+    "noTags": "لا توجد وسوم مطابقة.",
+    "pickDate": "اختر تاريخاً",
+    "pickRange": "اختر الفترة",
+    "clearDate": "مسح التاريخ",
+    "present": "حتى الآن"
   },
   "Playground": {
     "title": "معمل المكوّنات",

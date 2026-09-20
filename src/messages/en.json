@@ -181,7 +181,11 @@
     "characters": "{count} characters",
     "markdownHint": "Markdown is supported.",
     "createTag": "Add “{tag}”",
-    "noTags": "No matching tags."
+    "noTags": "No matching tags.",
+    "pickDate": "Pick a date",
+    "pickRange": "Pick a period",
+    "clearDate": "Clear date",
+    "present": "Present"
   },
   "Playground": {
     "title": "Component playground",

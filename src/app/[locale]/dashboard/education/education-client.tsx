@@ -13,7 +13,7 @@ import {
   visibilityColumn,
 } from "@/components/shared/data-table/common-columns";
 import {
-  DateField,
+  DateRangeField,
   ImageField,
   SelectField,
   SwitchField,
@@ -164,8 +164,11 @@ export function EducationClient({ rows }: { rows: EducationRow[] }) {
         <TextField name="fieldEn" label={t("fields.fieldEn")} dir="ltr" />
       </FormStep>
       <FormStep id="details">
-        <DateField name="startDate" label={t("fields.startDate")} />
-        <DateField name="endDate" label={t("fields.endDate")} />
+        <DateRangeField
+          name="startDate"
+          endName="endDate"
+          label={tc("period")}
+        />
         <TextField
           name="credentialUrl"
           label={t("fields.credentialUrl")}

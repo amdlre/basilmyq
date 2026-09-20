@@ -13,7 +13,7 @@ import {
   visibilityColumn,
 } from "@/components/shared/data-table/common-columns";
 import {
-  DateField,
+  DateRangeField,
   ImageField,
   SwitchField,
   TextField,
@@ -165,8 +165,11 @@ export function ExperienceClient({ rows }: { rows: ExperienceRow[] }) {
         <TextField name="locationEn" label={t("fields.locationEn")} dir="ltr" />
       </FormStep>
       <FormStep id="details">
-        <DateField name="startDate" label={t("fields.startDate")} />
-        <DateField name="endDate" label={t("fields.endDate")} />
+        <DateRangeField
+          name="startDate"
+          endName="endDate"
+          label={tc("period")}
+        />
         <SwitchField name="isCurrent" label={t("fields.isCurrent")} />
       </FormStep>
       <FormStep id="content">
