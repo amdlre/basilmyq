@@ -11,7 +11,7 @@ set -e
 echo "> Applying database migrations…"
 
 attempt=1
-max_attempts=30
+max_attempts=60
 
 until (cd /app/migrate && node node_modules/prisma/build/index.js migrate deploy --config prisma7.config.ts); do
   if [ "$attempt" -ge "$max_attempts" ]; then
