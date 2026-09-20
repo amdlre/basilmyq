@@ -104,10 +104,15 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
 - **Satori (`next/og`) shapes Arabic letters but has no bidi algorithm**, so word order
   comes out reversed. The OG route reverses tokens for Arabic before rendering.
 - **`next build` must never touch the database.** The Docker build has no
-  `DATABASE_URL`. Public pages return `[]` from `generateStaticParams` and are
-  rendered on first request, then cached (ISR); the dashboard layout is
-  `force-dynamic`; `sitemap.ts` is `force-dynamic`. A new route that queries at
-  build time will break every deploy — check with `DATABASE_URL="" npm run build`.
+  `DATABASE_URL`. Public pages return `[]` from `generateStaticParams`, and the
+  public layout, the dashboard layout and `sitemap.ts` are all `force-dynamic`;
+  the data itself stays cached through `unstable_cache`. A new route that queries
+  at build time will break every deploy — check with `DATABASE_URL="" npm run build`.
+- **A database outage must never reach the visitor.** The public layout swallows a
+  failed settings read and renders the maintenance screen, `(public)/error.tsx`
+  catches anything a page throws, and `docker-entrypoint.sh` starts the server even
+  when migrations cannot run — otherwise the host answers "Bad Gateway". Rendering
+  per request is what keeps an outage from being cached as if it were the site.
 - **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
   rendering React component". It comes from the inline theme script `next-themes` renders
   when the client re-renders `<html>` across the locale change. It is a React

@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { Footer } from "@/components/public/footer";
@@ -8,15 +7,24 @@ import { pick, pickLogo } from "@/lib/i18n-content";
 import { readSocialLinks } from "@/lib/social";
 import { getSiteSettings } from "@/server/queries/public";
 
+/**
+ * Rendered per request rather than cached as a static page. Its data reads are
+ * still cached, so this costs little — and it means a database outage renders
+ * the maintenance screen (see `error.tsx`) instead of an uncatchable 500, and
+ * never caches that outage as if it were the site.
+ */
+export const dynamic = "force-dynamic";
+
 export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(props.params);
-  const settings = await getSiteSettings();
+  // A database that is down or not yet seeded closes the site rather than
+  // failing the request: visitors see the maintenance screen instead of the
+  // host's "Bad Gateway".
+  const settings = await getSiteSettings().catch(() => null);
   const t = await getTranslations("Maintenance");
 
-  if (!settings) notFound();
-
-  if (settings.maintenanceMode) {
-    // The dashboard stays reachable — only the public site is closed.
+  // The dashboard stays reachable — only the public site is closed.
+  if (!settings || settings.maintenanceMode) {
     return (
       <main
         id="main-content"

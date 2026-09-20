@@ -16,6 +16,7 @@ export const PUBLIC_NAMESPACES = [
   "BlogPage",
   "ContactPage",
   "ErrorPage",
+  "Maintenance",
 ] as const;
 
 export const DASHBOARD_NAMESPACES = [

@@ -15,8 +15,11 @@ max_attempts=60
 
 until (cd /app/migrate && node node_modules/prisma/build/index.js migrate deploy --config prisma7.config.ts); do
   if [ "$attempt" -ge "$max_attempts" ]; then
-    echo "> Database still unreachable after $max_attempts attempts — giving up." >&2
-    exit 1
+    # Start anyway: the site then serves its own maintenance screen instead of
+    # the host's "Bad Gateway", and the dashboard shows the real error.
+    echo "> Database still unreachable after $max_attempts attempts." >&2
+    echo "> Starting without migrations — the site will show its maintenance page." >&2
+    break
   fi
   echo "> Database not ready yet (attempt $attempt/$max_attempts); retrying in 2s…"
   attempt=$((attempt + 1))
