@@ -166,7 +166,9 @@
     "notAnImage": "That file is not an image.",
     "uploadFailed": "Upload failed. Try again.",
     "tooLarge": "The image is larger than 5 MB.",
-    "uploaded": "Image uploaded"
+    "uploaded": "Image uploaded",
+    "dropFileHint": "Drop a PDF here, or click to choose",
+    "removeFile": "Remove file"
   },
   "Form": {
     "generateSlug": "Generate from title",
@@ -597,8 +599,6 @@
       "bioAr": "Bio (Arabic)",
       "bioEn": "Bio (English)",
       "image": "Image",
-      "years": "Years of experience",
-      "projects": "Projects delivered",
       "clients": "Clients"
     },
     "contact": {
@@ -608,10 +608,9 @@
       "cityEn": "City (English)"
     },
     "cv": {
-      "ar": "CV (Arabic)",
-      "en": "CV (English)",
       "downloads": "Downloads",
-      "hint": "Paste a link to a PDF."
+      "hint": "One PDF for both languages. Clicking the button on the site downloads it straight away.",
+      "file": "CV file"
     },
     "seo": {
       "keywordsAr": "Keywords (Arabic)",

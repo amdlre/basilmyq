@@ -207,8 +207,7 @@ export const siteSettingSchema = z.object({
   cityAr: optionalText,
   cityEn: optionalText,
   socialLinks: z.array(socialLinkSchema),
-  cvUrlAr: optionalText,
-  cvUrlEn: optionalText,
+  cvUrl: optionalText,
   seoKeywordsAr: optionalText,
   seoKeywordsEn: optionalText,
   googleVerification: optionalText,
@@ -251,8 +250,6 @@ export const aboutSectionSchema = z.object({
   bioAr: z.string().min(1),
   bioEn: z.string().min(1),
   imageUrl: optionalText,
-  yearsExperience: z.number().int().min(0).max(80),
-  projectsCount: z.number().int().min(0),
   clientsCount: z.number().int().min(0),
 });
 

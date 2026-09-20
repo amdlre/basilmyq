@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import {
   DateField,
+  FileField,
   ImageField,
   RichTextField,
   SocialLinksField,
@@ -218,18 +219,6 @@ export function SettingsClient({
                 <RichTextField name="bioEn" label={t("about.bioEn")} rows={8} />
                 <ImageField compact name="imageUrl" label={t("about.image")} />
                 <TextField
-                  name="yearsExperience"
-                  label={t("about.years")}
-                  type="number"
-                  dir="ltr"
-                />
-                <TextField
-                  name="projectsCount"
-                  label={t("about.projects")}
-                  type="number"
-                  dir="ltr"
-                />
-                <TextField
                   name="clientsCount"
                   label={t("about.clients")}
                   type="number"
@@ -278,13 +267,11 @@ export function SettingsClient({
               defaultValues={settings}
               action={saveSiteSettings}
             >
-              <TextField
-                name="cvUrlAr"
-                label={t("cv.ar")}
-                dir="ltr"
+              <FileField
+                name="cvUrl"
+                label={t("cv.file")}
                 description={t("cv.hint")}
               />
-              <TextField name="cvUrlEn" label={t("cv.en")} dir="ltr" />
               <p className="text-sm text-muted-foreground">
                 {t("cv.downloads")}:{" "}
                 <span className="font-medium text-foreground tabular-nums">

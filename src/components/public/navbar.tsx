@@ -90,7 +90,7 @@ export function Navbar({ siteName, logoUrl, cvUrl }: NavbarProps) {
           {cvUrl ? (
             <Button asChild size="sm" className="hidden sm:inline-flex">
               {/* Route handler rather than the file: it records the download. */}
-              <a href="/api/cv" target="_blank" rel="noopener noreferrer">
+              <a href="/api/cv" download>
                 <DownloadIcon />
                 {t("downloadCv")}
               </a>
@@ -144,7 +144,7 @@ export function Navbar({ siteName, logoUrl, cvUrl }: NavbarProps) {
 
                 {cvUrl ? (
                   <Button asChild size="lg">
-                    <a href="/api/cv" target="_blank" rel="noopener noreferrer">
+                    <a href="/api/cv" download>
                       <DownloadIcon />
                       {t("downloadCv")}
                     </a>

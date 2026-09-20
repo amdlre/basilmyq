@@ -109,12 +109,8 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
           hero={hero}
           about={about}
           cards={heroCards}
-          cvUrl={
-            (locale === "ar" ? settings?.cvUrlAr : settings?.cvUrlEn) ??
-            settings?.cvUrlAr ??
-            settings?.cvUrlEn ??
-            null
-          }
+          cvUrl={settings?.cvUrl ?? null}
+          projectsCount={projects.length}
           locale={locale}
         />
       ) : null}

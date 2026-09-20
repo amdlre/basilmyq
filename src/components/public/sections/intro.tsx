@@ -18,8 +18,6 @@ type HeroRow = Record<string, unknown> & {
 
 type AboutRow = Record<string, unknown> & {
   imageUrl: string | null;
-  yearsExperience: number;
-  projectsCount: number;
 };
 
 type CardRow = Record<string, unknown> & {
@@ -32,6 +30,8 @@ type IntroProps = {
   about: AboutRow | null;
   cards: CardRow[];
   cvUrl: string | null;
+  /** Counted from the published projects, never typed by hand. */
+  projectsCount: number;
   locale: AppLocale;
 };
 
@@ -42,7 +42,14 @@ type IntroProps = {
  * Nothing here is animated on entry — it holds the LCP element, and anything
  * starting at `opacity: 0` delays it until hydration.
  */
-export async function Intro({ hero, about, cards, cvUrl, locale }: IntroProps) {
+export async function Intro({
+  hero,
+  about,
+  cards,
+  cvUrl,
+  projectsCount,
+  locale,
+}: IntroProps) {
   const t = await getTranslations("Home");
   const tNav = await getTranslations("Nav");
   const Arrow =
@@ -54,11 +61,13 @@ export async function Intro({ hero, about, cards, cvUrl, locale }: IntroProps) {
   const secondaryLabel = pickOptional(hero, "secondaryCtaLabel", locale);
   const portrait = hero.imageUrl ?? about?.imageUrl ?? null;
 
-  // Typed once in the dashboard, counted here, so it never goes stale.
-  const years = yearsSince(hero.careerStartDate) ?? about?.yearsExperience ?? 0;
+  // Both numbers are derived: the years from the career start date typed once
+  // in the dashboard, the project count from the projects themselves. Neither
+  // can drift out of date the way a hand-entered figure does.
+  const years = yearsSince(hero.careerStartDate) ?? 0;
 
   const stats = [
-    { value: about?.projectsCount ?? 0, label: t("projectsCount") },
+    { value: projectsCount, label: t("projectsCount") },
     { value: years, label: t("years") },
   ].filter((stat) => stat.value > 0);
 
@@ -111,7 +120,7 @@ export async function Intro({ hero, about, cards, cvUrl, locale }: IntroProps) {
                 {cvUrl ? (
                   <Button asChild size="lg">
                     {/* The route handler, not the file: it counts downloads. */}
-                    <a href="/api/cv" target="_blank" rel="noopener noreferrer">
+                    <a href="/api/cv" download>
                       <DownloadIcon />
                       {tNav("downloadCv")}
                     </a>

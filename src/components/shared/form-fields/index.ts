@@ -1,3 +1,4 @@
+export { FileField } from "./file-field";
 export { DateField } from "./date-field";
 export { DateRangeField } from "./date-range-field";
 export { ImageField } from "./image-field";

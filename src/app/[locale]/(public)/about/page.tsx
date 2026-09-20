@@ -52,7 +52,7 @@ export default async function AboutPage(props: PageProps<"/[locale]/about">) {
   const tExp = await getTranslations("Experience");
   const tEdu = await getTranslations("Education");
 
-  const cvUrl = locale === "ar" ? settings?.cvUrlAr : settings?.cvUrlEn;
+  const cvUrl = settings?.cvUrl ?? null;
 
   const formatYear = (value: Date | string | null): string => {
     const date = toDate(value);
@@ -73,11 +73,7 @@ export default async function AboutPage(props: PageProps<"/[locale]/about">) {
 
             {cvUrl ? (
               <Button asChild size="lg" className="mt-8">
-                <a
-                  href={`/api/cv?locale=${locale}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="/api/cv" download>
                   <DownloadIcon />
                   {t("downloadCv")}
                 </a>

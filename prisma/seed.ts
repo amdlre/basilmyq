@@ -106,8 +106,6 @@ async function main() {
         "أعمل في هندسة الويب منذ سنوات، وأركّز على المنتجات التي تُستخدم يومياً: لوحات تحكم، منصات تجارة، وأنظمة إدارة محتوى. أهتم بالتفاصيل التي يشعر بها المستخدم ولا يلاحظها — سرعة الاستجابة، وضوح الحالة، ودعم كامل للعربية والاتجاه من اليمين لليسار.",
       bioEn:
         "I have spent years in web engineering, focused on products people use daily: dashboards, commerce platforms, and content systems. I care about the details users feel without noticing — responsiveness, clear state, and first-class Arabic and RTL support.",
-      yearsExperience: 7,
-      projectsCount: 42,
       clientsCount: 18,
     },
   });

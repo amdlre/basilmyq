@@ -52,8 +52,8 @@ model SiteSetting {
   /// [{ label, url, icon }] — dynamic list edited from Settings → Contact.
   socialLinks Json @default("[]")
 
-  cvUrlAr         String?
-  cvUrlEn         String?
+  /// One CV file for both locales, uploaded from Settings -> CV.
+  cvUrl           String?
   cvDownloadCount Int     @default(0)
 
   seoKeywordsAr      String?
@@ -121,8 +121,8 @@ model AboutSection {
 
   imageUrl String?
 
-  yearsExperience Int @default(0)
-  projectsCount   Int @default(0)
+  /// Years of experience are derived from HeroSection.careerStartDate and the
+  /// project count from the visible projects, so neither is typed by hand.
   clientsCount    Int @default(0)
 
   createdAt DateTime @default(now())

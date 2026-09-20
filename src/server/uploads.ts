@@ -38,12 +38,20 @@ const EXTENSION_BY_TYPE: Record<string, string> = {
   "image/avif": "avif",
 };
 
-const TYPE_BY_EXTENSION = Object.fromEntries(
-  Object.entries(EXTENSION_BY_TYPE).map(([type, ext]) => [ext, type]),
-);
+const TYPE_BY_EXTENSION: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.entries(EXTENSION_BY_TYPE).map(([type, ext]) => [ext, type]),
+  ),
+  pdf: "application/pdf",
+};
 
 /** Names are generated here, so anything else is a traversal attempt. */
-const STORED_NAME = /^[0-9a-f-]{36}\.(jpg|png|webp|gif|avif)$/;
+const STORED_NAME = /^[0-9a-f-]{36}\.(jpg|png|webp|gif|avif|pdf)$/;
+
+export const MAX_DOCUMENT_BYTES = 10 * 1024 * 1024;
+
+/** `%PDF-` — checked against the bytes, not the declared content type. */
+const PDF_MAGIC = Buffer.from("%PDF-");
 
 export type UploadError = "INVALID_TYPE" | "TOO_LARGE";
 
@@ -75,6 +83,41 @@ export async function saveImage(
       size: file.size,
       width: metadata.width ?? null,
       height: metadata.height ?? null,
+    },
+  });
+
+  return { url };
+}
+
+/**
+ * Stores a PDF, currently only used for the CV.
+ *
+ * The magic bytes are checked rather than the browser-supplied content type,
+ * which a client controls freely. Only PDF is accepted: it is the one document
+ * format every browser and phone can open without downloading an app.
+ */
+export async function saveDocument(
+  file: File,
+): Promise<{ url: string } | { error: UploadError }> {
+  if (file.type !== "application/pdf") return { error: "INVALID_TYPE" };
+  if (file.size > MAX_DOCUMENT_BYTES) return { error: "TOO_LARGE" };
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  if (!buffer.subarray(0, PDF_MAGIC.length).equals(PDF_MAGIC)) {
+    return { error: "INVALID_TYPE" };
+  }
+
+  const filename = `${randomUUID()}.pdf`;
+  await mkdir(UPLOAD_DIR, { recursive: true });
+  await writeFile(storedPath(filename), buffer);
+
+  const url = `${UPLOAD_URL_PREFIX}${filename}`;
+  await db.media.create({
+    data: {
+      url,
+      filename: file.name || filename,
+      mimeType: "application/pdf",
+      size: file.size,
     },
   });
 

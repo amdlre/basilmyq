@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/lib/auth/get-session";
-import { saveImage } from "@/server/uploads";
+import { saveDocument, saveImage } from "@/server/uploads";
 
 /**
- * Receives one image from the dashboard's image fields.
+ * Receives one file from the dashboard's upload fields.
  *
  * A route handler rather than a Server Action because actions cap the request
- * body at 1 MB, well under a typical cover image.
+ * body at 1 MB, well under a typical cover image or CV.
  */
 export async function POST(request: Request): Promise<Response> {
   if (!(await getSession())) {
@@ -20,7 +20,13 @@ export async function POST(request: Request): Promise<Response> {
     return NextResponse.json({ error: "INVALID_TYPE" }, { status: 400 });
   }
 
-  const result = await saveImage(file);
+  // `kind` decides which validator runs; anything unrecognised is an image,
+  // so an unexpected value can never widen what is accepted.
+  const result =
+    form?.get("kind") === "document"
+      ? await saveDocument(file)
+      : await saveImage(file);
+
   if ("error" in result) {
     return NextResponse.json(result, { status: 400 });
   }

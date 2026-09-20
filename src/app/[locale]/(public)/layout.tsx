@@ -38,8 +38,6 @@ export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
     );
   }
 
-  const cvUrl = locale === "ar" ? settings.cvUrlAr : settings.cvUrlEn;
-
   return (
     <>
       {/*
@@ -55,7 +53,7 @@ export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
       <Navbar
         siteName={pick(settings, "siteName", locale)}
         logoUrl={pickLogo(settings, locale)}
-        cvUrl={cvUrl ?? settings.cvUrlEn ?? settings.cvUrlAr}
+        cvUrl={settings.cvUrl}
       />
       <main id="main-content" className="flex-1">
         {props.children}
