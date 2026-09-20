@@ -23,10 +23,21 @@ export const PUBLIC_TAGS = {
   skills: "public:skills",
 } as const;
 
+/**
+ * Dashboard writes expire these tags immediately, so the time limit only
+ * matters for changes made outside the app — restoring a dump into an empty
+ * database, say. Without it, "no settings yet" would be cached as the truth and
+ * the site would stay on its maintenance screen until the next deploy.
+ */
+const SETTINGS_REVALIDATE_SECONDS = 60;
+
 export const getSiteSettings = unstable_cache(
   async () => db.siteSetting.findUnique({ where: { id: "singleton" } }),
   ["site-settings"],
-  { tags: [PUBLIC_TAGS.settings] },
+  {
+    tags: [PUBLIC_TAGS.settings],
+    revalidate: SETTINGS_REVALIDATE_SECONDS,
+  },
 );
 
 export const getHeroSection = unstable_cache(
