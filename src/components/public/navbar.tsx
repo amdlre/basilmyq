@@ -45,16 +45,21 @@ export function Navbar({ siteName, logoUrl, cvUrl }: NavbarProps) {
   }, []);
 
   return (
+    // A floating pill rather than a full-width bar: it lifts off the page,
+    // then shrinks and frosts over once the page scrolls under it.
     <header
       className={cn(
-        "sticky top-0 z-40 transition-colors duration-200",
-        isScrolled
-          ? "border-b bg-background/85 backdrop-blur"
-          : "bg-transparent",
+        "sticky top-0 z-40 px-4 transition-all duration-300",
+        isScrolled ? "pt-2" : "pt-2",
       )}
     >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/">
+      <div
+        className={cn(
+          "mx-auto flex w-full max-w-6xl items-center justify-between gap-4 rounded-full transition-all duration-300",
+          "h-13 border bg-background/70 px-3 shadow-lg backdrop-blur-md",
+        )}
+      >
+        <Link href="/" className="flex shrink-0 items-center gap-1">
           <BrandMark name={siteName} logoUrl={logoUrl} eager />
         </Link>
 
@@ -76,8 +81,11 @@ export function Navbar({ siteName, logoUrl, cvUrl }: NavbarProps) {
         </nav>
 
         <div className="flex items-center gap-1">
-          <ThemeToggle />
-          <LocaleToggle />
+          {/* On phones these live inside the menu instead, to keep the bar short. */}
+          <div className="hidden items-center gap-1 md:flex">
+            <ThemeToggle />
+            <LocaleToggle />
+          </div>
 
           {cvUrl ? (
             <Button asChild size="sm" className="hidden sm:inline-flex">
@@ -100,29 +108,49 @@ export function Navbar({ siteName, logoUrl, cvUrl }: NavbarProps) {
                 <MenuIcon className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
+            {/* Full screen on phones: the links are the whole view, not a panel. */}
+            <SheetContent
+              side="bottom"
+              // Same variant the sheet uses for its own height, so this wins.
+              className="flex w-full max-w-none flex-col gap-0 p-0 data-[side=bottom]:h-dvh"
+            >
+              <SheetHeader className="border-b">
                 <SheetTitle>
                   <BrandMark name={siteName} logoUrl={logoUrl} />
                 </SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-1 p-4">
+
+              <nav className="flex flex-1 flex-col justify-center gap-2 p-6">
                 {LINKS.map((link) => (
                   <SheetClose key={link.href} asChild>
-                    <Button asChild variant="ghost" className="justify-start">
-                      <Link href={link.href}>{t(link.key)}</Link>
-                    </Button>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "rounded-lg px-2 py-3 font-heading text-2xl font-semibold transition-colors hover:text-primary",
+                        pathname.startsWith(link.href) && "text-primary",
+                      )}
+                    >
+                      {t(link.key)}
+                    </Link>
                   </SheetClose>
                 ))}
+              </nav>
+
+              <div className="flex items-center justify-between gap-3 border-t p-6">
+                <div className="flex items-center gap-1">
+                  <ThemeToggle />
+                  <LocaleToggle />
+                </div>
+
                 {cvUrl ? (
-                  <Button asChild className="mt-2">
+                  <Button asChild size="lg">
                     <a href="/api/cv" target="_blank" rel="noopener noreferrer">
                       <DownloadIcon />
                       {t("downloadCv")}
                     </a>
                   </Button>
                 ) : null}
-              </nav>
+              </div>
             </SheetContent>
           </Sheet>
         </div>

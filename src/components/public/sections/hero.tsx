@@ -21,13 +21,9 @@ export function Hero({ hero, locale }: { hero: HeroRow; locale: AppLocale }) {
   const secondaryLabel = pickOptional(hero, "secondaryCtaLabel", locale);
 
   return (
+    // The accent wash lives in the layout, so it runs behind the floating
+    // header instead of starting below it.
     <section className="relative overflow-hidden">
-      {/* A soft accent wash behind the fold, not a hard colour block. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 to-transparent"
-      />
-
       <div className="mx-auto w-full max-w-6xl px-4 py-24 md:py-36">
         {/*
           Deliberately not animated: this block holds the LCP element, and a

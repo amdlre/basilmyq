@@ -42,6 +42,16 @@ export default async function PublicLayout(props: LayoutProps<"/[locale]">) {
 
   return (
     <>
+      {/*
+        A soft accent wash behind the fold. It sits at the layout level so it
+        reaches the very top of the page: the header floats over it rather than
+        leaving a band of bare background above the hero.
+      */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] bg-gradient-to-b from-primary/10 to-transparent"
+      />
+
       <Navbar
         siteName={pick(settings, "siteName", locale)}
         logoUrl={pickLogo(settings, locale)}
