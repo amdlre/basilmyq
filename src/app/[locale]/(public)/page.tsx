@@ -51,6 +51,25 @@ export async function generateMetadata(
   });
 }
 
+/**
+ * Column spans for the featured grid, keyed by how many projects are featured.
+ * The full set is two halves over three thirds; the smaller sets are arranged
+ * so no row is left half empty.
+ */
+const FEATURED_SPANS: Record<number, string[]> = {
+  1: ["md:col-span-6"],
+  2: ["md:col-span-3", "md:col-span-3"],
+  3: ["md:col-span-2", "md:col-span-2", "md:col-span-2"],
+  4: ["md:col-span-3", "md:col-span-3", "md:col-span-3", "md:col-span-3"],
+  5: [
+    "md:col-span-3",
+    "md:col-span-3",
+    "md:col-span-2",
+    "md:col-span-2",
+    "md:col-span-2",
+  ],
+};
+
 export default async function HomePage(props: PageProps<"/[locale]">) {
   const locale = await resolveLocale(props.params);
 
@@ -128,21 +147,30 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
             </Button>
           }
         >
-          {/* Bento: the first project takes a double cell on desktop. */}
-          <div className="grid auto-rows-fr gap-4 md:grid-cols-3">
-            {featured.map((project, index) => (
-              <AnimatedIn
-                key={project.id}
-                delay={index * 0.05}
-                className={index === 0 ? "md:col-span-2 md:row-span-2" : ""}
-              >
-                <ProjectCard
-                  project={project}
-                  locale={locale}
-                  featured={index === 0}
-                />
-              </AnimatedIn>
-            ))}
+          {/*
+            Two wide cards over three narrower ones. The spans live here rather
+            than in the card so the layout is readable in one place, and the
+            shorter sets still fill their rows instead of leaving a gap.
+          */}
+          <div className="grid gap-4 md:grid-cols-6">
+            {featured.map((project, index) => {
+              const span =
+                FEATURED_SPANS[featured.length]?.[index] ?? "md:col-span-2";
+
+              return (
+                <AnimatedIn
+                  key={project.id}
+                  delay={index * 0.05}
+                  className={span}
+                >
+                  <ProjectCard
+                    project={project}
+                    locale={locale}
+                    size={span === "md:col-span-3" ? "lg" : "md"}
+                  />
+                </AnimatedIn>
+              );
+            })}
           </div>
         </Section>
       ) : null}

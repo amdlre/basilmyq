@@ -15,15 +15,22 @@ type ProjectCardRow = Record<string, unknown> & {
   year: number | null;
 };
 
-/** One card, used by the home bento grid and the projects index alike. */
+/**
+ * One card, used by the home grid and the projects index alike.
+ *
+ * `size` only scales the typography and tells `next/image` how wide the card
+ * will be. How much of the grid a card occupies is the grid's decision, not the
+ * card's — the two used to fight over it, with the card setting its own column
+ * span from inside.
+ */
 export function ProjectCard({
   project,
   locale,
-  featured = false,
+  size = "md",
 }: {
   project: ProjectCardRow;
   locale: AppLocale;
-  featured?: boolean;
+  size?: "lg" | "md";
 }) {
   const title = pick(project, "title", locale);
   const summary = pick(project, "summary", locale);
@@ -31,10 +38,7 @@ export function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className={cn(
-        "group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-lg focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-        featured && "md:col-span-2 md:row-span-2",
-      )}
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-lg focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
         {project.coverUrl ? (
@@ -43,8 +47,8 @@ export function ProjectCard({
             alt={title}
             fill
             sizes={
-              featured
-                ? "(max-width: 768px) 100vw, 66vw"
+              size === "lg"
+                ? "(max-width: 768px) 100vw, 50vw"
                 : "(max-width: 768px) 100vw, 33vw"
             }
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
@@ -61,7 +65,7 @@ export function ProjectCard({
           <h3
             className={cn(
               "font-heading font-semibold text-balance",
-              featured ? "text-xl" : "text-base",
+              size === "lg" ? "text-lg" : "text-base",
             )}
           >
             {title}
