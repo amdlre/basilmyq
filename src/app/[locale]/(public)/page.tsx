@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { getFormatter, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import { Intro } from "@/components/public/sections/intro";
 import { SkillsSection } from "@/components/public/sections/skills";
 import { TimelineSection } from "@/components/public/sections/timeline";
+import { PostCard } from "@/components/public/post-card";
 import { ProjectCard } from "@/components/public/project-card";
 import { PersonJsonLd } from "@/components/public/json-ld";
 import { AnimatedIn } from "@/components/shared/animated-in";
 import { Section } from "@/components/shared/section";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { getLocaleDirection } from "@/i18n/routing";
-import { toDate } from "@/lib/format";
 import { pick } from "@/lib/i18n-content";
 import { buildMetadata } from "@/lib/seo";
 import { readSocialLinks } from "@/lib/social";
@@ -91,7 +90,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
 
   const t = await getTranslations("Home");
   const tExp = await getTranslations("Experience");
-  const format = await getFormatter();
   const Arrow =
     getLocaleDirection(locale) === "rtl" ? ArrowLeftIcon : ArrowRightIcon;
 
@@ -200,56 +198,15 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
             </Button>
           }
         >
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {latestPosts.map((post, index) => (
               <AnimatedIn key={post.id} delay={index * 0.05}>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                >
-                  <Card className="h-full transition-shadow hover:shadow-lg">
-                    <CardContent className="space-y-2 p-5">
-                      <p className="text-xs text-muted-foreground">
-                        {toDate(post.publishedAt)
-                          ? format.dateTime(toDate(post.publishedAt) as Date, {
-                              dateStyle: "medium",
-                            })
-                          : null}
-                      </p>
-                      <h3 className="font-heading font-semibold text-balance transition-colors group-hover:text-primary">
-                        {pick(post, "title", locale)}
-                      </h3>
-                      <p className="line-clamp-3 text-sm text-balance text-muted-foreground">
-                        {pick(post, "excerpt", locale)}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <PostCard post={post} locale={locale} />
               </AnimatedIn>
             ))}
           </div>
         </Section>
       ) : null}
-
-      <Section>
-        <AnimatedIn>
-          <div className="rounded-2xl bg-primary px-6 py-14 text-center text-primary-foreground">
-            <h2 className="font-heading text-2xl font-semibold text-balance md:text-3xl">
-              {t("ctaTitle")}
-            </h2>
-            <p className="mx-auto mt-2 max-w-md text-balance opacity-90">
-              {t("ctaDesc")}
-            </p>
-            <Button asChild size="lg" variant="secondary" className="mt-6">
-              {/* Bottom of the page: no reason to pull the contact bundle
-                  before the reader has scrolled to it. */}
-              <Link href="/contact" prefetch={false}>
-                {t("ctaButton")}
-              </Link>
-            </Button>
-          </div>
-        </AnimatedIn>
-      </Section>
     </>
   );
 }

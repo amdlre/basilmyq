@@ -2,23 +2,23 @@
 
 import { useMemo } from "react";
 import { SearchIcon } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 
+import { PostCard } from "@/components/public/post-card";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
-import { toDate } from "@/lib/format";
 import { pick } from "@/lib/i18n-content";
 
 type Post = Record<string, unknown> & {
   id: string;
   slug: string;
+  coverUrl: string | null;
   tags: string[];
   readTimeMinutes: number;
+  views: number;
   publishedAt: Date | string | null;
 };
 
@@ -30,7 +30,6 @@ export function BlogBrowser({
   locale: AppLocale;
 }) {
   const t = useTranslations("BlogPage");
-  const format = useFormatter();
   const [filters, setFilters] = useQueryStates(
     { q: parseAsString.withDefault(""), tag: parseAsString.withDefault("") },
     { history: "replace", clearOnDefault: true },
@@ -99,39 +98,10 @@ export function BlogBrowser({
           description={t("emptyHint")}
         />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {visible.map((post) => {
-            const published = toDate(post.publishedAt);
-            return (
-              <Link
-                key={post.id}
-                href={`/blog/${post.slug}`}
-                className="group block rounded-xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              >
-                <Card className="h-full transition-shadow hover:shadow-lg">
-                  <CardContent className="space-y-2 p-6">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      {published ? (
-                        <span>
-                          {format.dateTime(published, { dateStyle: "medium" })}
-                        </span>
-                      ) : null}
-                      <span aria-hidden>·</span>
-                      <span>
-                        {t("readTime", { minutes: post.readTimeMinutes })}
-                      </span>
-                    </div>
-                    <h2 className="font-heading text-lg font-semibold text-balance transition-colors group-hover:text-primary">
-                      {pick(post, "title", locale)}
-                    </h2>
-                    <p className="line-clamp-3 text-sm text-balance text-muted-foreground">
-                      {pick(post, "excerpt", locale)}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
+        <div className="grid gap-5 md:grid-cols-2">
+          {visible.map((post) => (
+            <PostCard key={post.id} post={post} locale={locale} />
+          ))}
         </div>
       )}
     </div>

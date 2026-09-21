@@ -12,5 +12,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
   return {
     locale,
     messages: (await import(`../messages/${locale}.json`)).default,
+    // Pinned per request so `format.relativeTime` produces the same string on
+    // the server and on the client. Left unset, each side reads its own clock
+    // and "3 days ago" can hydrate into something slightly different.
+    now: new Date(),
   };
 });
