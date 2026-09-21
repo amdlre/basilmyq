@@ -3,7 +3,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
 
 import { Intro } from "@/components/public/sections/intro";
-import { ServicesSection } from "@/components/public/sections/services";
 import { SkillsSection } from "@/components/public/sections/skills";
 import { TestimonialsSection } from "@/components/public/sections/testimonials";
 import { TimelineSection } from "@/components/public/sections/timeline";
@@ -26,7 +25,6 @@ import {
   getHeroSection,
   getPublicPosts,
   getPublicProjects,
-  getPublicServices,
   getPublicSkillGroups,
   getPublicTestimonials,
   getSiteSettings,
@@ -80,7 +78,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
     heroCards,
     projects,
     skillGroups,
-    services,
     experiences,
     testimonials,
     posts,
@@ -91,7 +88,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
     getHeroCards(),
     getPublicProjects(),
     getPublicSkillGroups(),
-    getPublicServices(),
     getPublicExperiences(),
     getPublicTestimonials(),
     getPublicPosts(),
@@ -181,15 +177,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
           locale={locale}
           title={t("skills")}
           description={t("skillsDesc")}
-        />
-      ) : null}
-
-      {settings?.showServices ? (
-        <ServicesSection
-          services={services}
-          locale={locale}
-          title={t("services")}
-          description={t("servicesDesc")}
         />
       ) : null}
 

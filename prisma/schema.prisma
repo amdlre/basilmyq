@@ -70,7 +70,6 @@ model SiteSetting {
   // Public section switches (Settings → Advanced).
   showProjects     Boolean @default(true)
   showSkills       Boolean @default(true)
-  showServices     Boolean @default(true)
   showExperience   Boolean @default(true)
   showTestimonials Boolean @default(true)
   showBlog         Boolean @default(true)
@@ -294,31 +293,9 @@ model Education {
 }
 
 // ---------------------------------------------------------------------------
-// Services & testimonials
+// Testimonials
 // ---------------------------------------------------------------------------
 
-model Service {
-  id            String @id @default(cuid())
-  titleAr       String
-  titleEn       String
-  descriptionAr String @db.Text
-  descriptionEn String @db.Text
-  icon          String?
-
-  featuresAr String[] @default([])
-  featuresEn String[] @default([])
-
-  price     String?
-  priceNote String?
-
-  isVisible  Boolean  @default(true)
-  isFeatured Boolean  @default(false)
-  order      Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@index([isVisible, order])
-}
 
 model Testimonial {
   id        String  @id @default(cuid())

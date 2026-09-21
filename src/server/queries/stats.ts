@@ -30,15 +30,6 @@ export async function getPostStats() {
   };
 }
 
-export async function getServiceStats() {
-  await requireAuth();
-  const [total, visible] = await Promise.all([
-    db.service.count(),
-    db.service.count({ where: { isVisible: true } }),
-  ]);
-  return { total, visible, hidden: total - visible };
-}
-
 export async function getTestimonialStats() {
   await requireAuth();
   const [total, visible, rating] = await Promise.all([

@@ -364,10 +364,6 @@ export function SettingsClient({
               />
               <SwitchField name="showSkills" label={t("advanced.showSkills")} />
               <SwitchField
-                name="showServices"
-                label={t("advanced.showServices")}
-              />
-              <SwitchField
                 name="showExperience"
                 label={t("advanced.showExperience")}
               />

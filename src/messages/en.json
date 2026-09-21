@@ -44,7 +44,6 @@
       "overview": "Overview",
       "projects": "Projects",
       "blog": "Blog",
-      "services": "Services",
       "testimonials": "Testimonials",
       "experience": "Experience",
       "education": "Education",
@@ -83,8 +82,6 @@
     "allProjects": "All projects",
     "skills": "What I work with",
     "skillsDesc": "Tools and technologies I use daily.",
-    "services": "Services",
-    "servicesDesc": "How I can help.",
     "experience": "Experience",
     "experienceDesc": "Where I have worked.",
     "testimonials": "What clients say",
@@ -379,27 +376,6 @@
       "publishedAt": "Publish date"
     }
   },
-  "Services": {
-    "title": "Services",
-    "description": "What you offer clients.",
-    "singular": "service",
-    "stats": {
-      "total": "Total",
-      "visible": "Active",
-      "hidden": "Hidden"
-    },
-    "fields": {
-      "titleAr": "Name (Arabic)",
-      "titleEn": "Name (English)",
-      "descriptionAr": "Description (Arabic)",
-      "descriptionEn": "Description (English)",
-      "icon": "Icon",
-      "featuresAr": "Features (Arabic)",
-      "featuresEn": "Features (English)",
-      "price": "Price",
-      "priceNote": "Price note"
-    }
-  },
   "Testimonials": {
     "title": "Testimonials",
     "description": "What your clients say.",
@@ -626,7 +602,6 @@
       "sections": "Public sections",
       "showProjects": "Projects",
       "showSkills": "Skills",
-      "showServices": "Services",
       "showExperience": "Experience",
       "showTestimonials": "Testimonials",
       "showBlog": "Blog",
@@ -691,7 +666,6 @@
     "entities": {
       "project": "project",
       "post": "post",
-      "service": "service",
       "testimonial": "testimonial",
       "experience": "role",
       "education": "entry",

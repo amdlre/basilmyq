@@ -9,7 +9,6 @@ import {
   MessageSquareQuoteIcon,
   SettingsIcon,
   SparklesIcon,
-  WrenchIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -21,7 +20,6 @@ export type NavLabelKey =
   | "overview"
   | "projects"
   | "blog"
-  | "services"
   | "testimonials"
   | "experience"
   | "education"
@@ -66,7 +64,6 @@ export const DASHBOARD_NAV: NavGroup[] = [
         icon: FolderKanbanIcon,
       },
       { href: "/dashboard/blog", labelKey: "blog", icon: FileTextIcon },
-      { href: "/dashboard/services", labelKey: "services", icon: WrenchIcon },
       {
         href: "/dashboard/testimonials",
         labelKey: "testimonials",

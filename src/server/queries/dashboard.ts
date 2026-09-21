@@ -28,11 +28,6 @@ export async function getPosts() {
   return db.post.findMany({ orderBy: [...byOrder] });
 }
 
-export async function getServices() {
-  await requireAuth();
-  return db.service.findMany({ orderBy: [...byOrder] });
-}
-
 export async function getTestimonials() {
   await requireAuth();
   return db.testimonial.findMany({ orderBy: [...byOrder] });
@@ -80,7 +75,6 @@ export async function getMedia() {
 
 export type ProjectRow = Awaited<ReturnType<typeof getProjects>>[number];
 export type PostRow = Awaited<ReturnType<typeof getPosts>>[number];
-export type ServiceRow = Awaited<ReturnType<typeof getServices>>[number];
 export type TestimonialRow = Awaited<
   ReturnType<typeof getTestimonials>
 >[number];

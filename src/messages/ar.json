@@ -44,7 +44,6 @@
       "overview": "نظرة عامة",
       "projects": "المشاريع",
       "blog": "المدونة",
-      "services": "الخدمات",
       "testimonials": "الآراء",
       "experience": "الخبرات",
       "education": "التعليم",
@@ -83,8 +82,6 @@
     "allProjects": "كل المشاريع",
     "skills": "ما أعمل به",
     "skillsDesc": "أدوات وتقنيات أستخدمها يومياً.",
-    "services": "الخدمات",
-    "servicesDesc": "كيف يمكنني المساعدة.",
     "experience": "الخبرة",
     "experienceDesc": "أين عملت.",
     "testimonials": "آراء العملاء",
@@ -379,27 +376,6 @@
       "publishedAt": "تاريخ النشر"
     }
   },
-  "Services": {
-    "title": "الخدمات",
-    "description": "ما تقدّمه لعملائك.",
-    "singular": "خدمة",
-    "stats": {
-      "total": "الإجمالي",
-      "visible": "نشطة",
-      "hidden": "مخفية"
-    },
-    "fields": {
-      "titleAr": "الاسم (عربي)",
-      "titleEn": "Name (English)",
-      "descriptionAr": "الوصف (عربي)",
-      "descriptionEn": "Description (English)",
-      "icon": "الأيقونة",
-      "featuresAr": "المزايا (عربي)",
-      "featuresEn": "Features (English)",
-      "price": "السعر",
-      "priceNote": "ملاحظة السعر"
-    }
-  },
   "Testimonials": {
     "title": "الآراء",
     "description": "ما يقوله عملاؤك.",
@@ -626,7 +602,6 @@
       "sections": "أقسام الموقع العام",
       "showProjects": "المشاريع",
       "showSkills": "المهارات",
-      "showServices": "الخدمات",
       "showExperience": "الخبرات",
       "showTestimonials": "الآراء",
       "showBlog": "المدونة",
@@ -691,7 +666,6 @@
     "entities": {
       "project": "مشروع",
       "post": "مقال",
-      "service": "خدمة",
       "testimonial": "رأي",
       "experience": "خبرة",
       "education": "مؤهل",

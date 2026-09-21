@@ -76,19 +76,6 @@ export const postSchema = z.object({
   ...common,
 });
 
-export const serviceSchema = z.object({
-  titleAr: z.string().min(2),
-  titleEn: z.string().min(2),
-  descriptionAr: z.string().min(10),
-  descriptionEn: z.string().min(10),
-  icon: optionalText,
-  featuresAr: z.array(z.string()),
-  featuresEn: z.array(z.string()),
-  price: optionalText,
-  priceNote: optionalText,
-  ...common,
-});
-
 export const testimonialSchema = z.object({
   nameAr: z.string().min(2),
   nameEn: z.string().min(2),
@@ -174,7 +161,6 @@ export const mediaSchema = z.object({
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type ProjectCategoryInput = z.infer<typeof projectCategorySchema>;
 export type PostInput = z.infer<typeof postSchema>;
-export type ServiceInput = z.infer<typeof serviceSchema>;
 export type TestimonialInput = z.infer<typeof testimonialSchema>;
 export type ExperienceInput = z.infer<typeof experienceSchema>;
 export type EducationInput = z.infer<typeof educationSchema>;
@@ -217,7 +203,6 @@ export const siteSettingSchema = z.object({
   maintenanceMode: z.boolean(),
   showProjects: z.boolean(),
   showSkills: z.boolean(),
-  showServices: z.boolean(),
   showExperience: z.boolean(),
   showTestimonials: z.boolean(),
   showBlog: z.boolean(),
