@@ -30,7 +30,6 @@ export const DASHBOARD_NAMESPACES = [
   "Settings",
   "Projects",
   "Blog",
-  "Testimonials",
   "Experience",
   "Education",
   "Skills",

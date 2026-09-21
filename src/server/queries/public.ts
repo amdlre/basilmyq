@@ -16,7 +16,6 @@ export const PUBLIC_TAGS = {
   settings: "public:settings",
   projects: "public:projects",
   posts: "public:posts",
-  testimonials: "public:testimonials",
   experience: "public:experience",
   education: "public:education",
   skills: "public:skills",
@@ -137,16 +136,6 @@ export const getPublicPosts = unstable_cache(
     }),
   ["public-posts"],
   { tags: [PUBLIC_TAGS.posts] },
-);
-
-export const getPublicTestimonials = unstable_cache(
-  async () =>
-    db.testimonial.findMany({
-      where: { isVisible: true },
-      orderBy: [{ order: "asc" }],
-    }),
-  ["public-testimonials"],
-  { tags: [PUBLIC_TAGS.testimonials] },
 );
 
 export const getPublicExperiences = unstable_cache(

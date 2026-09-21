@@ -26,7 +26,6 @@ const ACTION_KEYS = [
 const ENTITY_KEYS = [
   "project",
   "post",
-  "testimonial",
   "experience",
   "education",
   "skill",

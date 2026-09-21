@@ -71,7 +71,6 @@ model SiteSetting {
   showProjects     Boolean @default(true)
   showSkills       Boolean @default(true)
   showExperience   Boolean @default(true)
-  showTestimonials Boolean @default(true)
   showBlog         Boolean @default(true)
 
   createdAt DateTime @default(now())
@@ -293,33 +292,9 @@ model Education {
 }
 
 // ---------------------------------------------------------------------------
-// Testimonials
 // ---------------------------------------------------------------------------
 
 
-model Testimonial {
-  id        String  @id @default(cuid())
-  nameAr    String
-  nameEn    String
-  roleAr    String?
-  roleEn    String?
-  companyAr String?
-  companyEn String?
-  avatarUrl String?
-  quoteAr   String  @db.Text
-  quoteEn   String  @db.Text
-
-  /// 1–5.
-  rating Int @default(5)
-
-  isVisible  Boolean  @default(true)
-  isFeatured Boolean  @default(false)
-  order      Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@index([isVisible, order])
-}
 
 // ---------------------------------------------------------------------------
 // Blog

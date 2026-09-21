@@ -14,7 +14,6 @@ import {
   skillGroupSchema,
   skillSchema,
   tagSchema,
-  testimonialSchema,
 } from "@/lib/validations/content";
 import { db } from "@/server/db";
 import { PUBLIC_TAGS } from "@/server/queries/public";
@@ -85,14 +84,6 @@ export const CONTENT_ENTITIES = {
     paths: ["/", "/blog"],
     tag: PUBLIC_TAGS.posts,
     uniqueFields: ["slug"],
-    supportsVisibility: true,
-    supportsFeatured: true,
-  },
-  testimonial: {
-    delegate: db.testimonial as unknown as ContentDelegate,
-    schema: testimonialSchema as unknown as ContentConfig["schema"],
-    paths: ["/"],
-    tag: PUBLIC_TAGS.testimonials,
     supportsVisibility: true,
     supportsFeatured: true,
   },

@@ -76,20 +76,6 @@ export const postSchema = z.object({
   ...common,
 });
 
-export const testimonialSchema = z.object({
-  nameAr: z.string().min(2),
-  nameEn: z.string().min(2),
-  roleAr: optionalText,
-  roleEn: optionalText,
-  companyAr: optionalText,
-  companyEn: optionalText,
-  avatarUrl: optionalText,
-  quoteAr: z.string().min(10),
-  quoteEn: z.string().min(10),
-  rating: z.number().int().min(1).max(5),
-  ...common,
-});
-
 export const experienceSchema = z.object({
   companyAr: z.string().min(2),
   companyEn: z.string().min(2),
@@ -161,7 +147,6 @@ export const mediaSchema = z.object({
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type ProjectCategoryInput = z.infer<typeof projectCategorySchema>;
 export type PostInput = z.infer<typeof postSchema>;
-export type TestimonialInput = z.infer<typeof testimonialSchema>;
 export type ExperienceInput = z.infer<typeof experienceSchema>;
 export type EducationInput = z.infer<typeof educationSchema>;
 export type SkillInput = z.infer<typeof skillSchema>;
@@ -204,7 +189,6 @@ export const siteSettingSchema = z.object({
   showProjects: z.boolean(),
   showSkills: z.boolean(),
   showExperience: z.boolean(),
-  showTestimonials: z.boolean(),
   showBlog: z.boolean(),
 });
 

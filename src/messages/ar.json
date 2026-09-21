@@ -44,7 +44,6 @@
       "overview": "نظرة عامة",
       "projects": "المشاريع",
       "blog": "المدونة",
-      "testimonials": "الآراء",
       "experience": "الخبرات",
       "education": "التعليم",
       "skills": "المهارات",
@@ -84,8 +83,6 @@
     "skillsDesc": "أدوات وتقنيات أستخدمها يومياً.",
     "experience": "الخبرة",
     "experienceDesc": "أين عملت.",
-    "testimonials": "آراء العملاء",
-    "testimonialsDesc": "ما قيل عن العمل.",
     "latestPosts": "أحدث المقالات",
     "latestPostsDesc": "أكتب عمّا أتعلّمه.",
     "allPosts": "كل المقالات",
@@ -376,28 +373,6 @@
       "publishedAt": "تاريخ النشر"
     }
   },
-  "Testimonials": {
-    "title": "الآراء",
-    "description": "ما يقوله عملاؤك.",
-    "singular": "رأي",
-    "stats": {
-      "total": "الإجمالي",
-      "averageRating": "متوسط التقييم",
-      "visible": "منشورة"
-    },
-    "fields": {
-      "nameAr": "الاسم (عربي)",
-      "nameEn": "Name (English)",
-      "roleAr": "المسمى (عربي)",
-      "roleEn": "Role (English)",
-      "companyAr": "الجهة (عربي)",
-      "companyEn": "Company (English)",
-      "avatar": "الصورة",
-      "quoteAr": "الاقتباس (عربي)",
-      "quoteEn": "Quote (English)",
-      "rating": "التقييم (١-٥)"
-    }
-  },
   "Experience": {
     "title": "الخبرات",
     "description": "مسارك المهني.",
@@ -603,7 +578,6 @@
       "showProjects": "المشاريع",
       "showSkills": "المهارات",
       "showExperience": "الخبرات",
-      "showTestimonials": "الآراء",
       "showBlog": "المدونة",
       "accentForeground": "لون النص فوق لون الهوية",
       "accentForegroundHint": "«تلقائي» يختار الأوضح. اختر أبيض أو داكن لتفرضه بنفسك.",
@@ -666,7 +640,6 @@
     "entities": {
       "project": "مشروع",
       "post": "مقال",
-      "testimonial": "رأي",
       "experience": "خبرة",
       "education": "مؤهل",
       "skill": "مهارة",

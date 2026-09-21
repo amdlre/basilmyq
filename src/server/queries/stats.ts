@@ -30,20 +30,6 @@ export async function getPostStats() {
   };
 }
 
-export async function getTestimonialStats() {
-  await requireAuth();
-  const [total, visible, rating] = await Promise.all([
-    db.testimonial.count(),
-    db.testimonial.count({ where: { isVisible: true } }),
-    db.testimonial.aggregate({ _avg: { rating: true } }),
-  ]);
-  return {
-    total,
-    visible,
-    averageRating: Math.round((rating._avg.rating ?? 0) * 10) / 10,
-  };
-}
-
 export async function getExperienceStats() {
   await requireAuth();
   const [total, current, earliest] = await Promise.all([

@@ -367,10 +367,6 @@ export function SettingsClient({
                 name="showExperience"
                 label={t("advanced.showExperience")}
               />
-              <SwitchField
-                name="showTestimonials"
-                label={t("advanced.showTestimonials")}
-              />
               <SwitchField name="showBlog" label={t("advanced.showBlog")} />
             </SettingsForm>
           ),

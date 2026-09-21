@@ -28,11 +28,6 @@ export async function getPosts() {
   return db.post.findMany({ orderBy: [...byOrder] });
 }
 
-export async function getTestimonials() {
-  await requireAuth();
-  return db.testimonial.findMany({ orderBy: [...byOrder] });
-}
-
 export async function getExperiences() {
   await requireAuth();
   return db.experience.findMany({ orderBy: [{ startDate: "desc" }] });
@@ -75,9 +70,6 @@ export async function getMedia() {
 
 export type ProjectRow = Awaited<ReturnType<typeof getProjects>>[number];
 export type PostRow = Awaited<ReturnType<typeof getPosts>>[number];
-export type TestimonialRow = Awaited<
-  ReturnType<typeof getTestimonials>
->[number];
 export type ExperienceRow = Awaited<ReturnType<typeof getExperiences>>[number];
 export type EducationRow = Awaited<ReturnType<typeof getEducation>>[number];
 export type SkillRow = Awaited<ReturnType<typeof getSkills>>[number];

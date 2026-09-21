@@ -44,7 +44,6 @@
       "overview": "Overview",
       "projects": "Projects",
       "blog": "Blog",
-      "testimonials": "Testimonials",
       "experience": "Experience",
       "education": "Education",
       "skills": "Skills",
@@ -84,8 +83,6 @@
     "skillsDesc": "Tools and technologies I use daily.",
     "experience": "Experience",
     "experienceDesc": "Where I have worked.",
-    "testimonials": "What clients say",
-    "testimonialsDesc": "Words about the work.",
     "latestPosts": "Latest writing",
     "latestPostsDesc": "I write about what I learn.",
     "allPosts": "All posts",
@@ -376,28 +373,6 @@
       "publishedAt": "Publish date"
     }
   },
-  "Testimonials": {
-    "title": "Testimonials",
-    "description": "What your clients say.",
-    "singular": "testimonial",
-    "stats": {
-      "total": "Total",
-      "averageRating": "Average rating",
-      "visible": "Published"
-    },
-    "fields": {
-      "nameAr": "Name (Arabic)",
-      "nameEn": "Name (English)",
-      "roleAr": "Role (Arabic)",
-      "roleEn": "Role (English)",
-      "companyAr": "Company (Arabic)",
-      "companyEn": "Company (English)",
-      "avatar": "Photo",
-      "quoteAr": "Quote (Arabic)",
-      "quoteEn": "Quote (English)",
-      "rating": "Rating (1-5)"
-    }
-  },
   "Experience": {
     "title": "Experience",
     "description": "Your career path.",
@@ -603,7 +578,6 @@
       "showProjects": "Projects",
       "showSkills": "Skills",
       "showExperience": "Experience",
-      "showTestimonials": "Testimonials",
       "showBlog": "Blog",
       "accentForeground": "Text on the accent",
       "accentForegroundHint": "“Auto” picks whichever reads better. Choose white or dark to force it.",
@@ -666,7 +640,6 @@
     "entities": {
       "project": "project",
       "post": "post",
-      "testimonial": "testimonial",
       "experience": "role",
       "education": "entry",
       "skill": "skill",

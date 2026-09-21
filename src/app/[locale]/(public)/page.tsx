@@ -4,7 +4,6 @@ import { getFormatter, getTranslations } from "next-intl/server";
 
 import { Intro } from "@/components/public/sections/intro";
 import { SkillsSection } from "@/components/public/sections/skills";
-import { TestimonialsSection } from "@/components/public/sections/testimonials";
 import { TimelineSection } from "@/components/public/sections/timeline";
 import { ProjectCard } from "@/components/public/project-card";
 import { PersonJsonLd } from "@/components/public/json-ld";
@@ -26,7 +25,6 @@ import {
   getPublicPosts,
   getPublicProjects,
   getPublicSkillGroups,
-  getPublicTestimonials,
   getSiteSettings,
   getPublicExperiences,
 } from "@/server/queries/public";
@@ -79,7 +77,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
     projects,
     skillGroups,
     experiences,
-    testimonials,
     posts,
   ] = await Promise.all([
     getSiteSettings(),
@@ -89,7 +86,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
     getPublicProjects(),
     getPublicSkillGroups(),
     getPublicExperiences(),
-    getPublicTestimonials(),
     getPublicPosts(),
   ]);
 
@@ -188,15 +184,6 @@ export default async function HomePage(props: PageProps<"/[locale]">) {
           description={t("experienceDesc")}
           presentLabel={tExp("present")}
           currentLabel={tExp("current")}
-        />
-      ) : null}
-
-      {settings?.showTestimonials ? (
-        <TestimonialsSection
-          testimonials={testimonials}
-          locale={locale}
-          title={t("testimonials")}
-          description={t("testimonialsDesc")}
         />
       ) : null}
 

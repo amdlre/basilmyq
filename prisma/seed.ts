@@ -12,10 +12,10 @@ const db = createPrismaClient();
 /**
  * SAMPLE DATA ONLY — none of this is factual.
  *
- * This repository is public, so every organisation, client, employer, credential
- * and testimonial below is a deliberately generic placeholder. Nothing here is
- * attributed to a real company or a real person, and no quote below was said by
- * anyone. It exists to give the dashboard realistically shaped rows to render.
+ * This repository is public, so every organisation, client, employer and
+ * credential below is a deliberately generic placeholder. Nothing here is
+ * attributed to a real company or a real person. It exists to give the
+ * dashboard realistically shaped rows to render.
  *
  * Replace all of it with real content from the dashboard.
  *
@@ -32,7 +32,6 @@ async function countExistingContent(): Promise<number> {
     db.skill.count(),
     db.experience.count(),
     db.education.count(),
-    db.testimonial.count(),
     db.contactMessage.count(),
   ]);
   return counts.reduce((total, count) => total + count, 0);
@@ -64,7 +63,6 @@ async function main() {
   await db.contactMessage.deleteMany();
   await db.media.deleteMany();
   await db.post.deleteMany();
-  await db.testimonial.deleteMany();
   await db.education.deleteMany();
   await db.experience.deleteMany();
   await db.skill.deleteMany();
@@ -590,56 +588,6 @@ async function main() {
     ],
   });
 
-  // -- Testimonials ---------------------------------------------------------
-
-  await db.testimonial.createMany({
-    data: [
-      {
-        nameAr: "اسم العميل (عيّنة)",
-        nameEn: "Client name (sample)",
-        roleAr: "مدير المنتج",
-        roleEn: "Product Manager",
-        companyAr: "شركة في قطاع السفر (عيّنة)",
-        companyEn: "A travel company (sample)",
-        quoteAr:
-          "سلّم أسرع مما توقعنا، وبجودة جعلت فريقنا يعيد النظر في معاييره.",
-        quoteEn:
-          "He delivered faster than we expected, at a quality that made our team raise its own bar.",
-        rating: 5,
-        order: 1,
-        isFeatured: true,
-      },
-      {
-        nameAr: "اسم العميلة (عيّنة)",
-        nameEn: "Client name (sample)",
-        roleAr: "المؤسِّسة",
-        roleEn: "Founder",
-        companyAr: "منصة تعليمية (عيّنة)",
-        companyEn: "A learning platform (sample)",
-        quoteAr:
-          "فهم المشكلة قبل أن يكتب سطراً واحداً. هذا وحده وفّر علينا شهرين.",
-        quoteEn:
-          "He understood the problem before writing a single line. That alone saved us two months.",
-        rating: 5,
-        order: 2,
-        isFeatured: true,
-      },
-      {
-        nameAr: "اسم العميل (عيّنة)",
-        nameEn: "Client name (sample)",
-        roleAr: "المدير التقني",
-        roleEn: "CTO",
-        companyAr: "شركة منتجات رقمية (عيّنة)",
-        companyEn: "A digital products company (sample)",
-        quoteAr: "نظام التصميم الذي بناه ما زال أساس كل منتجاتنا حتى اليوم.",
-        quoteEn:
-          "The design system he built is still the foundation of every product we ship.",
-        rating: 5,
-        order: 3,
-      },
-    ],
-  });
-
   // -- Blog -----------------------------------------------------------------
 
   await db.post.createMany({
@@ -735,7 +683,6 @@ async function main() {
     skillGroups: await db.skillGroup.count(),
     experiences: await db.experience.count(),
     education: await db.education.count(),
-    testimonials: await db.testimonial.count(),
     posts: await db.post.count(),
     messages: await db.contactMessage.count(),
   };

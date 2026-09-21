@@ -6,7 +6,6 @@ import {
   GraduationCapIcon,
   ImageIcon,
   MailIcon,
-  MessageSquareQuoteIcon,
   SettingsIcon,
   SparklesIcon,
   type LucideIcon,
@@ -20,7 +19,6 @@ export type NavLabelKey =
   | "overview"
   | "projects"
   | "blog"
-  | "testimonials"
   | "experience"
   | "education"
   | "skills"
@@ -64,11 +62,6 @@ export const DASHBOARD_NAV: NavGroup[] = [
         icon: FolderKanbanIcon,
       },
       { href: "/dashboard/blog", labelKey: "blog", icon: FileTextIcon },
-      {
-        href: "/dashboard/testimonials",
-        labelKey: "testimonials",
-        icon: MessageSquareQuoteIcon,
-      },
     ],
   },
   {
