@@ -17,11 +17,47 @@ const db = createPrismaClient();
  * attributed to a real company or a real person, and no quote below was said by
  * anyone. It exists to give the dashboard realistically shaped rows to render.
  *
- * Replace all of it with real content from the dashboard once Phase 4 lands.
+ * Replace all of it with real content from the dashboard.
+ *
+ * Seeding REPLACES content: every table below is emptied first. It refuses to
+ * run against a database that already holds content unless `--force` is passed,
+ * because "let me just check the seed still works" is otherwise one keystroke
+ * away from deleting a real site's projects and posts.
  */
 
+async function countExistingContent(): Promise<number> {
+  const counts = await Promise.all([
+    db.project.count(),
+    db.post.count(),
+    db.skill.count(),
+    db.experience.count(),
+    db.education.count(),
+    db.testimonial.count(),
+    db.contactMessage.count(),
+  ]);
+  return counts.reduce((total, count) => total + count, 0);
+}
+
 async function main() {
-  console.log("Seeding basilmyq…");
+  const force = process.argv.includes("--force");
+  const existing = await countExistingContent();
+
+  if (existing > 0 && !force) {
+    console.error(
+      `\nRefusing to seed: the database already holds ${existing} content rows.\n` +
+        "Seeding deletes them and writes sample data in their place.\n\n" +
+        "If that is what you want, run:  npm run db:seed -- --force\n" +
+        "To keep them, take a dump first: pg_dump ... > backup.sql\n",
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  console.log(
+    force && existing > 0
+      ? `Seeding basilmyq — replacing ${existing} existing content rows…`
+      : "Seeding basilmyq…",
+  );
 
   // Order matters: children before parents.
   await db.activityLog.deleteMany();
@@ -29,7 +65,6 @@ async function main() {
   await db.media.deleteMany();
   await db.post.deleteMany();
   await db.testimonial.deleteMany();
-  await db.service.deleteMany();
   await db.education.deleteMany();
   await db.experience.deleteMany();
   await db.skill.deleteMany();
@@ -555,83 +590,6 @@ async function main() {
     ],
   });
 
-  // -- Services -------------------------------------------------------------
-
-  await db.service.createMany({
-    data: [
-      {
-        titleAr: "بناء تطبيقات ويب",
-        titleEn: "Web application development",
-        descriptionAr: "تطبيقات كاملة من الواجهة حتى قاعدة البيانات والنشر.",
-        descriptionEn:
-          "Complete applications from interface to database and deployment.",
-        icon: "code",
-        featuresAr: [
-          "Next.js و TypeScript",
-          "قاعدة بيانات وتصميم مخطط",
-          "نشر وأتمتة",
-        ],
-        featuresEn: [
-          "Next.js and TypeScript",
-          "Database and schema design",
-          "Deployment and automation",
-        ],
-        price: "من ١٥٬٠٠٠ ر.س",
-        order: 1,
-        isFeatured: true,
-      },
-      {
-        titleAr: "أنظمة التصميم",
-        titleEn: "Design systems",
-        descriptionAr: "مكتبة مكوّنات موحّدة تدعم العربية والوضع الداكن.",
-        descriptionEn:
-          "A unified component library with Arabic and dark mode support.",
-        icon: "palette",
-        featuresAr: ["توكنات لونية وخطوط", "مكوّنات موثّقة", "دعم RTL كامل"],
-        featuresEn: [
-          "Colour and type tokens",
-          "Documented components",
-          "Full RTL support",
-        ],
-        price: "من ١٠٬٠٠٠ ر.س",
-        order: 2,
-      },
-      {
-        titleAr: "تحسين الأداء",
-        titleEn: "Performance engineering",
-        descriptionAr: "تشخيص وإصلاح بطء التحميل وضعف نتائج Core Web Vitals.",
-        descriptionEn:
-          "Diagnosing and fixing slow loads and weak Core Web Vitals.",
-        icon: "gauge",
-        featuresAr: ["تحليل الحزمة", "تحسين الصور والخطوط", "تقرير قبل وبعد"],
-        featuresEn: [
-          "Bundle analysis",
-          "Image and font optimisation",
-          "Before/after report",
-        ],
-        price: "من ٦٬٠٠٠ ر.س",
-        order: 3,
-      },
-      {
-        titleAr: "تعريب المنتجات",
-        titleEn: "Arabic localisation",
-        descriptionAr:
-          "دعم كامل للعربية والاتجاه من اليمين لليسار في منتج قائم.",
-        descriptionEn:
-          "Full Arabic and right-to-left support for an existing product.",
-        icon: "languages",
-        featuresAr: ["مراجعة الاتجاهين", "اختيار الخطوط", "مراجعة النصوص"],
-        featuresEn: [
-          "Bidirectional audit",
-          "Typeface selection",
-          "Copy review",
-        ],
-        price: "من ٨٬٠٠٠ ر.س",
-        order: 4,
-      },
-    ],
-  });
-
   // -- Testimonials ---------------------------------------------------------
 
   await db.testimonial.createMany({
@@ -777,7 +735,6 @@ async function main() {
     skillGroups: await db.skillGroup.count(),
     experiences: await db.experience.count(),
     education: await db.education.count(),
-    services: await db.service.count(),
     testimonials: await db.testimonial.count(),
     posts: await db.post.count(),
     messages: await db.contactMessage.count(),
