@@ -6,7 +6,9 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { DASHBOARD_NAMESPACES } from "@/i18n/namespaces";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { requireAuth } from "@/lib/auth/require-auth";
+import { pick, pickLogo } from "@/lib/i18n-content";
 import { db } from "@/server/db";
+import { getSiteSettings } from "@/server/queries/public";
 
 // Per-request, always: every dashboard page reads the session cookie. Without
 // this the empty `generateStaticParams` in the `[locale]` layout would mark
@@ -20,17 +22,24 @@ export const dynamic = "force-dynamic";
 export default async function DashboardLayout(
   props: LayoutProps<"/[locale]/dashboard">,
 ) {
-  await resolveLocale(props.params);
+  const locale = await resolveLocale(props.params);
   const session = await requireAuth();
 
-  const unreadMessages = await db.contactMessage.count({
-    where: { isRead: false, isArchived: false },
-  });
+  // The sidebar brand comes from Settings, like the public header does, so a
+  // rename or a new logo shows up here too. Cached and tag-expired on write.
+  const [unreadMessages, settings] = await Promise.all([
+    db.contactMessage.count({ where: { isRead: false, isArchived: false } }),
+    getSiteSettings().catch(() => null),
+  ]);
 
   return (
     <MessagesProvider namespaces={DASHBOARD_NAMESPACES}>
       <SidebarProvider>
-        <DashboardSidebar unreadMessages={unreadMessages} />
+        <DashboardSidebar
+          unreadMessages={unreadMessages}
+          siteName={settings ? pick(settings, "siteName", locale) : null}
+          logoUrl={settings ? pickLogo(settings, locale) : null}
+        />
         <SidebarInset className="min-w-0">
           <DashboardTopbar email={session.email} />
           <main id="main-content" className="min-w-0 flex-1">

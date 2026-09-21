@@ -3,6 +3,7 @@
 import { ExternalLinkIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import { BrandMark } from "@/components/shared/brand-mark";
 import {
   Sidebar,
   SidebarContent,
@@ -23,9 +24,16 @@ import { DASHBOARD_NAV } from "@/lib/dashboard-nav";
 
 type DashboardSidebarProps = {
   unreadMessages: number;
+  /** Settings → General, for the active language. Null before that row exists. */
+  siteName: string | null;
+  logoUrl: string | null;
 };
 
-export function DashboardSidebar({ unreadMessages }: DashboardSidebarProps) {
+export function DashboardSidebar({
+  unreadMessages,
+  siteName,
+  logoUrl,
+}: DashboardSidebarProps) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
   const locale = useLocale() as AppLocale;
@@ -35,22 +43,36 @@ export function DashboardSidebar({ unreadMessages }: DashboardSidebarProps) {
   // panel paints on the left, and the content renders underneath it.
   const side = getLocaleDirection(locale) === "rtl" ? "right" : "left";
 
+  const brandName = siteName ?? t("dashboard.title");
+
   return (
     <Sidebar collapsible="icon" side={side}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild size="lg">
+            <SidebarMenuButton asChild size="lg" tooltip={brandName}>
               <Link href="/dashboard">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground">
-                  b
-                </div>
-                <div className="grid flex-1 text-start leading-tight">
-                  <span className="truncate font-semibold">basilmyq</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {t("dashboard.title")}
-                  </span>
-                </div>
+                {/* Collapsed, the button is a bare 32px square — too little
+                    room for a logo and a name, so it falls back to a
+                    monogram and the brand mark steps aside. */}
+                <span
+                  aria-hidden
+                  className="hidden aspect-square size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground group-data-[collapsible=icon]:flex"
+                >
+                  {brandName.trim().charAt(0)}
+                </span>
+                <span className="grid min-w-0 flex-1 text-start leading-tight group-data-[collapsible=icon]:hidden">
+                  <BrandMark
+                    name={brandName}
+                    logoUrl={logoUrl}
+                    className="min-w-0 [&>span]:truncate"
+                  />
+                  {siteName ? (
+                    <span className="truncate text-xs text-muted-foreground">
+                      {t("dashboard.title")}
+                    </span>
+                  ) : null}
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
