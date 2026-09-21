@@ -135,9 +135,12 @@ export function CrudModule<TRow extends CrudRow, TValues extends FieldValues>({
     },
     {
       id: "visibility",
-      label: (row) => (row.isVisible ? t("hide") : t("show")),
+      // A switch names the setting, not the command: the state is in the
+      // switch, so "Hide"/"Show" would fight it.
+      label: t("visible"),
       icon: EyeIcon,
       hidden: (row) => row.isVisible === undefined,
+      toggle: (row) => row.isVisible === true,
       run: async (row) =>
         report(
           await setContentFlag(entity, [row.id], "isVisible", !row.isVisible),

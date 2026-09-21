@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useOptimistic, useState, useTransition } from "react";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { DropdownToggleItem } from "@/components/shared/dropdown-toggle-item";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -53,26 +54,36 @@ export function RowActions<TData>({ row, actions }: RowActionsProps<TData>) {
             <MoreHorizontalIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {visible.map((action) => (
-            <DropdownMenuItem
-              key={action.id}
-              variant={
-                action.variant === "destructive" ? "destructive" : "default"
-              }
-              onSelect={() => {
-                // Rule 9: destructive actions always pass through a confirm step.
-                if (action.confirm) {
-                  setPendingAction(action);
-                  return;
+        <DropdownMenuContent align="end" className="min-w-48">
+          {visible.map((action) =>
+            action.toggle ? (
+              <ToggleActionItem
+                key={action.id}
+                row={row}
+                action={action}
+                label={labelOf(action)}
+              />
+            ) : (
+              <DropdownMenuItem
+                key={action.id}
+                className="gap-2 px-2 py-1.5"
+                variant={
+                  action.variant === "destructive" ? "destructive" : "default"
                 }
-                run(action);
-              }}
-            >
-              {action.icon ? <action.icon className="size-4" /> : null}
-              {labelOf(action)}
-            </DropdownMenuItem>
-          ))}
+                onSelect={() => {
+                  // Rule 9: destructive actions always pass through a confirm step.
+                  if (action.confirm) {
+                    setPendingAction(action);
+                    return;
+                  }
+                  run(action);
+                }}
+              >
+                {action.icon ? <action.icon className="size-4" /> : null}
+                {labelOf(action)}
+              </DropdownMenuItem>
+            ),
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -89,5 +100,42 @@ export function RowActions<TData>({ row, actions }: RowActionsProps<TData>) {
         }}
       />
     </>
+  );
+}
+
+/**
+ * A row action rendered as a switch. The state comes from the row, so it only
+ * settles once the server action and the refresh land; `useOptimistic` flips it
+ * under the finger and puts it back by itself if the write failed.
+ */
+function ToggleActionItem<TData>({
+  row,
+  action,
+  label,
+}: {
+  row: TData;
+  action: RowAction<TData>;
+  label: string;
+}) {
+  const checked = action.toggle?.(row) ?? false;
+  const [optimistic, setOptimistic] = useOptimistic(checked);
+  const [isRunning, startTransition] = useTransition();
+
+  return (
+    <DropdownToggleItem
+      checked={optimistic}
+      disabled={isRunning}
+      onCheckedChange={(next) => {
+        // The write runs inside this transition, not the parent's, so the
+        // optimistic value holds until the refreshed row arrives.
+        startTransition(async () => {
+          setOptimistic(next);
+          await action.run(row);
+        });
+      }}
+    >
+      {action.icon ? <action.icon className="size-4" /> : null}
+      {label}
+    </DropdownToggleItem>
   );
 }

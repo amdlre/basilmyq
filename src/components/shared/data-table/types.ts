@@ -35,6 +35,11 @@ export type RowAction<TData> = {
   confirm?: boolean;
   /** Hide the action for rows it does not apply to. */
   hidden?: (row: TData) => boolean;
+  /**
+   * Turns the item into an on/off switch reading this row's current state.
+   * `run` then flips it, and `label` names the setting rather than the command.
+   */
+  toggle?: (row: TData) => boolean;
   run: (row: TData) => Promise<void> | void;
 };
 

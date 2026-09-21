@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import { DropdownToggleItem } from "@/components/shared/dropdown-toggle-item";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -157,18 +158,17 @@ export function Toolbar<TData>({
               <span className="hidden sm:inline">{t("columns")}</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>{t("toggleColumns")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {hideableColumns.map((column) => (
-              <DropdownMenuCheckboxItem
+              <DropdownToggleItem
                 key={column.id}
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(value)}
-                onSelect={(event) => event.preventDefault()}
               >
                 {column.columnDef.meta?.label ?? column.id}
-              </DropdownMenuCheckboxItem>
+              </DropdownToggleItem>
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={onResetPreferences}>
