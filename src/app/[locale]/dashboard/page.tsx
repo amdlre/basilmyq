@@ -27,7 +27,6 @@ const ENTITY_KEYS = [
   "project",
   "post",
   "experience",
-  "education",
   "skill",
   "skillGroup",
   "projectCategory",

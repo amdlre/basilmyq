@@ -43,7 +43,6 @@ const IMAGE_COLUMNS: [table: string, column: string][] = [
   ["Post", "coverUrl"],
   ["Testimonial", "avatarUrl"],
   ["Experience", "logoUrl"],
-  ["Education", "logoUrl"],
   // `Media` is deliberately absent: the upload route writes a fresh row for
   // every file, so the rows from the dump are deleted below instead of being
   // repointed — otherwise the library would list each image twice.

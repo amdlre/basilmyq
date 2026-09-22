@@ -5,7 +5,6 @@ import type { ZodType } from "zod";
 import type { Prisma } from "@/generated/prisma/client";
 
 import {
-  educationSchema,
   heroCardSchema,
   experienceSchema,
   postSchema,
@@ -92,14 +91,6 @@ export const CONTENT_ENTITIES = {
     schema: experienceSchema as unknown as ContentConfig["schema"],
     paths: ["/", "/about"],
     tag: PUBLIC_TAGS.experience,
-    supportsVisibility: true,
-    supportsFeatured: true,
-  },
-  education: {
-    delegate: db.education as unknown as ContentDelegate,
-    schema: educationSchema as unknown as ContentConfig["schema"],
-    paths: ["/", "/about"],
-    tag: PUBLIC_TAGS.education,
     supportsVisibility: true,
     supportsFeatured: true,
   },

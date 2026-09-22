@@ -31,7 +31,6 @@ async function countExistingContent(): Promise<number> {
     db.post.count(),
     db.skill.count(),
     db.experience.count(),
-    db.education.count(),
     db.contactMessage.count(),
   ]);
   return counts.reduce((total, count) => total + count, 0);
@@ -63,7 +62,6 @@ async function main() {
   await db.contactMessage.deleteMany();
   await db.media.deleteMany();
   await db.post.deleteMany();
-  await db.education.deleteMany();
   await db.experience.deleteMany();
   await db.skill.deleteMany();
   await db.skillGroup.deleteMany();
@@ -549,45 +547,6 @@ async function main() {
     ],
   });
 
-  // -- Education ------------------------------------------------------------
-
-  await db.education.createMany({
-    data: [
-      {
-        type: "DEGREE",
-        schoolAr: "الجامعة (عيّنة)",
-        schoolEn: "University (sample)",
-        degreeAr: "بكالوريوس",
-        degreeEn: "Bachelor's degree",
-        fieldAr: "علوم الحاسب",
-        fieldEn: "Computer Science",
-        startDate: new Date("2013-09-01"),
-        endDate: new Date("2017-06-30"),
-        order: 1,
-      },
-      {
-        type: "CERTIFICATE",
-        schoolAr: "جهة مانحة للشهادات (عيّنة)",
-        schoolEn: "A certification body (sample)",
-        degreeAr: "شهادة احترافية في الحوسبة السحابية",
-        degreeEn: "Cloud developer certification",
-        startDate: new Date("2022-04-01"),
-        endDate: new Date("2022-04-30"),
-        order: 2,
-      },
-      {
-        type: "CERTIFICATE",
-        schoolAr: "منصة تعليمية (عيّنة)",
-        schoolEn: "A learning platform (sample)",
-        degreeAr: "شهادة تطوير الواجهات الأمامية",
-        degreeEn: "Front-end development certificate",
-        startDate: new Date("2021-01-01"),
-        endDate: new Date("2021-05-31"),
-        order: 3,
-      },
-    ],
-  });
-
   // -- Blog -----------------------------------------------------------------
 
   await db.post.createMany({
@@ -682,7 +641,6 @@ async function main() {
     skills: await db.skill.count(),
     skillGroups: await db.skillGroup.count(),
     experiences: await db.experience.count(),
-    education: await db.education.count(),
     posts: await db.post.count(),
     messages: await db.contactMessage.count(),
   };

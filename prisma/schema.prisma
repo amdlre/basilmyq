@@ -19,11 +19,6 @@ enum ProjectStatus {
   ARCHIVED
 }
 
-enum EducationType {
-  DEGREE
-  CERTIFICATE
-}
-
 // ---------------------------------------------------------------------------
 // Singletons
 // ---------------------------------------------------------------------------
@@ -238,7 +233,7 @@ model Skill {
 }
 
 // ---------------------------------------------------------------------------
-// Experience & education
+// Experience
 // ---------------------------------------------------------------------------
 
 model Experience {
@@ -265,30 +260,6 @@ model Experience {
 
   @@index([isVisible, order])
   @@index([startDate])
-}
-
-model Education {
-  id            String        @id @default(cuid())
-  type          EducationType @default(DEGREE)
-  schoolAr      String
-  schoolEn      String
-  degreeAr      String
-  degreeEn      String
-  fieldAr       String?
-  fieldEn       String?
-  startDate     DateTime
-  endDate       DateTime?
-  credentialUrl String?
-  logoUrl       String?
-
-  isVisible  Boolean  @default(true)
-  isFeatured Boolean  @default(false)
-  order      Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@index([isVisible, order])
-  @@index([type])
 }
 
 // ---------------------------------------------------------------------------

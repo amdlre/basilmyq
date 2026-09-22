@@ -93,21 +93,6 @@ export const experienceSchema = z.object({
   ...common,
 });
 
-export const educationSchema = z.object({
-  type: z.enum(["DEGREE", "CERTIFICATE"]),
-  schoolAr: z.string().min(2),
-  schoolEn: z.string().min(2),
-  degreeAr: z.string().min(2),
-  degreeEn: z.string().min(2),
-  fieldAr: optionalText,
-  fieldEn: optionalText,
-  startDate: z.date(),
-  endDate: z.date().nullable(),
-  credentialUrl: optionalUrl,
-  logoUrl: optionalText,
-  ...common,
-});
-
 export const skillSchema = z.object({
   nameAr: z.string().min(1),
   nameEn: z.string().min(1),
@@ -148,7 +133,6 @@ export type ProjectInput = z.infer<typeof projectSchema>;
 export type ProjectCategoryInput = z.infer<typeof projectCategorySchema>;
 export type PostInput = z.infer<typeof postSchema>;
 export type ExperienceInput = z.infer<typeof experienceSchema>;
-export type EducationInput = z.infer<typeof educationSchema>;
 export type SkillInput = z.infer<typeof skillSchema>;
 export type SkillGroupInput = z.infer<typeof skillGroupSchema>;
 export type TagInput = z.infer<typeof tagSchema>;

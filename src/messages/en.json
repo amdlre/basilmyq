@@ -45,7 +45,6 @@
       "projects": "Projects",
       "blog": "Blog",
       "experience": "Experience",
-      "education": "Education",
       "skills": "Skills",
       "messages": "Messages",
       "media": "Media",
@@ -401,33 +400,6 @@
       "companyUrl": "Company website"
     }
   },
-  "Education": {
-    "title": "Education",
-    "description": "Your qualifications and certificates.",
-    "singular": "entry",
-    "stats": {
-      "degrees": "Qualifications",
-      "certificates": "Certificates",
-      "total": "Total"
-    },
-    "type": {
-      "DEGREE": "Degree",
-      "CERTIFICATE": "Certificate"
-    },
-    "fields": {
-      "type": "Type",
-      "schoolAr": "Institution (Arabic)",
-      "schoolEn": "Institution (English)",
-      "degreeAr": "Qualification (Arabic)",
-      "degreeEn": "Qualification (English)",
-      "fieldAr": "Field (Arabic)",
-      "fieldEn": "Field (English)",
-      "startDate": "Start date",
-      "endDate": "End date",
-      "credentialUrl": "Credential URL",
-      "logo": "Logo"
-    }
-  },
   "Skills": {
     "title": "Skills",
     "description": "What you are good at.",
@@ -642,7 +614,6 @@
       "project": "project",
       "post": "post",
       "experience": "role",
-      "education": "entry",
       "skill": "skill",
       "skillGroup": "skill group",
       "projectCategory": "category"
@@ -696,9 +667,7 @@
     "title": "About me",
     "description": "Who I am and what I do.",
     "experience": "Experience",
-    "education": "Education and certificates",
-    "downloadCv": "Download CV",
-    "credential": "View credential"
+    "downloadCv": "Download CV"
   },
   "ContactPage": {
     "title": "Get in touch",

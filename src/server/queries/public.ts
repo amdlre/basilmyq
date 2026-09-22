@@ -17,7 +17,6 @@ export const PUBLIC_TAGS = {
   projects: "public:projects",
   posts: "public:posts",
   experience: "public:experience",
-  education: "public:education",
   skills: "public:skills",
 } as const;
 
@@ -146,16 +145,6 @@ export const getPublicExperiences = unstable_cache(
     }),
   ["public-experiences"],
   { tags: [PUBLIC_TAGS.experience] },
-);
-
-export const getPublicEducation = unstable_cache(
-  async () =>
-    db.education.findMany({
-      where: { isVisible: true },
-      orderBy: [{ startDate: "desc" }],
-    }),
-  ["public-education"],
-  { tags: [PUBLIC_TAGS.education] },
 );
 
 export const getPublicSkillGroups = unstable_cache(

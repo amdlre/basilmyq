@@ -48,15 +48,6 @@ export async function getExperienceStats() {
   return { total, current, years };
 }
 
-export async function getEducationStats() {
-  await requireAuth();
-  const [degrees, certificates] = await Promise.all([
-    db.education.count({ where: { type: "DEGREE" } }),
-    db.education.count({ where: { type: "CERTIFICATE" } }),
-  ]);
-  return { degrees, certificates, total: degrees + certificates };
-}
-
 export async function getSkillStats() {
   await requireAuth();
   const [total, groups, featured] = await Promise.all([

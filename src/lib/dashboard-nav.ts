@@ -3,7 +3,6 @@ import {
   FileTextIcon,
   FolderKanbanIcon,
   GaugeIcon,
-  GraduationCapIcon,
   ImageIcon,
   MailIcon,
   SettingsIcon,
@@ -20,7 +19,6 @@ export type NavLabelKey =
   | "projects"
   | "blog"
   | "experience"
-  | "education"
   | "skills"
   | "messages"
   | "media"
@@ -71,11 +69,6 @@ export const DASHBOARD_NAV: NavGroup[] = [
         href: "/dashboard/experience",
         labelKey: "experience",
         icon: BriefcaseIcon,
-      },
-      {
-        href: "/dashboard/education",
-        labelKey: "education",
-        icon: GraduationCapIcon,
       },
       { href: "/dashboard/skills", labelKey: "skills", icon: SparklesIcon },
     ],

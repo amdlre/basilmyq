@@ -45,7 +45,6 @@
       "projects": "المشاريع",
       "blog": "المدونة",
       "experience": "الخبرات",
-      "education": "التعليم",
       "skills": "المهارات",
       "messages": "الرسائل",
       "media": "الوسائط",
@@ -401,33 +400,6 @@
       "companyUrl": "موقع الجهة"
     }
   },
-  "Education": {
-    "title": "التعليم",
-    "description": "مؤهلاتك وشهاداتك.",
-    "singular": "مؤهل",
-    "stats": {
-      "degrees": "المؤهلات",
-      "certificates": "الشهادات",
-      "total": "الإجمالي"
-    },
-    "type": {
-      "DEGREE": "مؤهل",
-      "CERTIFICATE": "شهادة"
-    },
-    "fields": {
-      "type": "النوع",
-      "schoolAr": "الجهة (عربي)",
-      "schoolEn": "Institution (English)",
-      "degreeAr": "الشهادة (عربي)",
-      "degreeEn": "Qualification (English)",
-      "fieldAr": "التخصص (عربي)",
-      "fieldEn": "Field (English)",
-      "startDate": "تاريخ البداية",
-      "endDate": "تاريخ النهاية",
-      "credentialUrl": "رابط التحقق",
-      "logo": "الشعار"
-    }
-  },
   "Skills": {
     "title": "المهارات",
     "description": "ما تُتقنه.",
@@ -642,7 +614,6 @@
       "project": "مشروع",
       "post": "مقال",
       "experience": "خبرة",
-      "education": "مؤهل",
       "skill": "مهارة",
       "skillGroup": "مجموعة مهارات",
       "projectCategory": "تصنيف"
@@ -696,9 +667,7 @@
     "title": "نبذة عني",
     "description": "من أنا وما أعمله.",
     "experience": "الخبرة",
-    "education": "التعليم والشهادات",
-    "downloadCv": "تحميل السيرة الذاتية",
-    "credential": "التحقق من الشهادة"
+    "downloadCv": "تحميل السيرة الذاتية"
   },
   "ContactPage": {
     "title": "تواصل معي",
