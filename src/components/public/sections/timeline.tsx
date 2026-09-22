@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { AnimatedIn } from "@/components/shared/animated-in";
 import { Section } from "@/components/shared/section";
 import { StatusBadge } from "@/components/shared/status-badge";
@@ -11,6 +13,7 @@ type ExperienceRow = Record<string, unknown> & {
   startDate: Date | string;
   endDate: Date | string | null;
   isCurrent: boolean;
+  logoUrl: string | null;
 };
 
 export function TimelineSection({
@@ -53,24 +56,40 @@ export function TimelineSection({
               aria-hidden
               className="absolute -start-[1.9rem] top-1.5 size-2.5 rounded-full bg-primary ring-4 ring-[var(--background)]"
             />
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-heading font-semibold">
-                {pick(experience, "role", locale)}
-              </h3>
-              {experience.isCurrent ? (
-                <StatusBadge label={currentLabel} tone="success" />
+            <div className="flex items-start gap-3">
+              {experience.logoUrl ? (
+                <span className="flex h-11 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-logo-plate p-1.5">
+                  <Image
+                    src={experience.logoUrl}
+                    // The company name is written right beside it.
+                    alt=""
+                    width={128}
+                    height={44}
+                    className="size-full object-contain"
+                  />
+                </span>
               ) : null}
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-heading font-semibold">
+                    {pick(experience, "role", locale)}
+                  </h3>
+                  {experience.isCurrent ? (
+                    <StatusBadge label={currentLabel} tone="success" />
+                  ) : null}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {pick(experience, "company", locale)}
+                  {pickOptional(experience, "location", locale)
+                    ? ` · ${pickOptional(experience, "location", locale)}`
+                    : ""}
+                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {formatYear(experience.startDate)} —{" "}
+                  {formatYear(experience.endDate)}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              {pick(experience, "company", locale)}
-              {pickOptional(experience, "location", locale)
-                ? ` · ${pickOptional(experience, "location", locale)}`
-                : ""}
-            </p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              {formatYear(experience.startDate)} —{" "}
-              {formatYear(experience.endDate)}
-            </p>
             <p className="mt-2 text-sm leading-relaxed text-balance">
               {pick(experience, "description", locale)}
             </p>
