@@ -88,11 +88,11 @@ export function TimelineSection({
                   {formatYear(experience.startDate)} —{" "}
                   {formatYear(experience.endDate)}
                 </p>
+                <p className="mt-2 text-sm leading-relaxed text-balance">
+                  {pick(experience, "description", locale)}
+                </p>
               </div>
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-balance">
-              {pick(experience, "description", locale)}
-            </p>
           </AnimatedIn>
         </li>
       ))}
