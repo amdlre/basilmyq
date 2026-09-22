@@ -26,6 +26,12 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   typedRoutes: true,
+  experimental: {
+    // The root layout is `app/[locale]/layout.tsx`, a top-level dynamic
+    // segment, so an unmatched URL is answered before any layout renders.
+    // This is the documented way to give those a page of our own.
+    globalNotFound: true,
+  },
 };
 
 export default withNextIntl(nextConfig);

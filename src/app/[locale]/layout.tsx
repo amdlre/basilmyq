@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { getTranslations } from "next-intl/server";
 
 import { AppProviders } from "@/components/shared/app-providers";
+import { FONT_VARIABLES } from "@/app/fonts";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { PUBLIC_NAMESPACES } from "@/i18n/namespaces";
 import { getLocaleDirection } from "@/i18n/routing";
@@ -11,30 +11,6 @@ import { DEFAULT_FAVICON, siteDescription, siteTitle } from "@/lib/seo";
 import { getSiteSettings } from "@/server/queries/public";
 
 import "../globals.css";
-
-const fontLatin = Geist({
-  subsets: ["latin"],
-  variable: "--font-latin",
-  display: "swap",
-});
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-  display: "swap",
-  // Only the dashboard's markdown editor uses it, so it is fetched on demand
-  // rather than preloaded on every page.
-  preload: false,
-});
-
-const fontArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  // Two weights, not five: each extra weight is another ~35 KB preloaded on
-  // every page, and the design only ever uses body and semibold.
-  weight: ["400", "600"],
-  variable: "--font-arabic",
-  display: "swap",
-});
 
 /**
  * Empty on purpose: every public page is rendered on its first request and
@@ -94,7 +70,7 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
       lang={locale}
       dir={direction}
       suppressHydrationWarning
-      className={`${fontLatin.variable} ${fontMono.variable} ${fontArabic.variable} h-full antialiased`}
+      className={`${FONT_VARIABLES} h-full antialiased`}
     >
       {accent ? (
         <head>
