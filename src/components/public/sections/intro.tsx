@@ -158,7 +158,7 @@ export async function Intro({
                 {cards.map((card) => (
                   <div
                     key={card.id}
-                    className="relative h-24 overflow-hidden rounded-2xl bg-muted/80 backdrop-blur-sm sm:h-40"
+                    className="relative h-24 overflow-hidden rounded-2xl bg-muted/80 backdrop-blur-sm sm:h-30"
                   >
                     <p className="relative z-10 p-4 font-heading font-medium text-balance max-sm:text-xs">
                       {pick(card, "title", locale)}
@@ -166,7 +166,7 @@ export async function Intro({
                     {card.imageUrl ? (
                       // Fills the lower half and runs past the bottom edge, so
                       // the card crops it rather than framing it.
-                      <div className="absolute inset-x-3 top-12 -bottom-6">
+                      <div className="absolute inset-x-3 top-12 bottom-0">
                         <Image
                           src={card.imageUrl}
                           alt=""
