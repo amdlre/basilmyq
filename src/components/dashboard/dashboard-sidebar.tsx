@@ -52,15 +52,14 @@ export function DashboardSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg" tooltip={brandName}>
               <Link href="/dashboard">
-                {/* Collapsed, the button is a bare 32px square — too little
-                    room for a logo and a name, so it falls back to a
-                    monogram and the brand mark steps aside. */}
-                <span
-                  aria-hidden
-                  className="hidden aspect-square size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-foreground/15 text-sm font-semibold text-sidebar-foreground group-data-[collapsible=icon]:flex"
-                >
-                  {brandName.trim().charAt(0)}
-                </span>
+                {/* Collapsed, the button is a bare 32px square: room for
+                    the logo alone, so the full mark steps aside. */}
+                <BrandMark
+                  name={brandName}
+                  logoUrl={logoUrl}
+                  variant="mark"
+                  className="hidden group-data-[collapsible=icon]:inline-flex"
+                />
                 <span className="grid min-w-0 flex-1 text-start leading-tight group-data-[collapsible=icon]:hidden">
                   <BrandMark
                     name={brandName}

@@ -64,15 +64,16 @@
     "downloadCv": "السيرة الذاتية"
   },
   "Theme": {
-    "toggle": "تبديل المظهر",
-    "light": "فاتح",
-    "dark": "داكن",
-    "system": "النظام"
+    "toggle": "تبديل المظهر"
   },
   "Locale": {
-    "toggle": "تغيير اللغة",
     "ar": "العربية",
-    "en": "English"
+    "en": "English",
+    "switchTo": "التبديل إلى {language}",
+    "short": {
+      "ar": "ع",
+      "en": "EN"
+    }
   },
   "Home": {
     "featuredProjects": "مشاريع مختارة",

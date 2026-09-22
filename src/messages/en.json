@@ -64,15 +64,16 @@
     "downloadCv": "Download CV"
   },
   "Theme": {
-    "toggle": "Toggle theme",
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "toggle": "Toggle theme"
   },
   "Locale": {
-    "toggle": "Change language",
     "ar": "العربية",
-    "en": "English"
+    "en": "English",
+    "switchTo": "Switch to {language}",
+    "short": {
+      "ar": "ع",
+      "en": "EN"
+    }
   },
   "Home": {
     "featuredProjects": "Selected work",
