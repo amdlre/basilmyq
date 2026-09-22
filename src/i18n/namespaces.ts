@@ -11,6 +11,7 @@ export const PUBLIC_NAMESPACES = [
   "Theme",
   "Locale",
   "Form",
+  "Validation",
   "Upload",
   "ProjectsPage",
   "BlogPage",

@@ -10,6 +10,7 @@ import {
   isContentEntity,
 } from "@/server/content-registry";
 import { db } from "@/server/db";
+import { fieldErrorsFrom } from "@/server/field-errors";
 
 export type ActionResult = {
   ok: boolean;
@@ -69,12 +70,10 @@ export async function upsertContent(
 
   if (!parsed.success) {
     // Field errors are returned to the form rather than thrown.
-    const fieldErrors: Record<string, string> = {};
-    for (const issue of parsed.error.issues) {
-      const key = issue.path.join(".");
-      if (key && !fieldErrors[key]) fieldErrors[key] = issue.message;
-    }
-    return { ok: false, fieldErrors };
+    return {
+      ok: false,
+      fieldErrors: await fieldErrorsFrom(parsed.error.issues),
+    };
   }
 
   try {

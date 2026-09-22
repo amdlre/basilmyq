@@ -75,8 +75,14 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
     width and shifts the whole page sideways in RTL. Gate visual styles behind `focus-visible:`.
 - **Breadcrumbs:** `BreadcrumbSeparator` is a sibling `<li>`, never a child of
   `BreadcrumbItem` — nesting them is invalid HTML and fails hydration.
-- **Validation messages** come from Zod's built-in locales, wired to the active language in
-  `ZodLocaleProvider`. Only override a message when the default is too vague.
+- **Validation messages** are ours, not Zod's. Zod's defaults describe the failed check
+  ("Too small: expected string to have >=1 characters"), which is useless in a form and
+  reads badly in Arabic. `plainMessage` in `lib/validations/configure-zod.ts` maps every
+  issue a form can raise onto one plain sentence from the `Validation` namespace, and an
+  empty field always reads as "required" whatever constraint tripped first. Clients wire it
+  through `useZodLocale()`; server actions translate per request through
+  `server/field-errors.ts`, because Zod's error map is global and an action serves every
+  locale at once. Add a key to `Validation` rather than a message to a schema.
 - **Adding a dashboard module** means: a Zod schema in `lib/validations/content.ts`, an
   entry in `server/content-registry.ts`, a `columns.tsx`, a client that renders
   `<CrudModule>` with its fields, and a `page.tsx` that fetches rows and stats. No new

@@ -182,6 +182,19 @@
     "clearDate": "Clear date",
     "present": "Present"
   },
+  "Validation": {
+    "required": "This field is required",
+    "tooShort": "Must be at least {min, plural, one {# character} other {# characters}}",
+    "tooLong": "Must be at most {max, plural, one {# character} other {# characters}}",
+    "tooFew": "Choose at least {min, plural, one {# item} other {# items}}",
+    "tooMany": "Choose at most {max, plural, one {# item} other {# items}}",
+    "tooSmall": "Must be at least {min}",
+    "tooBig": "Must be at most {max}",
+    "email": "Enter a valid email address",
+    "url": "Enter a valid link",
+    "format": "The format is not valid",
+    "invalid": "Not a valid value"
+  },
   "Playground": {
     "title": "Component playground",
     "description": "A demo page consuming every shared component with dummy data.",

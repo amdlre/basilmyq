@@ -182,6 +182,19 @@
     "clearDate": "مسح التاريخ",
     "present": "حتى الآن"
   },
+  "Validation": {
+    "required": "الحقل مطلوب",
+    "tooShort": "لا يقل عن {min, plural, one {حرف واحد} two {حرفين} few {# أحرف} other {# حرفًا}}",
+    "tooLong": "لا يزيد عن {max, plural, one {حرف واحد} two {حرفين} few {# أحرف} other {# حرفًا}}",
+    "tooFew": "اختر {min, plural, one {عنصرًا واحدًا} two {عنصرين} few {# عناصر} other {# عنصرًا}} على الأقل",
+    "tooMany": "لا يزيد عن {max, plural, one {عنصر واحد} two {عنصرين} few {# عناصر} other {# عنصرًا}}",
+    "tooSmall": "لا يقل عن {min}",
+    "tooBig": "لا يزيد عن {max}",
+    "email": "بريد إلكتروني غير صحيح",
+    "url": "رابط غير صحيح",
+    "format": "الصيغة غير صحيحة",
+    "invalid": "قيمة غير صحيحة"
+  },
   "Playground": {
     "title": "معمل المكوّنات",
     "description": "صفحة تجريبية تستهلك كل المكوّنات المشتركة ببيانات وهمية.",

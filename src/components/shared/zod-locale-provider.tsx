@@ -1,7 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { AppLocale } from "@/i18n/routing";
 import { configureZodLocale } from "@/lib/validations/configure-zod";
@@ -11,18 +10,8 @@ import { configureZodLocale } from "@/lib/validations/configure-zod";
  * an effect: a form validating on the first pass must already see the right
  * language. Setting it is idempotent and touches no React state.
  */
-export function ZodLocaleProvider({
-  locale,
-  children,
-}: {
-  locale: AppLocale;
-  children: ReactNode;
-}) {
-  configureZodLocale(locale);
-  return children;
-}
-
 export function useZodLocale(): void {
   const locale = useLocale() as AppLocale;
-  configureZodLocale(locale);
+  const t = useTranslations("Validation");
+  configureZodLocale(locale, t);
 }
