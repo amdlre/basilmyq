@@ -1,7 +1,7 @@
 import "server-only";
 
 import { randomUUID } from "node:crypto";
-import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import sharp from "sharp";
@@ -182,4 +182,33 @@ export async function deleteStoredFiles(urls: string[]): Promise<void> {
       .filter((name) => STORED_NAME.test(name))
       .map((name) => unlink(storedPath(name)).catch(() => {})),
   );
+}
+
+/**
+ * Whether the uploads directory still holds what the database points at.
+ *
+ * `UPLOAD_DIR` has to be a volume that outlives the container. Without one the
+ * rows survive every redeploy — Postgres is its own service — while the files
+ * do not, and the site quietly fills with broken images that nothing in the
+ * logs complains about. Checking the oldest upload catches that within one
+ * deploy: it is the first file a lost volume takes with it.
+ */
+export async function storageStatus(): Promise<
+  "ok" | "empty" | "missing-files"
+> {
+  const oldest = await db.media.findFirst({
+    orderBy: { createdAt: "asc" },
+    select: { url: true },
+  });
+  if (!oldest) return "empty";
+
+  const name = oldest.url.slice(UPLOAD_URL_PREFIX.length);
+  if (!STORED_NAME.test(name)) return "missing-files";
+
+  try {
+    await access(storedPath(name));
+    return "ok";
+  } catch {
+    return "missing-files";
+  }
 }
