@@ -77,7 +77,7 @@ export default async function LocaleLayout(props: LayoutProps<"/[locale]">) {
           {/*
             Injected rather than written into globals.css because the value
             lives in the database. It is generated from parsed numbers, never
-            interpolated from the raw input, so nothing the field accepts can
+            interpolated from the raw, so nothing the field accepts can
           */}
           <style id="accent-tokens">{accent}</style>
         </head>
