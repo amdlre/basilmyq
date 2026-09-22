@@ -7,6 +7,7 @@ import { resolveLocale } from "@/i18n/resolve-locale";
 import { PUBLIC_NAMESPACES } from "@/i18n/namespaces";
 import { getLocaleDirection } from "@/i18n/routing";
 import { accentStyleSheet, type AccentForeground } from "@/lib/accent";
+import { DEFAULT_FAVICON, siteDescription, siteTitle } from "@/lib/seo";
 import { getSiteSettings } from "@/server/queries/public";
 
 import "../globals.css";
@@ -45,15 +46,31 @@ export function generateStaticParams(): { locale: string }[] {
   return [];
 }
 
+/**
+ * The tab title, the search snippet and the tab icon all come from
+ * Settings → SEO. Each falls back to the general site copy when left empty, so
+ * the SEO tab only has to be filled in when it should differ. A database that
+ * cannot be reached returns nothing rather than a hardcoded string — the
+ * maintenance screen is what the visitor sees in that case anyway.
+ */
 export async function generateMetadata(
   props: LayoutProps<"/[locale]">,
 ): Promise<Metadata> {
   const locale = await resolveLocale(props.params);
-  const t = await getTranslations({ locale, namespace: "Metadata" });
+  const settings = await getSiteSettings().catch(() => null);
+  if (!settings) return {};
+
+  const site = siteTitle(settings, locale);
 
   return {
-    title: t("title"),
-    description: t("description"),
+    // `default` is what a page without its own title gets; `template` is what
+    // every page with one gets appended to it.
+    title: { default: site, template: `%s — ${site}` },
+    description: siteDescription(settings, locale),
+    // Explicit, because Next's `app/favicon.ico` file convention outranks
+    // anything set here — so that file lives in `public/` instead and is named
+    // as the fallback rather than silently winning.
+    icons: { icon: settings.faviconUrl ?? DEFAULT_FAVICON },
   };
 }
 

@@ -15,7 +15,7 @@ import { Link } from "@/i18n/navigation";
 import { resolveLocale } from "@/i18n/resolve-locale";
 import { getLocaleDirection } from "@/i18n/routing";
 import { pick } from "@/lib/i18n-content";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, siteDescription, siteTitle } from "@/lib/seo";
 import { readSocialLinks } from "@/lib/social";
 import {
   getAboutSection,
@@ -35,13 +35,12 @@ export async function generateMetadata(
   const settings = await getSiteSettings();
   if (!settings) return {};
 
-  const siteName = pick(settings, "siteName", locale);
-
   return buildMetadata({
     locale,
-    siteName,
-    title: `${siteName} — ${pick(settings, "tagline", locale)}`,
-    description: pick(settings, "description", locale),
+    siteName: pick(settings, "siteName", locale),
+    title: siteTitle(settings, locale),
+    absoluteTitle: true,
+    description: siteDescription(settings, locale),
     image: settings.ogImageUrl,
   });
 }

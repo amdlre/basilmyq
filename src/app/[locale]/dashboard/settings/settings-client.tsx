@@ -106,11 +106,6 @@ export function SettingsClient({
                 name="logoUrlEn"
                 label={t("general.logoEn")}
               />
-              <TextField
-                name="faviconUrl"
-                label={t("general.favicon")}
-                dir="ltr"
-              />
               <ImageField
                 compact
                 name="ogImageUrl"
@@ -293,6 +288,29 @@ export function SettingsClient({
               defaultValues={settings}
               action={saveSiteSettings}
             >
+              <ImageField
+                compact
+                name="faviconUrl"
+                label={t("seo.favicon")}
+                description={t("seo.faviconHint")}
+              />
+              <TextField
+                name="metaTitleAr"
+                label={t("seo.titleAr")}
+                description={t("seo.titleHint")}
+              />
+              <TextField name="metaTitleEn" label={t("seo.titleEn")} />
+              <TextField
+                name="metaDescriptionAr"
+                label={t("seo.descriptionAr")}
+                description={t("seo.descriptionHint")}
+                multiline
+              />
+              <TextField
+                name="metaDescriptionEn"
+                label={t("seo.descriptionEn")}
+                multiline
+              />
               <TextField
                 name="seoKeywordsAr"
                 label={t("seo.keywordsAr")}

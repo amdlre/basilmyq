@@ -1,8 +1,4 @@
 {
-  "Metadata": {
-    "title": "باسل مية — مهندس واجهات وتجارب رقمية",
-    "description": "معرض أعمال ومدونة باسل مية: مشاريع، خبرات، وخدمات في هندسة الويب."
-  },
   "Common": {
     "loading": "جارٍ التحميل…",
     "save": "حفظ",
@@ -503,7 +499,6 @@
       "descriptionEn": "Description (English)",
       "logoAr": "الشعار (عربي)",
       "logoEn": "Logo (English)",
-      "favicon": "الأيقونة المفضّلة",
       "ogImage": "صورة المشاركة (OG)"
     },
     "hero": {
@@ -551,6 +546,14 @@
       "file": "ملف السيرة الذاتية"
     },
     "seo": {
+      "favicon": "أيقونة الموقع",
+      "faviconHint": "تظهر في تبويب المتصفح والمفضلة. صورة مربعة، PNG بحجم 512×512 أو أقرب.",
+      "titleAr": "عنوان الموقع (عربي)",
+      "titleEn": "عنوان الموقع (إنجليزي)",
+      "titleHint": "يظهر في تبويب المتصفح وفي نتائج البحث. اسم الموقع إن تُرك فارغًا.",
+      "descriptionAr": "وصف الموقع (عربي)",
+      "descriptionEn": "وصف الموقع (إنجليزي)",
+      "descriptionHint": "السطر تحت العنوان في نتائج البحث. وصف الموقع من تبويب «عام» إن تُرك فارغًا.",
       "keywordsAr": "كلمات مفتاحية (عربي)",
       "keywordsEn": "Keywords (English)",
       "googleVerification": "Google verification",

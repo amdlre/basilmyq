@@ -51,6 +51,13 @@ model SiteSetting {
   cvUrl           String?
   cvDownloadCount Int     @default(0)
 
+  /// Browser tab and search-result title. Falls back to the site name.
+  metaTitleAr       String?
+  metaTitleEn       String?
+  /// Search-result snippet. Falls back to the site description.
+  metaDescriptionAr String? @db.Text
+  metaDescriptionEn String? @db.Text
+
   seoKeywordsAr      String?
   seoKeywordsEn      String?
   googleVerification String?

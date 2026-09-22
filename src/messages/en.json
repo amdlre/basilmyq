@@ -1,8 +1,4 @@
 {
-  "Metadata": {
-    "title": "Basil Myq — Web & Product Engineer",
-    "description": "Portfolio and writing by Basil Myq: projects, experience, and web engineering services."
-  },
   "Common": {
     "loading": "Loading…",
     "save": "Save",
@@ -503,7 +499,6 @@
       "descriptionEn": "Description (English)",
       "logoAr": "Logo (Arabic)",
       "logoEn": "Logo (English)",
-      "favicon": "Favicon",
       "ogImage": "Share image (OG)"
     },
     "hero": {
@@ -551,6 +546,14 @@
       "file": "CV file"
     },
     "seo": {
+      "favicon": "Site icon",
+      "faviconHint": "Shown in the browser tab and bookmarks. A square PNG, 512×512 or close.",
+      "titleAr": "Site title (Arabic)",
+      "titleEn": "Site title (English)",
+      "titleHint": "The browser tab and the search result heading. The site name if left empty.",
+      "descriptionAr": "Site description (Arabic)",
+      "descriptionEn": "Site description (English)",
+      "descriptionHint": "The line under the heading in search results. The General tab's description if left empty.",
       "keywordsAr": "Keywords (Arabic)",
       "keywordsEn": "Keywords (English)",
       "googleVerification": "Google verification",
