@@ -153,6 +153,36 @@
   --sidebar-ring: oklch(0.68 0.19 264.376);
 }
 
+/* The dashboard sidebar is the one brand-coloured surface in the app, and only
+   on the light theme — the dark theme keeps its neutral panel, where a lit
+   brand block would fight the page instead of framing it.
+
+   `:root:not(.dark)` rather than `:root`, because `.dark` sits on the same
+   element: a plain `:root` here would win on source order and colour the dark
+   sidebar too.
+
+   `--sidebar` is the brand deepened until white reads on it — a full panel of
+   the accent measures around 3.4:1, well under AA. The value here is the
+   fallback for the built-in brand; once an accent is set in Settings,
+   `accent.ts` measures that colour and overrides it. Everything else is
+   derived, so there is one place to edit either way. */
+:root:not(.dark) {
+  --sidebar: color-mix(in oklch, var(--sidebar-primary) 55%, oklch(0.205 0 0));
+  --sidebar-foreground: var(--sidebar-primary-foreground);
+  --sidebar-accent: color-mix(
+    in oklch,
+    var(--sidebar-primary-foreground) 16%,
+    transparent
+  );
+  --sidebar-accent-foreground: var(--sidebar-primary-foreground);
+  --sidebar-border: color-mix(
+    in oklch,
+    var(--sidebar-primary-foreground) 20%,
+    transparent
+  );
+  --sidebar-ring: var(--sidebar-primary-foreground);
+}
+
 /* Locale-aware typography: Geist for Latin, IBM Plex Sans Arabic for Arabic. */
 :root {
   --font-sans:

@@ -57,7 +57,7 @@ export function DashboardSidebar({
                     monogram and the brand mark steps aside. */}
                 <span
                   aria-hidden
-                  className="hidden aspect-square size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground group-data-[collapsible=icon]:flex"
+                  className="hidden aspect-square size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-foreground/15 text-sm font-semibold text-sidebar-foreground group-data-[collapsible=icon]:flex"
                 >
                   {brandName.trim().charAt(0)}
                 </span>
@@ -68,7 +68,7 @@ export function DashboardSidebar({
                     className="min-w-0 [&>span]:truncate"
                   />
                   {siteName ? (
-                    <span className="truncate text-xs text-muted-foreground">
+                    <span className="truncate text-xs font-bold text-sidebar-foreground/85">
                       {t("dashboard.title")}
                     </span>
                   ) : null}
@@ -82,7 +82,7 @@ export function DashboardSidebar({
       <SidebarContent>
         {DASHBOARD_NAV.map((group) => (
           <SidebarGroup key={group.labelKey}>
-            <SidebarGroupLabel>
+            <SidebarGroupLabel className="text-sidebar-foreground/85">
               {t(`dashboard.groups.${group.labelKey}`)}
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -102,7 +102,9 @@ export function DashboardSidebar({
                       >
                         <Link href={item.href}>
                           <item.icon />
-                          <span>{t(`dashboard.${item.labelKey}`)}</span>
+                          <span className="font-bold">
+                            {t(`dashboard.${item.labelKey}`)}
+                          </span>
                         </Link>
                       </SidebarMenuButton>
                       {item.badgeKey === "unreadMessages" &&

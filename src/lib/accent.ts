@@ -29,6 +29,13 @@ const DARK_BG_L = 0.145;
 /** Minimum lightness an accent needs to carry text on the dark theme. */
 const DARK_THEME_MIN_L = 0.62;
 
+/**
+ * Contrast the dashboard sidebar's text needs on its own panel. Deliberately
+ * above AA's 4.5: the sidebar draws group labels and secondary lines at 70%
+ * opacity, and those have to clear 4.5 too.
+ */
+const SIDEBAR_MIN_CONTRAST = 6.5;
+
 function parseOklch(value: string): Oklch | null {
   const match = /^oklch\(\s*([\d.]+%?)\s+([\d.]+)\s+([\d.]+)/i.exec(
     value.trim(),
@@ -119,9 +126,33 @@ function foregroundFor(fill: Oklch, choice: AccentForeground): Oklch {
     : TEXT_DARK;
 }
 
+/**
+ * The sidebar is a whole panel of the accent, not a button-sized patch of it,
+ * so the accent itself is usually too light to read against: white on the
+ * default brand measures 3.4:1. This walks the panel's lightness away from the
+ * text until it is comfortable, leaving hue and chroma alone — the result is
+ * the same colour, deepened, rather than a second colour to keep in sync.
+ *
+ * Light theme only. The dark theme keeps its neutral sidebar.
+ */
+function surfaceFor(accent: Oklch, text: Oklch): Oklch {
+  const step = text.l > 0.5 ? -0.01 : 0.01;
+  let surface = accent;
+
+  while (contrast(text, surface) < SIDEBAR_MIN_CONTRAST) {
+    const l = surface.l + step;
+    if (l <= 0 || l >= 1) break;
+    surface = { ...surface, l };
+  }
+
+  return surface;
+}
+
 export type AccentTokens = {
   light: { primary: string; foreground: string };
   dark: { primary: string; foreground: string };
+  /** The light theme's sidebar panel — see `surfaceFor`. */
+  sidebarSurface: string;
   /** Contrast of the accent against each theme's page background. */
   contrast: { onLight: number; onDark: number };
   /** Contrast of the chosen text colour on the accent, per theme. */
@@ -146,6 +177,7 @@ export function buildAccentTokens(
   return {
     light: { primary: format(base), foreground: format(lightText) },
     dark: { primary: format(darkAccent), foreground: format(darkText) },
+    sidebarSurface: format(surfaceFor(base, lightText)),
     contrast: {
       onLight: contrast(base, { l: LIGHT_BG_L, c: 0, h: 0 }),
       onDark: contrast(darkAccent, { l: DARK_BG_L, c: 0, h: 0 }),
@@ -170,5 +202,15 @@ export function accentStyleSheet(
   const tokens = buildAccentTokens(value, choice);
   if (!tokens) return null;
 
-  return `:root{--primary:${tokens.light.primary};--primary-foreground:${tokens.light.foreground};--ring:${tokens.light.primary};--sidebar-primary:${tokens.light.primary};--sidebar-primary-foreground:${tokens.light.foreground};--sidebar-ring:${tokens.light.primary}}.dark{--primary:${tokens.dark.primary};--primary-foreground:${tokens.dark.foreground};--ring:${tokens.dark.primary};--sidebar-primary:${tokens.dark.primary};--sidebar-primary-foreground:${tokens.dark.foreground};--sidebar-ring:${tokens.dark.primary}}`;
+  const block = (theme: AccentTokens["light"]): string =>
+    `--primary:${theme.primary};--primary-foreground:${theme.foreground};` +
+    `--ring:${theme.primary};--sidebar-primary:${theme.primary};` +
+    `--sidebar-primary-foreground:${theme.foreground};--sidebar-ring:${theme.primary}`;
+
+  return (
+    `:root{${block(tokens.light)}}` +
+    `.dark{${block(tokens.dark)}}` +
+    // Light only, and specific enough to beat the `.dark` block above.
+    `:root:not(.dark){--sidebar:${tokens.sidebarSurface};--sidebar-foreground:${tokens.light.foreground};--sidebar-ring:${tokens.light.foreground}}`
+  );
 }
