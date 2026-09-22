@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -24,6 +24,12 @@ type DateRangeFieldProps = Omit<BaseFieldProps, "name"> & {
   name: string;
   /** The field holding the end; left empty for anything still running. */
   endName: string;
+  /**
+   * Name of a boolean field that means "no end date yet" — `isCurrent` on an
+   * experience. While it is on there is only one date to pick, so the calendar
+   * collapses to a single day and the end field is cleared.
+   */
+  openEndedWhen?: string;
 };
 
 /**
@@ -31,7 +37,11 @@ type DateRangeFieldProps = Omit<BaseFieldProps, "name"> & {
  * date-picker-02. A period is picked as a period rather than as two fields
  * that can silently contradict each other.
  */
-export function DateRangeField({ endName, ...base }: DateRangeFieldProps) {
+export function DateRangeField({
+  endName,
+  openEndedWhen,
+  ...base
+}: DateRangeFieldProps) {
   const { setValue, control } = useFormContext();
   const t = useTranslations("Form");
   const locale = useLocale() as AppLocale;
@@ -44,11 +54,25 @@ export function DateRangeField({ endName, ...base }: DateRangeFieldProps) {
     useWatch({ control, name: endName }) as Date | string | null,
   );
 
+  // A name that matches no field watches nothing, rather than the whole form.
+  const isOpenEnded =
+    useWatch({ control, name: openEndedWhen ?? "\u0000" }) === true;
+
+  // Turning the switch on retires whatever end date was already picked, so the
+  // two controls can never disagree about whether this is still running.
+  useEffect(() => {
+    if (isOpenEnded && to) {
+      setValue(endName, null, { shouldDirty: true, shouldValidate: true });
+    }
+  }, [endName, isOpenEnded, setValue, to]);
+
   const label = from
     ? `${formatPickedDate(from, locale)} — ${
         to ? formatPickedDate(to, locale) : t("present")
       }`
-    : t("pickRange");
+    : isOpenEnded
+      ? t("pickDate")
+      : t("pickRange");
 
   return (
     <FieldWrapper {...base}>
@@ -75,25 +99,42 @@ export function DateRangeField({ endName, ...base }: DateRangeFieldProps) {
             align="start"
             dir={getLocaleDirection(locale)}
           >
-            <Calendar
-              mode="range"
-              selected={{ from: from ?? undefined, to: to ?? undefined }}
-              defaultMonth={from ?? undefined}
-              captionLayout="dropdown"
-              dir={getLocaleDirection(locale)}
-              onSelect={(range) => {
-                // Validation stays with the schema; this only keeps the two
-                // fields consistent with what was picked.
-                setValue(base.name, range?.from ?? null, {
-                  shouldDirty: true,
-                  shouldValidate: true,
-                });
-                setValue(endName, range?.to ?? null, {
-                  shouldDirty: true,
-                  shouldValidate: true,
-                });
-              }}
-            />
+            {isOpenEnded ? (
+              <Calendar
+                mode="single"
+                selected={from ?? undefined}
+                defaultMonth={from ?? undefined}
+                captionLayout="dropdown"
+                dir={getLocaleDirection(locale)}
+                onSelect={(day) => {
+                  setValue(base.name, day ?? null, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                  setOpen(false);
+                }}
+              />
+            ) : (
+              <Calendar
+                mode="range"
+                selected={{ from: from ?? undefined, to: to ?? undefined }}
+                defaultMonth={from ?? undefined}
+                captionLayout="dropdown"
+                dir={getLocaleDirection(locale)}
+                onSelect={(range) => {
+                  // Validation stays with the schema; this only keeps the two
+                  // fields consistent with what was picked.
+                  setValue(base.name, range?.from ?? null, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                  setValue(endName, range?.to ?? null, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                }}
+              />
+            )}
           </PopoverContent>
         </Popover>
       )}

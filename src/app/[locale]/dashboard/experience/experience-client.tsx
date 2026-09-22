@@ -165,12 +165,15 @@ export function ExperienceClient({ rows }: { rows: ExperienceRow[] }) {
         <TextField name="locationEn" label={t("fields.locationEn")} dir="ltr" />
       </FormStep>
       <FormStep id="details">
+        {/* The switch comes first: it decides whether the control below asks
+            for one date or two. */}
+        <SwitchField name="isCurrent" label={t("fields.isCurrent")} />
         <DateRangeField
           name="startDate"
           endName="endDate"
+          openEndedWhen="isCurrent"
           label={tc("period")}
         />
-        <SwitchField name="isCurrent" label={t("fields.isCurrent")} />
       </FormStep>
       <FormStep id="content">
         <TextField
