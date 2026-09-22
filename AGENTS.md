@@ -114,6 +114,12 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   public layout, the dashboard layout and `sitemap.ts` are all `force-dynamic`;
   the data itself stays cached through `unstable_cache`. A new route that queries
   at build time will break every deploy — check with `DATABASE_URL="" npm run build`.
+- **Uploaded files live in Postgres, not on disk.** `Media.data` holds the bytes;
+  `UPLOAD_DIR` is a cache that `readStoredFile` refills on a miss. The container's disk
+  does not survive a redeploy, so disk-only storage meant every push broke every image
+  on the site while the rows stayed behind. Never select `data` alongside a list —
+  `getMedia` omits it, and forgetting that pulls the whole library into memory to draw
+  a grid of thumbnails.
 - **A database outage must never reach the visitor.** The public layout swallows a
   failed settings read and renders the maintenance screen, `(public)/error.tsx`
   catches anything a page throws, and `docker-entrypoint.sh` starts the server even

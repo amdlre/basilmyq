@@ -1,30 +1,35 @@
 # Deploying basilmyq on Coolify
 
-## The one thing that must be configured: persistent storage
+## Uploaded files
 
-Uploaded images live on disk at `UPLOAD_DIR` (`/app/uploads` in the image), not
-in the database and not in `public/`. The database rows that point at them live
-in Postgres, which is its own service with its own volume.
+The bytes live in Postgres, in `Media.data`. Disk is only a cache in front of
+it: `UPLOAD_DIR` (`/app/uploads` in the image) is written on upload and read
+first, and the first request for a file that is not there fetches it from the
+row and leaves the copy behind. A redeploy empties that directory and the
+library heals itself one file at a time.
 
-That split is why a redeploy can break every image on the site while nothing
-appears to be wrong: **the rows survive, the files do not.** `/uploads/<id>.png`
-then answers 404 and the page renders a broken image.
+**There is nothing to configure.** Mounting a persistent volume at
+`/app/uploads` is still worth doing — it saves the database read after each
+deploy — but nothing breaks without it.
 
-The `VOLUME` line in the `Dockerfile` does not prevent this. Without an
-explicit mount Docker creates a _new anonymous volume_ for each container, so
-files uploaded after a deploy work until the next one replaces the container —
-which is exactly the "it breaks whenever I push" symptom.
+It did not always work this way. Files used to live only on the container's
+disk, which a redeploy replaces, while their rows stayed in Postgres. Every
+push broke every image on the site and nothing in the logs said so.
 
-### Configure it once
+### Files from before the change
 
-In the Coolify application → **Storages** → **Add**:
+Anything uploaded before the bytes moved into the database, and already gone
+from disk, cannot be recovered — nothing holds it. Re-upload from Settings and
+the dashboard, then delete the stale rows in **Media**.
 
-| Field            | Value          |
-| ---------------- | -------------- |
-| Name             | `uploads`      |
-| Destination Path | `/app/uploads` |
+If the old files are still on a disk somewhere, point `UPLOAD_DIR` at it and
+run the backfill to copy them into their rows:
 
-Redeploy. From then on the directory is the same one on every container.
+```bash
+npm run backfill-media
+```
+
+It prints what it stored and lists anything it could not find.
 
 ### Check it
 
@@ -32,23 +37,10 @@ Redeploy. From then on the directory is the same one on every container.
 curl -s https://<your-domain>/api/health
 ```
 
-- `{"status":"ok","database":"up","storage":"ok"}` — the files the database
-  points at are on disk.
-- `"storage":"missing-files"` — rows exist whose files are gone. The volume is
-  missing or was replaced.
-- `"storage":"empty"` — nothing has been uploaded yet, so there is nothing to
-  tell yet. Upload one image, redeploy, and check again.
-
-### Files already lost
-
-They are gone: nothing in the database holds the bytes. Re-upload them from
-Settings and the dashboard, then delete the orphaned rows in **Media**.
-
-Old anonymous volumes may still be on the host holding those files. To look:
-
-```bash
-docker volume ls -qf dangling=true
-```
+- `"storage":"ok"` — the oldest upload can be served.
+- `"storage":"missing-files"` — a row from before the change whose file is
+  gone. Re-upload it.
+- `"storage":"empty"` — nothing uploaded yet.
 
 ## Environment
 
@@ -79,5 +71,5 @@ hash silently becomes an empty string and sign-in fails with a confusing
 
 ## Backups
 
-Postgres holds the content; `/app/uploads` holds the files. Both are needed to
-restore, and a database dump alone will leave every image broken.
+A Postgres dump is a complete backup: it carries the content and the uploaded
+files together. `/app/uploads` is a cache and does not need backing up.

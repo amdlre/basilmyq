@@ -9,11 +9,18 @@ import sharp from "sharp";
 import { db } from "@/server/db";
 
 /**
- * Local-disk storage for uploaded images.
+ * Storage for uploaded files.
  *
- * Files live outside `public/` because the standalone server only serves what
- * existed at build time. In Docker, mount a volume at `UPLOAD_DIR` or every
- * redeploy loses the library.
+ * The bytes live in Postgres. Disk is a cache in front of it: a write goes to
+ * both, a read prefers disk and falls back to the row, restoring the file on
+ * the way past.
+ *
+ * It is that way round because the container's disk does not outlive a
+ * redeploy. Files written to `UPLOAD_DIR` disappear with the container while
+ * their rows — in Postgres, a separate service — stay behind, so the site
+ * filled with broken images every time anything was pushed. Mounting a volume
+ * fixes that too, but it is a step outside the repository that nothing here
+ * can check, and forgetting it looks exactly like a bug in the site.
  */
 const UPLOAD_DIR =
   process.env.UPLOAD_DIR ||
@@ -105,10 +112,10 @@ export async function saveImage(
   if (!metadata) return { error: "INVALID_TYPE" };
 
   const filename = `${randomUUID()}.${extension}`;
-  await mkdir(UPLOAD_DIR, { recursive: true });
-  await writeFile(storedPath(filename), buffer);
-
   const url = `${UPLOAD_URL_PREFIX}${filename}`;
+
+  // The row first: it is the copy that has to exist. The disk copy is a cache
+  // and a failed write there must not lose the upload.
   await db.media.create({
     data: {
       url,
@@ -117,8 +124,10 @@ export async function saveImage(
       size: file.size,
       width: metadata.width ?? null,
       height: metadata.height ?? null,
+      data: buffer,
     },
   });
+  await cacheOnDisk(filename, buffer);
 
   return { url };
 }
@@ -142,20 +151,30 @@ export async function saveDocument(
   }
 
   const filename = `${randomUUID()}.pdf`;
-  await mkdir(UPLOAD_DIR, { recursive: true });
-  await writeFile(storedPath(filename), buffer);
-
   const url = `${UPLOAD_URL_PREFIX}${filename}`;
+
   await db.media.create({
     data: {
       url,
       filename: file.name || filename,
       mimeType: "application/pdf",
       size: file.size,
+      data: buffer,
     },
   });
+  await cacheOnDisk(filename, buffer);
 
   return { url };
+}
+
+/** Best effort: losing the cache copy costs a database read, nothing more. */
+async function cacheOnDisk(name: string, body: Buffer): Promise<void> {
+  try {
+    await mkdir(UPLOAD_DIR, { recursive: true });
+    await writeFile(storedPath(name), body);
+  } catch {
+    // A read-only or full disk is survivable; the row still has the file.
+  }
 }
 
 export async function readStoredFile(
@@ -169,8 +188,20 @@ export async function readStoredFile(
   try {
     return { body: await readFile(storedPath(name)), type };
   } catch {
-    return null;
+    // Not on this container's disk — the first request for each file after a
+    // redeploy lands here, fetches it from the row and leaves the copy behind,
+    // so the library heals itself one file at a time.
   }
+
+  const row = await db.media.findFirst({
+    where: { url: `${UPLOAD_URL_PREFIX}${name}` },
+    select: { data: true },
+  });
+  if (!row?.data) return null;
+
+  const body = Buffer.from(row.data);
+  await cacheOnDisk(name, body);
+  return { body, type };
 }
 
 /** Removes the files behind library URLs; foreign URLs are ignored. */
@@ -185,22 +216,21 @@ export async function deleteStoredFiles(urls: string[]): Promise<void> {
 }
 
 /**
- * Whether the uploads directory still holds what the database points at.
+ * Whether the oldest upload can still be served at all.
  *
- * `UPLOAD_DIR` has to be a volume that outlives the container. Without one the
- * rows survive every redeploy — Postgres is its own service — while the files
- * do not, and the site quietly fills with broken images that nothing in the
- * logs complains about. Checking the oldest upload catches that within one
- * deploy: it is the first file a lost volume takes with it.
+ * Since the bytes moved into Postgres this only goes wrong for rows written
+ * before that change whose disk copy is already gone — those files are not
+ * recoverable and have to be uploaded again. Reported by `/api/health`.
  */
 export async function storageStatus(): Promise<
   "ok" | "empty" | "missing-files"
 > {
   const oldest = await db.media.findFirst({
     orderBy: { createdAt: "asc" },
-    select: { url: true },
+    select: { url: true, data: true },
   });
   if (!oldest) return "empty";
+  if (oldest.data) return "ok";
 
   const name = oldest.url.slice(UPLOAD_URL_PREFIX.length);
   if (!STORED_NAME.test(name)) return "missing-files";

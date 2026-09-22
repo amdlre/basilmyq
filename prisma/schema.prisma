@@ -373,6 +373,11 @@ model Media {
   altAr    String?
   altEn    String?
 
+  /// The file itself. Postgres is the only storage that outlives a redeploy
+  /// without a volume mounted, and a portfolio's whole library is a few
+  /// megabytes. Never select this alongside a list — see `getMedia`.
+  data Bytes?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

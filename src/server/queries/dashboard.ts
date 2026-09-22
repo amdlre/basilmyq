@@ -60,7 +60,12 @@ export async function getMessages() {
 
 export async function getMedia() {
   await requireAuth();
-  return db.media.findMany({ orderBy: [{ createdAt: "desc" }] });
+  // `data` holds the whole file. Selecting it here would pull the entire
+  // library into memory to render a grid of thumbnails.
+  return db.media.findMany({
+    orderBy: [{ createdAt: "desc" }],
+    omit: { data: true },
+  });
 }
 
 export type ProjectRow = Awaited<ReturnType<typeof getProjects>>[number];
