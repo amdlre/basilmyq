@@ -29,13 +29,18 @@ export const UPLOAD_URL_PREFIX = "/uploads/";
 
 export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 
-/** SVG is left out on purpose: it can carry script. */
 const EXTENSION_BY_TYPE: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
   "image/gif": "gif",
   "image/avif": "avif",
+  // SVG is accepted, but it is markup rather than pixels: it can carry script
+  // and, served from our own origin, that script would run as us. Two layers
+  // answer that — `rejectsAsUnsafe` below refuses anything executable at the
+  // door, and `app/uploads/[file]` serves it under a CSP that would stop the
+  // script even if something slipped past. Neither is load-bearing alone.
+  "image/svg+xml": "svg",
 };
 
 const TYPE_BY_EXTENSION: Record<string, string> = {
@@ -46,14 +51,39 @@ const TYPE_BY_EXTENSION: Record<string, string> = {
 };
 
 /** Names are generated here, so anything else is a traversal attempt. */
-const STORED_NAME = /^[0-9a-f-]{36}\.(jpg|png|webp|gif|avif|pdf)$/;
+const STORED_NAME = /^[0-9a-f-]{36}\.(jpg|png|webp|gif|avif|svg|pdf)$/;
 
 export const MAX_DOCUMENT_BYTES = 10 * 1024 * 1024;
 
 /** `%PDF-` — checked against the bytes, not the declared content type. */
 const PDF_MAGIC = Buffer.from("%PDF-");
 
-export type UploadError = "INVALID_TYPE" | "TOO_LARGE";
+export type UploadError = "INVALID_TYPE" | "TOO_LARGE" | "UNSAFE_SVG";
+
+/**
+ * Everything an image has no business containing. This refuses rather than
+ * strips: a logo never holds any of it, so a file that does is either hostile
+ * or broken, and refusing cannot leave a half-cleaned payload behind the way a
+ * sanitiser that missed one vector would.
+ */
+const UNSAFE_SVG_PATTERNS: readonly RegExp[] = [
+  /<\s*script/i,
+  /<\s*foreignObject/i,
+  /<\s*(iframe|embed|object|audio|video)/i,
+  // Inline handlers: onload=, onclick=, and the rest.
+  /\son[a-z]+\s*=/i,
+  /javascript\s*:/i,
+  // Declared entities are how XML files are made to read other files.
+  /<!ENTITY/i,
+  // A reference that leaves the document: tracking, or worse.
+  /(?:xlink:)?href\s*=\s*["']\s*(?:https?:)?\/\//i,
+  /data:text\/html/i,
+];
+
+function rejectsAsUnsafe(buffer: Buffer): boolean {
+  const markup = buffer.toString("utf8");
+  return UNSAFE_SVG_PATTERNS.some((pattern) => pattern.test(markup));
+}
 
 export async function saveImage(
   file: File,
@@ -63,6 +93,10 @@ export async function saveImage(
   if (file.size > MAX_UPLOAD_BYTES) return { error: "TOO_LARGE" };
 
   const buffer = Buffer.from(await file.arrayBuffer());
+
+  if (extension === "svg" && rejectsAsUnsafe(buffer)) {
+    return { error: "UNSAFE_SVG" };
+  }
 
   // Reading the metadata also proves the bytes are really an image.
   const metadata = await sharp(buffer)

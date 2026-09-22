@@ -154,6 +154,7 @@
     "uploading": "Uploading…",
     "remove": "Remove image",
     "notAnImage": "That file is not an image.",
+    "unsafeSvg": "That SVG contains script or links out to another site, so it was refused. Export it from your design tool without scripting.",
     "uploadFailed": "Upload failed. Try again.",
     "tooLarge": "The image is larger than 5 MB.",
     "uploaded": "Image uploaded",

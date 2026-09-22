@@ -74,9 +74,11 @@ export function ImageUpload({
       const message =
         reason === "TOO_LARGE"
           ? t("tooLarge")
-          : reason === "INVALID_TYPE"
-            ? t("notAnImage")
-            : t("uploadFailed");
+          : reason === "UNSAFE_SVG"
+            ? t("unsafeSvg")
+            : reason === "INVALID_TYPE"
+              ? t("notAnImage")
+              : t("uploadFailed");
       setError(message);
       toast.error(message);
     } finally {
