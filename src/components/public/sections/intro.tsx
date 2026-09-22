@@ -154,13 +154,13 @@ export async function Intro({
             {cards.length > 0 ? (
               // The row spills past its column on wide screens, so the last
               // card overlaps the portrait the way the reference does.
-              <div className="relative z-10 grid gap-4 pt-4 sm:grid-cols-3 lg:-me-24">
+              <div className="relative z-10 grid grid-cols-3 gap-4 pt-4">
                 {cards.map((card) => (
                   <div
                     key={card.id}
-                    className="relative h-40 overflow-hidden rounded-2xl bg-muted/80 backdrop-blur-sm"
+                    className="relative h-24 overflow-hidden rounded-2xl bg-muted/80 backdrop-blur-sm sm:h-40"
                   >
-                    <p className="relative z-10 p-4 font-heading font-medium text-balance">
+                    <p className="relative z-10 p-4 font-heading font-medium text-balance max-sm:text-xs">
                       {pick(card, "title", locale)}
                     </p>
                     {card.imageUrl ? (
