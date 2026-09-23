@@ -125,10 +125,13 @@ The full specification lives in `SPEC.md`. These ten rules govern every change.
   catches anything a page throws, and `docker-entrypoint.sh` starts the server even
   when migrations cannot run — otherwise the host answers "Bad Gateway". Rendering
   per request is what keeps an outage from being cached as if it were the site.
-- **Known non-issue:** switching locale in `next dev` logs "Encountered a script tag while
-  rendering React component". It comes from the inline theme script `next-themes` renders
-  when the client re-renders `<html>` across the locale change. It is a React
-  development-build diagnostic only — verified absent in `next start`. Do not re-litigate.
+- **Switching locale is a full page load, on purpose.** `lang`, `dir` and the font
+  variables all live on `<html>`, so a soft navigation makes React re-render that element
+  on the client — which logged "Encountered a script tag while rendering React component"
+  for the inline `next-themes` script inside it. `LocaleToggle` therefore calls
+  `window.location.assign` rather than `router.replace`, with the Next lint rule suppressed
+  on that line: the rule's advice is what caused the problem. Do not turn it back into a
+  client-side navigation.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
