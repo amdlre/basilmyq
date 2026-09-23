@@ -160,7 +160,7 @@ export async function Intro({
                     key={card.id}
                     className="relative h-24 overflow-hidden rounded-2xl bg-muted/80 backdrop-blur-sm sm:h-30"
                   >
-                    <p className="relative z-10 p-4 font-heading font-medium text-balance max-sm:text-xs">
+                    <p className="relative z-10 p-4 font-heading text-xs font-medium text-balance">
                       {pick(card, "title", locale)}
                     </p>
                     {card.imageUrl ? (
